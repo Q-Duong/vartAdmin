@@ -41,7 +41,7 @@ class ReplyMail extends Mailable
                     'register_name' => $this->model->register_name,
                     'register_code' => $this->model->register_code,
                 ];
-                $subject = 'Thông báo chấp nhận cho phiên khoa học';
+                $subject = 'Thư mời tham gia hội nghị thường niên VART 2024';
                 if ($obj == 'CB') {
                     switch ($mail_type) {
                         case (1):
@@ -64,11 +64,10 @@ class ReplyMail extends Mailable
                 break;
             case ('en_register'):
                 $mail = $mailFrom->with([
-                    'en_register_gender' => $this->model->en_register_gender,
+                    'en_register_title' => $this->model->en_register_title,
                     'en_register_firstname' => $this->model->en_register_firstname,
                     'en_register_lastname' => $this->model->en_register_lastname,
-                    'en_register_code' => $this->model->en_register_code,
-                ])->view('mail.international')->subject('Notification');
+                ])->view('mail.international')->subject('Confirmation letter of participation in VART12 Conference');
                 return $mail;
                 break;
         }

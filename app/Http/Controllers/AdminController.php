@@ -60,7 +60,7 @@ class AdminController extends Controller
             $user->password=bcrypt($data['admin_password']);
             $user->save();
         }
-        return Redirect::to('/admin/information')->with('success','Cập nhật thông tin thành công');
+        return Redirect::route('information')->with('success','Cập nhật thông tin thành công');
        
     }
 }
