@@ -18,11 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         view()->composer('*',function($view) {
-            $getAllVart = Vart::orderBy('vart_id','ASC')->get();
-		    $getAllHart = Hart::orderBy('hart_id','ASC')->get();
-            $getAllConferenceCategory = ConferenceCategory::orderBy('conference_category_id','ASC')->get();
-            $getAllBlogCategory = BlogCategory::orderBy('blog_category_id','ASC')->get();
-            $view->with(compact('getAllVart','getAllHart','getAllConferenceCategory','getAllBlogCategory'));
+            
         });
     }
 

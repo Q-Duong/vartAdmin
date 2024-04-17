@@ -184,7 +184,7 @@
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         <i class="fas fa-sign-out-alt"></i> Log Out
                                     </a>
-                                    <form id="logout-form" action="{{ route('admin-logout') }}" method="POST"
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                         class="d-none">
                                         @csrf
                                     </form>
@@ -208,7 +208,7 @@
                             @php
                                 $route = Route::current();
                             @endphp
-                            <a class="{{ $route->uri == 'admin/dashboard' ? 'active' : '' }}"
+                            <a class="{{ $route->uri == 'dashboard' ? 'active' : '' }}"
                                 href="{{ Route('dashboard') }}">
                                 <i class="far fa-chart-bar"></i>
                                 <span>Statistical</span>
@@ -216,34 +216,34 @@
                         </li>
                         @if (Auth::user()->role == 0 || Auth::user()->role == 1)
                             <li>
-                                <a class="{{ $route->uri == 'admin/home-page/edit' ? 'active' : '' }}"
+                                <a class="{{ $route->uri == 'home-page/edit' ? 'active' : '' }}"
                                     href="{{ Route('editHomePage') }}">
                                     <i class="fa fa-info-circle"></i>
                                     <span>Home Page</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="{{ $route->uri == 'admin/contact/edit' ? 'active' : '' }}"
+                                <a class="{{ $route->uri == 'contact/edit' ? 'active' : '' }}"
                                     href="{{ Route('edit-contact') }}">
                                     <i class="fa fa-info-circle"></i>
                                     <span>Contact</span>
                                 </a>
                             </li>
                             <li class="sub-menu">
-                                <a class="{{ $route->uri == 'admin/vart/add' || $route->uri == 'admin/vart/list' ? 'active' : '' }}"
+                                <a class="{{ $route->uri == 'vart/add' || $route->uri == 'vart/list' ? 'active' : '' }}"
                                     href="javascript:;">
                                     <i class="fas fa-th"></i>
                                     <span>VART</span>
                                 </a>
                                 <ul class="sub">
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/vart/add' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'vart/add' ? 'active' : '' }}"
                                             href="{{ Route('addVart') }}">
                                             <i class="far fa-plus-square"></i> Add
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/vart/list' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'vart/list' ? 'active' : '' }}"
                                             href="{{ Route('listVart') }}">
                                             <i class="far fa-list-alt"></i> List
                                         </a>
@@ -251,20 +251,20 @@
                                 </ul>
                             </li>
                             <li class="sub-menu">
-                                <a class="{{ $route->uri == 'admin/hart/add' || $route->uri == 'admin/hart/list' ? 'active' : '' }}"
+                                <a class="{{ $route->uri == 'hart/add' || $route->uri == 'hart/list' ? 'active' : '' }}"
                                     href="javascript:;">
                                     <i class="fas fa-th"></i>
                                     <span>HART</span>
                                 </a>
                                 <ul class="sub">
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/hart/add' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'hart/add' ? 'active' : '' }}"
                                             href="{{ Route('addHart') }}">
                                             <i class="far fa-plus-square"></i> Add
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/hart/list' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'hart/list' ? 'active' : '' }}"
                                             href="{{ Route('listHart') }}">
                                             <i class="far fa-list-alt"></i> List
                                         </a>
@@ -272,20 +272,20 @@
                                 </ul>
                             </li>
                             <li class="sub-menu">
-                                <a class="{{ $route->uri == 'admin/conference-category/add' || $route->uri == 'admin/conference-category/list' ? 'active' : '' }}"
+                                <a class="{{ $route->uri == 'conference-category/add' || $route->uri == 'conference-category/list' ? 'active' : '' }}"
                                     href="javascript:;">
                                     <i class="fas fa-th"></i>
                                     <span>Conference Category</span>
                                 </a>
                                 <ul class="sub">
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/conference-category/add' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'conference-category/add' ? 'active' : '' }}"
                                             href="{{ Route('addConferenceCategory') }}">
                                             <i class="far fa-plus-square"></i> Add Conference Category
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/conference-category/list' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'conference-category/list' ? 'active' : '' }}"
                                             href="{{ Route('listConferenceCategory') }}">
                                             <i class="far fa-list-alt"></i> List Conference Category
                                         </a>
@@ -293,20 +293,20 @@
                                 </ul>
                             </li>
                             <li class="sub-menu">
-                                <a class="{{ $route->uri == 'admin/conference/add' || $route->uri == 'admin/conference/list' ? 'active' : '' }}"
+                                <a class="{{ $route->uri == 'conference/add' || $route->uri == 'conference/list' ? 'active' : '' }}"
                                     href="javascript:;">
                                     <i class="fas fa-th"></i>
                                     <span>Conference</span>
                                 </a>
                                 <ul class="sub">
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/conference/add' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'conference/add' ? 'active' : '' }}"
                                             href="{{ Route('addConference') }}">
                                             <i class="far fa-plus-square"></i> Add Conference
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/conference/list' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'conference/list' ? 'active' : '' }}"
                                             href="{{ Route('listConference') }}">
                                             <i class="far fa-list-alt"></i> List Conference
                                         </a>
@@ -315,28 +315,28 @@
                             </li>
                         @endif
                         <li class="sub-menu">
-                            <a class="{{ $route->uri == 'admin/conference/report/list' ? 'active' : '' }}"
+                            <a class="{{ $route->uri == 'conference/report/list' ? 'active' : '' }}"
                                 href="{{ Route('listConferenceReport') }}">
                                 <i class="fas fa-th"></i>
                                 <span>Conference Report List</span>
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a class="{{ $route->uri == 'admin/conference/en-report/list' ? 'active' : '' }}"
+                            <a class="{{ $route->uri == 'conference/en-report/list' ? 'active' : '' }}"
                                 href="{{ Route('listConferenceReportInternational') }}">
                                 <i class="fas fa-th"></i>
                                 <span>Conference Report Inter List</span>
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a class="{{ $route->uri == 'admin/conference/register/list' ? 'active' : '' }}"
+                            <a class="{{ $route->uri == 'conference/register/list' ? 'active' : '' }}"
                                 href="{{ Route('listConferenceRegister') }}">
                                 <i class="fas fa-th"></i>
                                 <span>Conference Registration List</span>
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a class="{{ $route->uri == 'admin/conference/en-register/list' ? 'active' : '' }}"
+                            <a class="{{ $route->uri == 'conference/en-register/list' ? 'active' : '' }}"
                                 href="{{ Route('listConferenceRegisterInternational') }}">
                                 <i class="fas fa-th"></i>
                                 <span>Conference Registration Inter List</span>
@@ -344,20 +344,20 @@
                         </li>
                         @if (Auth::user()->role == 0 || Auth::user()->role == 1)
                             <li class="sub-menu">
-                                <a class="{{ $route->uri == 'admin/courses/add' || $route->uri == 'admin/courses/list' ? 'active' : '' }}"
+                                <a class="{{ $route->uri == 'courses/add' || $route->uri == 'courses/list' ? 'active' : '' }}"
                                     href="javascript:;">
                                     <i class="fas fa-th"></i>
                                     <span>Lesson</span>
                                 </a>
                                 <ul class="sub">
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/courses/add' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'courses/add' ? 'active' : '' }}"
                                             href="">
                                             <i class="far fa-plus-square"></i> Add
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/courses/list' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'courses/list' ? 'active' : '' }}"
                                             href="">
                                             <i class="far fa-list-alt"></i> List
                                         </a>
@@ -365,20 +365,20 @@
                                 </ul>
                             </li>
                             <li class="sub-menu">
-                                <a class="{{ $route->uri == 'admin/courses/add' || $route->uri == 'admin/courses/list' ? 'active' : '' }}"
+                                <a class="{{ $route->uri == 'courses/add' || $route->uri == 'courses/list' ? 'active' : '' }}"
                                     href="javascript:;">
                                     <i class="fas fa-th"></i>
                                     <span>Forum</span>
                                 </a>
                                 <ul class="sub">
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/courses/add' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'courses/add' ? 'active' : '' }}"
                                             href="">
                                             <i class="far fa-plus-square"></i> Add
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/courses/list' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'courses/list' ? 'active' : '' }}"
                                             href="">
                                             <i class="far fa-list-alt"></i> List
                                         </a>
@@ -386,20 +386,20 @@
                                 </ul>
                             </li>
                             <li class="sub-menu">
-                                <a class="{{ $route->uri == 'admin/courses/add' || $route->uri == 'admin/courses/list' ? 'active' : '' }}"
+                                <a class="{{ $route->uri == 'courses/add' || $route->uri == 'courses/list' ? 'active' : '' }}"
                                     href="javascript:;">
                                     <i class="fas fa-th"></i>
                                     <span>Albums</span>
                                 </a>
                                 <ul class="sub">
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/courses/add' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'courses/add' ? 'active' : '' }}"
                                             href="">
                                             <i class="far fa-plus-square"></i> Add
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/courses/list' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'courses/list' ? 'active' : '' }}"
                                             href="">
                                             <i class="far fa-list-alt"></i> List
                                         </a>
@@ -407,20 +407,20 @@
                                 </ul>
                             </li>
                             <li class="sub-menu">
-                                <a class="{{ $route->uri == 'admin/category-post/add' || $route->uri == 'admin/category-post/list' ? 'active' : '' }}"
+                                <a class="{{ $route->uri == 'category-post/add' || $route->uri == 'category-post/list' ? 'active' : '' }}"
                                     href="javascript:;">
                                     <i class="fas fa-th"></i>
                                     <span>Categogies Blog</span>
                                 </a>
                                 <ul class="sub">
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/category-post/add' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'category-post/add' ? 'active' : '' }}"
                                             href="{{ Route('addBlogCategory') }}">
                                             <i class="far fa-plus-square"></i> Thêm danh mục bài viết
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/category-post/list' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'category-post/list' ? 'active' : '' }}"
                                             href="{{ route('listBlogCategory') }}">
                                             <i class="far fa-list-alt"></i> Danh mục bài viết
                                         </a>
@@ -428,20 +428,20 @@
                                 </ul>
                             </li>
                             <li class="sub-menu">
-                                <a class="{{ $route->uri == 'admin/post/add' || $route->uri == 'admin/post/list' ? 'active' : '' }}"
+                                <a class="{{ $route->uri == 'post/add' || $route->uri == 'post/list' ? 'active' : '' }}"
                                     href="javascript:;">
                                     <i class="fab fa-blogger-b"></i>
                                     <span>Blog</span>
                                 </a>
                                 <ul class="sub">
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/post/add' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'post/add' ? 'active' : '' }}"
                                             href="{{ Route('addBlog') }}">
                                             <i class="far fa-plus-square"></i> Thêm bài viết
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/post/list' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'post/list' ? 'active' : '' }}"
                                             href="{{ route('listBlog') }}">
                                             <i class="far fa-list-alt"></i> Danh sách bài viết
                                         </a>
@@ -449,20 +449,20 @@
                                 </ul>
                             </li>
                             <li class="sub-menu">
-                                <a class="{{ $route->uri == 'admin/slider/add' || $route->uri == 'admin/slider/list' ? 'active' : '' }}"
+                                <a class="{{ $route->uri == 'slider/add' || $route->uri == 'slider/list' ? 'active' : '' }}"
                                     href="javascript:;">
                                     <i class="fa fa-picture-o"></i>
                                     <span>Slider</span>
                                 </a>
                                 <ul class="sub">
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/slider/add' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'slider/add' ? 'active' : '' }}"
                                             href="{{ route('add-slider') }}">
                                             <i class="far fa-plus-square"></i> Thêm slider
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ $route->uri == 'admin/post/list' ? 'active' : '' }}"
+                                        <a class="{{ $route->uri == 'post/list' ? 'active' : '' }}"
                                             href="{{ route('list-slider') }}">
                                             <i class="far fa-list-alt"></i> Quản lý slider
                                         </a>

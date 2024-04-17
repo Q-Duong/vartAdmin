@@ -29,12 +29,12 @@ class AdminController extends Controller
     }
     public function login(){
         if(Auth::check()){
-            return Redirect::to('admin/dashboard');
+            return Redirect::route('dashboard');
         }else{
             return view('admin_login');
         }
     }
-    public function admin_logout(){
+    public function logout(){
         Auth::logout();
         return Redirect::to('login');
     }

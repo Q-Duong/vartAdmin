@@ -35,85 +35,12 @@ use Illuminate\Support\Facades\Request;
 |
 */
 
-//-------------------------------------------- Frontend --------------------------------------------
-Route::get('locale/{locale}', [LocalizationController::class, 'locale'])->name('locale');
-$locale = Request::segment(1);
-if (in_array($locale, ['en'])) {
-    App::setLocale($locale);
-} else {
-    App::setLocale('vn');
-    $locale = '';
-    // abort(400);
-}
-Route::group(['prefix' => $locale], function () {
-
-    Route::get('/', [HomeController::class, 'index'])->name('home');
-    Route::post('/schedule-submit', [CustomerController::class, 'schedule_submit'])->name('schedule_submit');
-    Route::get('/notification', [HomeController::class, 'notification'])->name('notification');
-    //Vart
-    Route::get('/vart', [VartController::class, 'showVartMain'])->name('vartMain');
-    Route::get('/vart/{vart_slug}', [VartController::class, 'showVartDetails'])->name('vart');
-    //Hart
-    Route::get('/hart', [HartController::class, 'showHartMain'])->name('hartMain');
-    Route::get('/hart/{hart_slug}', [HartController::class, 'showHartDetails'])->name('hart');
-    //Conference Category
-    Route::prefix('conference')->group(function () {
-        Route::get('/', [ConferenceCategoryController::class, 'showConferenceCategoryMain'])->name('conferenceCategoryMain');
-        Route::get('/register-report/{conference_code}', [ConferenceController::class, 'showRegisterReport'])->name('registerReport');
-        Route::get('/register-report-international/{conference_code}', [ConferenceController::class, 'showRegisterReportInternational'])->name('registerReportInternational');
-        Route::get('/register-conference/{conference_code}/{conference_fee}', [ConferenceController::class, 'showRegisterConference'])->name('registerConference');
-        Route::get('/register-conference-international/{conference_code}/{conference_fee}', [ConferenceController::class, 'showRegisterConferenceInternational'])->name('registerConferenceInternational');
-        Route::get('/{conference_category_slug}', [ConferenceController::class, 'showConferenceCategory'])->name('conference');
-        Route::get('/{conference_category_slug}/{conference_slug}', [ConferenceController::class, 'showConferenceDetails'])->name('conferenceDetails');
-        Route::post('/register-report-submit', [ConferenceController::class, 'registerReportSubmit'])->name('registerReportSubmit');
-        Route::post('/register-submit', [ConferenceController::class, 'registerSubmit'])->name('registerSubmit');
-        Route::post('/select-address', [ConferenceController::class, 'selectAddress'])->name('selectAddress');
-    });
-    Route::get('/test', [ConferenceController::class, 'convertRegisterCode'])->name('convertRegisterCode');
-    //Invitation Letter
-    Route::get('/invitation-letter', [SupportController::class, 'invitationLetter'])->name('invitationLetter');
-    Route::get('/invitation-letter-vip', [SupportController::class, 'invitationLetterVip'])->name('invitationLetterVip');
-    Route::post('/print-invitation-letter', [SupportController::class, 'printInvitation'])->name('printInvitation');
-
-    Route::get('/lesson', [HomeController::class, 'lesson'])->name('lesson');
-    Route::get('/forum', [HomeController::class, 'forum'])->name('forum');
-    Route::get('/albums', [HomeController::class, 'albums'])->name('albums');
-    Route::get('/contact', [ContactController::class, 'contact'])->name('contact');
-    //Blog
-    Route::get('/blog', [BlogController::class, 'show_blog_categories'])->name('blogCategories');
-    Route::get('/blog/{blog_category_slug}', [BlogController::class, 'show_blog_categories_slug'])->name('blogCategoriesSlug');
-    Route::get('/blog/{blog_category_slug}/{blog_slug}', [BlogController::class, 'show_blog_in_categories'])->name('blogInCategories');
-    Route::post('/comment-submit', [CommentController::class, 'comment_submit'])->name('comment_submit');
-    Route::post('/paginate-comment', [CommentController::class, 'paginate_comment'])->name('paginateComment');
-    //Courses
-    Route::get('/courses', [CoursesController::class, 'showCoursesMain'])->name('coursesMain');
-    Route::get('/courses/{courses_slug}', [CoursesController::class, 'showCourses'])->name('courses');
-});
-// }
-
-Route::get('mail', function () {
-    // Mail::to('quocduong081000@gmail.com')->send(New MailConference());
-    // // $name='d';
-    // // Mail::send('mail.test',array('name' => $name), function ($message) use ($name) {
-    // //     $message->to('quocduong081000@gmail.com')->subject('Thông báo đơn hàng');
-    // //     $message->from('hoikythuathinhanhyhoc@gmail.com', 'Vart');
-    // // });
-});
-Route::get('test-mail', function () {
-
-    return view('mail.international')->with([
-        'en_register_title' => 'Mr.',
-        'en_register_firstname' => 'Dương',
-        'en_register_lastname' => 'Dương',
-        'en_register_code' => 'DHHHH',
-    ]);
-});
-
 Auth::routes();
-Route::get('/admin', [AdminController::class, 'login']);
-Route::post('admin/logout', [AdminController::class, 'admin_logout'])->name('admin-logout');
+Route::get('/', [AdminController::class, 'login']);
+
 //-------------------------------------------- Backend --------------------------------------------
-Route::prefix('admin')->middleware(['auth'])->group(function () {
+Route::group(['middleware' => 'auth'], function () {
+    Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
     //Dashboard
     Route::get('/dashboard', [AdminController::class, 'show_dashboard'])->name('dashboard');
 
