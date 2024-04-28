@@ -7,11 +7,6 @@ use App\Models\Contact;
 
 class AboutController extends Controller
 {
-    public function about()
-    {
-        return view('pages.about.about_us');
-    }
-
     public function information()
     {
         $contact = Contact::where('info_id', 1)->get();

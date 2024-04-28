@@ -16,4 +16,10 @@ return [
         'title' => 'Thư mời',
         'titleVip' => 'Thư mời VIP',
     ],
+    'button' => [
+        'create' => 'Create',
+        'update' => 'Update',
+        'delete' => 'Delete',
+        'mail' => 'Send mail',
+    ]
 ];

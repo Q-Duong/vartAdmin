@@ -5,23 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
-use App\Models\Comment;
 use Illuminate\Support\Facades\Redirect;
 
 class BlogController extends Controller
 {
-    public function add()
-    {
-        $getAllBlogCategory = BlogCategory::orderBy('blog_category_id', 'ASC')->get();
-        return view('admin.Blog.add')->with(compact('getAllBlogCategory'));
-    }
-
-    public function list()
+    public function index()
     {
         $getAllBlog = Blog::orderBy('blog_id', 'DESC')->get();
-        return view('admin.Blog.list')->with(compact('getAllBlog'));
+        return view('pages.admin.blog.index',compact('getAllBlog'));
     }
-
+    public function create()
+    {
+        $getAllBlogCategory = BlogCategory::orderBy('blog_category_id', 'ASC')->get();
+        return view('pages.admin.blog.create',compact('getAllBlogCategory'));
+    }
     public function upload_image_ck(Request $request)
     {
         if ($request->hasFile('upload')) {
@@ -34,8 +31,7 @@ class BlogController extends Controller
             return response()->json(['fileName' => $new_image, 'uploaded' => 1, 'url' => $url]);
         }
     }
-
-    public function save(Request $request)
+    public function store(Request $request)
     {
         $this->checkAddBlog($request);
         $data = $request->all();
@@ -61,14 +57,12 @@ class BlogController extends Controller
             return Redirect()->back()->with('error', 'Vui lòng thêm hình ảnh');
         }
     }
-
     public function edit($blog_id)
     {
         $getAllBlogCategory = BlogCategory::orderBy('blog_category_id', 'ASC')->get();
         $blog = Blog::find($blog_id);
-        return view('admin.Blog.edit')->with(compact('getAllBlogCategory', 'blog'));
+        return view('pages.admin.blog.edit',compact('getAllBlogCategory', 'blog'));
     }
-
     public function update(Request $request, $blog_id)
     {
         $this->checkUpdateBlog($request);
@@ -91,10 +85,9 @@ class BlogController extends Controller
             $blog->blog_image = $new_image;
         }
         $blog->save();
-        return Redirect::to('admin/blog/list')->with('success', 'Cập nhật bài viết thành công');
+        return Redirect::route('blog.index')->with('success', 'Cập nhật bài viết thành công');
     }
-
-    public function delete($blog_id)
+    public function destroy($blog_id)
     {
         $blog = Blog::find($blog_id);
         $blog_image = $blog->blog_image;
@@ -104,34 +97,7 @@ class BlogController extends Controller
         $blog->delete();
         return Redirect()->back()->with('success', 'Xóa bài viết thành công');
     }
-    //Front End
-
-    public function show_blog_categories()
-    {
-        return view('pages.blog.blog_categories');
-    }
-
-    public function show_blog_categories_slug(Request $request, $blog_category_slug)
-    {
-        $blogCategory = BlogCategory::where('blog_category_slug', $blog_category_slug)->first();
-        $getAllBlog = Blog::where('blog_category_id', $blogCategory->blog_category_id)->orderBy('blog_id', 'DESC')->paginate(12);
-        return view('pages.blog.blog_categories_slug')->with(compact('getAllBlog', 'blogCategory'));
-    }
-
-    public function show_blog_in_categories(Request $request, $blog_category_slug, $blog_slug)
-    {
-        $blogCategory = BlogCategory::where('blog_category_slug', $blog_category_slug)->first();
-        $blog = Blog::where('blog_slug', $blog_slug)->first();
-        $Comment = Comment::where('blog_id', $blog->blog_id);
-        $totalComment = count($Comment->get());
-        $getPaginateComment = $Comment->paginate(2);
-        $remaining = $totalComment - count($getPaginateComment);
-        $getAllRelatedBlog = Blog::where('blog_category_id', $blogCategory->blog_category_id)->whereNotIn('blog_slug', [$blog_slug]);
-        $totalBlog = count($getAllRelatedBlog->get());
-        $relatedBlog = $getAllRelatedBlog->take($totalBlog % 2 == 0 || $totalBlog > 6 ? 6 : $totalBlog - 1)->orderBy('blog_id', 'DESC')->get();
-        return view('pages.blog.blog_details')->with(compact('blogCategory', 'blog', 'getPaginateComment', 'remaining', 'totalComment', 'relatedBlog'));
-    }
-
+    
     //Validation
     public function checkUpdateBlog(Request $request)
     {

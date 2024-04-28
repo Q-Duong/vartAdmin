@@ -16,4 +16,15 @@ return [
     'invitation' =>[
         'errorMessage' => 'Vui lòng kiểm tra lại mã code của bạn',
     ],
+    'conference' =>[
+        'successMessage_create' => 'Created successfully',
+        'successMessage_update' => 'Updated successfully',
+        'successMessage_delete' => 'Deleted successfully',
+        'errorMessage_create' => 'Created failed',
+        'errorMessage_update' => 'Updated failed',
+        'errorMessage_delete' => 'Deleted failed',
+    ],
+    'mail' =>[
+        'successMessage' => 'Mail sent successfully',
+    ],
 ];

@@ -40,7 +40,7 @@ class LoginController extends Controller
         if(Auth::check()){
             return Redirect::route('dashboard');
         }else{
-            return view('admin_login');
+            return view('pages.login.index');
         }
     }
     function login(Request $request){

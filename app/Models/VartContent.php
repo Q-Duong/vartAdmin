@@ -8,7 +8,7 @@ class VartContent extends Model
 {
     public $timestamps = true;
     protected $fillable = [
-        'vart_content_themes', 'vart_content_title', 'vart_content_title_en', 'vart_content_text', 'vart_content_text_en', 'vart_content_image', 'vart_id'
+        'vart_content_themes', 'vart_content_title', 'vart_content_title_en', 'vart_content_text', 'vart_content_text_en', 'vart_content_image', 'vart_content_image_en', 'vart_id'
     ];
     protected $primaryKey = 'vart_content_id';
     protected $table = 'vart_content';

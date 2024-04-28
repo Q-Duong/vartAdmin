@@ -4,14 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Blog;
-use App\Models\Order;
-use App\Models\Statistic;
-use Carbon\Carbon;
-use App\Http\Requests;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
@@ -25,13 +23,13 @@ class AdminController extends Controller
     }
     public function show_dashboard(Request $request){
         $blog = Blog::all()->count();
-        return view('admin.dashboard')->with(compact('blog'));
+        return view('pages.admin.dashboard')->with(compact('blog'));
     }
     public function login(){
         if(Auth::check()){
             return Redirect::route('dashboard');
         }else{
-            return view('admin_login');
+            return view('pages.login.index');
         }
     }
     public function logout(){
@@ -39,11 +37,11 @@ class AdminController extends Controller
         return Redirect::to('login');
     }
     public function information(){
-    	return view('admin.AdminInfomation.view_infomation');
+    	return view('pages.setting.infomation.view');
     }
 
     public function settings(){
-    	return view('admin.AdminInfomation.edit_infomation');
+    	return view('pages.setting.infomation.edit');
     }
     public function save_information(Request $request){
         $data=$request->all();
@@ -62,5 +60,17 @@ class AdminController extends Controller
         }
         return Redirect::route('information')->with('success','Cập nhật thông tin thành công');
        
+    }
+
+    public function per(){
+        // Role::create(['name'=>'writer']);
+        // $permission = Permission::create(['name'=>'view report']);
+        // $role = Role::findById(1);
+        // $permission = Permission::findById(1);
+        // $role->givePermissionTo($permission);
+        // $role->revokePermissionTo($permission);
+
+        return auth()->user()->permissions;
+        return Redirect::route('dashboard');
     }
 }
