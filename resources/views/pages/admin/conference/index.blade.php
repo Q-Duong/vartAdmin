@@ -29,7 +29,7 @@
                             <td>{{ $conference->conference_title_en }}</td>
                             <td>
                                 @if ($conference->conference_image)
-                                    <img class="img-fluid" src="{{ asset('storage/' . $conference->conference_image) }}">
+                                    <img class="img-fluid" src="{{ assetHost('storage/' . $conference->conference_image) }}">
                                 @else
                                     <img src="{{ asset('backend/images/content_type/no_photo.jpeg') }}"
                                         class="main-item-detail-image">
@@ -37,7 +37,7 @@
                             </td>
                             <td>
                                 @if ($conference->conference_image_en)
-                                    <img class="img-fluid" src="{{ asset('storage/' . $conference->conference_image_en) }}">
+                                    <img class="img-fluid" src="{{ assetHost('storage/' . $conference->conference_image_en) }}">
                                 @else
                                     <img src="{{ asset('backend/images/content_type/no_photo.jpeg') }}"
                                         class="main-item-detail-image">

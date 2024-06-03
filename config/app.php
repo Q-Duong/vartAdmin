@@ -28,6 +28,7 @@ return [
 
     'env' => env('APP_ENV', 'production'),
     'resourceVersion' => env('VERSION_RESOURCE', 1),
+    'assetHost' => env('SITE_HOST', 1),
     'zaloSecretKey' => env('ZALO_SECRET_KEY', 1),
     'zaloAppId' => env('ZALO_APP_ID', 1),
 

@@ -26,6 +26,13 @@ if (!function_exists('versionResource')) {
     }
 }
 
+if (!function_exists('assetHost')) {
+    function assetHost($path)
+    {
+        return  config("app.assetHost") . $path;
+    }
+}
+
 if (!function_exists('saveFileSource')) {
     function saveFileSource($file)
     {
@@ -46,7 +53,7 @@ if (!function_exists('saveImagesCK')) {
         $getName = current(explode('.', $fileName));
         $fileNameConvert = Str::slug($getName). '.' . $file->getClientOriginalExtension();
         Storage::putFileAs('public/content/', $file, $fileNameConvert);
-        $url = asset('storage/content/' . $fileNameConvert);
+        $url = assetHost('storage/content/' . $fileNameConvert);
         $response = ['url' => $url, 'fileName' => $fileNameConvert];
         return $response;
     }

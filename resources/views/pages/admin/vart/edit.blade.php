@@ -42,7 +42,7 @@
                                 <label for="exampleInputEmail1">Vart Image</label>
                                 <input type="file" name="vart_image" class="filepond">
                                 @if ($vart->vart_image)
-                                    <img class="img-fluid" src="{{ asset('storage/' . $vart->vart_image) }}">
+                                    <img class="img-fluid" src="{{ assetHost('storage/' . $vart->vart_image) }}">
                                 @endif
                                 <button type="submit" class="primary-btn-submit">Update Vart</button>
                         </form>
@@ -124,7 +124,7 @@
                                                 class="vart_content_image_{{ $vartContent->vart_content_id }}"
                                                 value="{{ $vartContent->vart_content_image }}">
                                             @if ($vartContent->vart_content_image)
-                                                <img src="{{ asset('storage/' . $vartContent->vart_content_image) }}"
+                                                <img src="{{ assetHost('storage/' . $vartContent->vart_content_image) }}"
                                                     class="main-item-detail-image">
                                             @else
                                                 <img src="{{ asset('backend/images/content_type/no_photo.jpeg') }}"
@@ -143,7 +143,7 @@
                                                 class="vart_content_image_en_{{ $vartContent->vart_content_id }}"
                                                 value="{{ $vartContent->vart_content_image_en }}">
                                             @if ($vartContent->vart_content_image_en)
-                                                <img src="{{ asset('storage/' . $vartContent->vart_content_image_en) }}"
+                                                <img src="{{ assetHost('storage/' . $vartContent->vart_content_image_en) }}"
                                                     class="main-item-detail-image">
                                             @else
                                                 <img src="{{ asset('backend/images/content_type/no_photo.jpeg') }}"
@@ -254,7 +254,7 @@
         var url_create_or_update_content = "{{ route('vart_content.store_or_update') }}";
         var url_load_content = "{{ route('vart_content.index') }}";
         var url_del_content = "{{ route('vart_content.destroy') }}";
-        var assetImg = "{{ asset('storage/') }}";
+        var assetImg = "{{ assetHost('storage/') }}";
         var url_file_process = "{{ route('file.process') }}";
         var url_file_revert = "{{ route('file.revert') }}";
         var files = [];

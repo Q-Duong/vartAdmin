@@ -39,7 +39,7 @@
                                 <label for="exampleInputEmail1">Conference Category Image</label>
                                 <input type="file" name="conference_category_image" class="filepond">
                                 @if ($conferenceCategory->conference_category_image)
-                                    <img class="img-fluid" src="{{ asset('storage/' . $conferenceCategory->conference_category_image) }}">
+                                    <img class="img-fluid" src="{{ assetHost('storage/' . $conferenceCategory->conference_category_image) }}">
                                 @endif
                             </div>
                             <button type="submit" class="primary-btn-submit button-submit">Update Conference Category</button>

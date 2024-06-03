@@ -22,7 +22,7 @@
                             <td>{{ $vart->vart_title_en }}</td>
                             <td>
                                 @if ($vart->vart_image)
-                                    <img class="img-fluid" src="{{ asset('storage/' . $vart->vart_image) }}">
+                                    <img class="img-fluid" src="{{ assetHost('storage/' . $vart->vart_image) }}">
                                 @else
                                     <img src="{{ asset('backend/images/content_type/no_photo.jpeg') }}"
                                         class="main-item-detail-image">

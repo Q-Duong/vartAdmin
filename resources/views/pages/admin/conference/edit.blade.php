@@ -90,7 +90,7 @@
                                 <label for="exampleInputEmail1">Conference Image </label>
                                 <input type="file" name="conference_image" class="filepond">
                                 @if ($conference->conference_image)
-                                    <img class="img-fluid" src="{{ asset('storage/' . $conference->conference_image) }}">
+                                    <img class="img-fluid" src="{{ assetHost('storage/' . $conference->conference_image) }}">
                                 @endif
                             </div>
                             <div class="form-group">
@@ -98,7 +98,7 @@
                                 <input type="file" name="conference_image_en" class="filepond">
                                 @if ($conference->conference_image_en)
                                     <img class="img-fluid"
-                                        src="{{ asset('storage/' . $conference->conference_image_en) }}">
+                                        src="{{ assetHost('storage/' . $conference->conference_image_en) }}">
                                 @endif
                             </div>
                             <button type="submit" class="primary-btn-submit">Update Conference Category</button>
@@ -331,7 +331,7 @@
         var url_create_or_update_content = "{{ route('conference_fee.store_or_update') }}";
         var url_load_content = "{{ route('conference_fee.index') }}";
         var url_del_content = "{{ route('conference_fee.destroy') }}";
-        var assetImg = "{{ asset('storage/') }}";
+        var assetImg = "{{ assetHost('storage/') }}";
         var url_file_process = "{{ route('file.process') }}";
         var url_file_revert = "{{ route('file.revert') }}";
         var files = [];
