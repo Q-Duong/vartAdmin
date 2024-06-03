@@ -2,21 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TempFile;
 use Illuminate\Http\Request;
 use App\Models\Vart;
 use App\Models\VartContent;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
 class VartController extends Controller
 {
-    private $mainFolder;
     private $folder;
 
     public function __construct()
     {
-        $this->mainFolder = 'vart';
-        $this->folder = 'vart/vartcontent';
+        $this->folder = 'vart';
+    }
+
+    public function index()
+    {
+        $getAllVart = Vart::orderBy('vart_id', 'DESC')->get();
+        return view('pages.admin.vart.index', compact('getAllVart'));
     }
 
     public function create()
@@ -24,136 +31,78 @@ class VartController extends Controller
         return view('pages.admin.vart.create');
     }
 
-    public function list()
+    public function store(Request $request)
     {
-        $getAllVart = Vart::orderBy('vart_id', 'DESC')->get();
-        return view('pages.admin.vart.list')->with(compact('getAllVart'));
-    }
-
-    public function save(Request $request)
-    {
-        // $this->checkPostAdd($request);
-        $data = $request->all();
-        $vart = new Vart();
-        $vart->vart_title = $data['vart_title'];
-        $vart->vart_slug = $data['vart_slug'];
-        $get_image = $request->file('vart_image');
-        if ($get_image) {
-            $vart->vart_image = saveImageSource($this->mainFolder, $get_image);
-        }
-        $vart->save();
-        return Redirect()->back()->with('success', 'Thêm dịch vụ thành công');
-    }
-
-    public function edit($vart_id)
-    {
-        $vart = Vart::find($vart_id);
-        $getAllVartContent = VartContent::where('vart_id', $vart_id)->get();
-        return view('pages.admin.vart.edit')->with(compact('vart', 'getAllVartContent'));
-    }
-
-    public function update(Request $request, $vart_id)
-    {
-        //$this->checkPostUpdate($request);
-        $data = $request->all();
-        $vart = Vart::find($vart_id);
-        $vart->vart_title = $data['vart_title'];
-        $vart->vart_slug = $data['vart_slug'];
-        $get_image = $request->file('vart_image');
-        if ($get_image) {
-            if ($vart->vart_image) {
-                removeImageSource($this->mainFolder, $vart->vart_image);
-            }
-            $vart->vart_image = saveImageSource($this->mainFolder, $get_image);
-        }
-        $vart->save();
-        return redirect()->route('listVart')->with('success', 'Cập nhật dịch vụ thành công');
-    }
-
-    public function loadVartContent(Request $request)
-    {
-        $getAllVartContent = VartContent::where('vart_id', $request->host_id)->get();
-        $html = view('pages.admin.vart.loadVartContent')->with(compact('getAllVartContent'))->render();
-        return response()->json(array('success' => true, 'html' => $html));
-    }
-
-    public function saveOrUpdateVartContent(Request $request)
-    {
-        $validator = Validator::make($request->all(), $this->validateVartContent(), $this->messageVartContent());
-        if ($validator->fails()) {
-            return response()->json(array('errors' => true, 'validator' => $validator->errors()));
-        }
         DB::beginTransaction();
         try {
-            $data = $request->all();
-            if($data['type'] == 'create'){
-                $vartContent = new VartContent();
-                $vartContent->vart_id = $data['vart_id'];
-                $vartContent->vart_content_title = $data['vart_content_title'];
-                $vartContent->vart_content_title_en = $data['vart_content_title_en'];
-                $vartContent->vart_content_text = $data['vart_content_text'];
-                $vartContent->vart_content_text_en = $data['vart_content_text_en'];
-                $vartContent->vart_content_themes = 1;
-                $get_image = $request->file('vart_content_image');
-                if ($get_image) {
-                    $vartContent->vart_content_image = saveImageSource($this->folder, $get_image);
-                }
-                $get_image_en = $request->file('vart_content_image_en');
-                if ($get_image_en) {
-                    $vartContent->vart_content_image_en = saveImageSource($this->folder, $get_image_en);
-                }
-                $vartContent->save();
-            }else{
-                $vartContent = VartContent::find($data['vart_content_id']);
-                $vartContent->vart_content_title = $data['vart_content_title'];
-                $vartContent->vart_content_title_en = $data['vart_content_title_en'];
-                $vartContent->vart_content_text = $data['vart_content_text'];
-                $vartContent->vart_content_text_en = $data['vart_content_text_en'];
-                $get_image = $request->file('vart_content_image');
-                if ($get_image) {
-                    if ($vartContent->vart_content_image) {
-                        removeImageSource($this->folder, $vartContent->vart_content_image);
-                    }
-                    $vartContent->vart_content_image = saveImageSource($this->folder, $get_image);
-                }
-                $get_image_en = $request->file('vart_content_image_en');
-                if ($get_image_en) {
-                    if ($vartContent->vart_content_image_en) {
-                        removeImageSource($this->folder, $vartContent->vart_content_image_en);
-                    }
-                    $vartContent->vart_content_image_en = saveImageSource($this->folder, $get_image_en);
-                }
-                $vartContent->save();
+            $vart = new Vart();
+            $vart->vart_title = $request->vart_title;
+            $vart->vart_title_en = $request->vart_title_en;
+            $vart->vart_slug = Str::slug($request->vart_title);
+            $file = TempFile::where('folder', $request->vart_image)->first();
+            if ($file) {
+                $vart->vart_image = moveFileSource($file->folder, $this->folder, $file->filename);
+                $file->delete();
             }
+            $vart->save();
             DB::commit();
-            return response()->json(array('success' => true, 'message' => __('alert.blog.successfulNotification')));
+
+            return Redirect()->back()->with('success', 'Successfully created');
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json(array('success' => false, 'route' => '500'));
+            return Redirect::route('vart.index')->with('error', __('alert.conference.errorMessage_update'));
         }
     }
 
-    public function deleteVartContent($vart_content_id)
+    public function edit($id)
     {
-        $vartContent = VartContent::find($vart_content_id);
-        if ($vartContent->vart_content_image) {
-            removeImageSource($this->folder, $vartContent->vart_content_image);
-        }
-        if ($vartContent->vart_content_image_en) {
-            removeImageSource($this->folder, $vartContent->vart_content_image_en);
-        }
-        $vartContent->delete();
-        return response()->json(array('message' => __('alert.blog.successfulNotification'), 'success' => true));
+        $vart = Vart::findOrFail($id);
+        $getAllVartContent = VartContent::where('vart_id', $id)->get();
+        return view('pages.admin.vart.edit', compact('vart', 'getAllVartContent'));
     }
 
-    public function delete($vart_id)
+    public function update(Request $request, $id)
     {
-        $vart = Vart::find($vart_id);
-        if ($vart->vart_image) {
-            removeImageSource($this->mainFolder, $vart->vart_image);
+        DB::beginTransaction();
+        try {
+            $vart = Vart::findOrFail($id);
+            $vart->vart_title = $request->vart_title;
+            $vart->vart_title_en = $request->vart_title_en;
+            $vart->vart_slug = Str::slug($request->vart_title);
+            $file = TempFile::where('folder', $request->vart_image)->first();
+            if ($file) {
+                if ($vart->vart_image) {
+                    removeFileSource(getFolderForDestroyFile($vart->vart_image), true);
+                }
+                $vart->vart_image = moveFileSource($file->folder, $this->folder, $file->filename);
+                $file->delete();
+            }
+            $vart->save();
+            DB::commit();
+
+            return Redirect::route('vart.index')->with('success', 'Successfully updated');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return Redirect::route('vart.index')->with('error', __('alert.conference.errorMessage_update'));
         }
-        $vart->delete();
-        return Redirect()->back()->with('success', 'Xóa dịch vụ thành công');
+    }
+
+    public function destroy($id)
+    {
+        DB::beginTransaction();
+        try {
+            $vart = Vart::findOrFail($id);
+            if ($vart->vart_image) {
+                removeFileSource(getFolderForDestroyFile($vart->vart_image), true);
+            }
+            $vart->delete();
+            DB::commit();
+
+            return Redirect::route('vart.index')->with('success', 'Successfully deleted');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return Redirect::route('vart.index')->with('error', __('alert.conference.errorMessage_update'));
+        }
     }
 
     //Validation
@@ -179,45 +128,5 @@ class VartController extends Controller
         ];
 
         return $message;
-    }
-
-    public function checkPostUpdate(Request $request)
-    {
-        $this->validate(
-            $request,
-            [
-                'post_title' => 'required',
-                'post_slug' => 'required',
-                //'post_desc' => 'required',
-                'post_content' => 'required',
-            ],
-            [
-                'post_title.required' => 'Vui lòng điền thông tin',
-                'post_slug.required' => 'Vui lòng điền thông tin',
-                'post_desc.required' => 'Vui lòng điền thông tin',
-                'post_content.required' => 'Vui lòng điền thông tin',
-            ]
-        );
-    }
-
-    public function checkPostAdd(Request $request)
-    {
-        $this->validate(
-            $request,
-            [
-                'post_title' => 'required',
-                'post_slug' => 'required',
-                'post_image' => 'required',
-                // 'post_desc' => 'required',
-                'post_content' => 'required',
-            ],
-            [
-                'post_title.required' => 'Vui lòng điền thông tin',
-                'post_slug.required' => 'Vui lòng điền thông tin',
-                'post_image.required' => 'Vui lòng theem hình ảnh',
-                'post_desc.required' => 'Vui lòng điền thông tin',
-                'post_content.required' => 'Vui lòng điền thông tin',
-            ]
-        );
     }
 }

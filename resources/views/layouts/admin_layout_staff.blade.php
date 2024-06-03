@@ -332,7 +332,7 @@
 
     <script type="text/javascript">
         //Handle sales
-        var url_upload_image_ck = "{{ route('upload-image-ck', ['_token' => csrf_token()]) }}";
+        var url_upload_image_ck = "{{ route('file.upload_image_ck', ['_token' => csrf_token()]) }}";
         // Revenue Statistics Url
         var url_revenue_statistics_for_the_month = "{{ route('url-revenue-statistics-for-the-month') }}";
         var url_optional_revenue_statistics = "{{ route('url-optional-revenue-statistics') }}";

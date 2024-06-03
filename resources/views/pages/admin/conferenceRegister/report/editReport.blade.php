@@ -1,6 +1,9 @@
 @extends('layouts.default_auth')
+@section('title', __('conference.en.report_title') .' - ')
 @push('css')
-    <link href="{{ versionResource('assets/css/support/filepond.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ versionResource('assets/css/support/filepond.css') }}" type="text/css" as="style" />
+    <link rel="stylesheet" href="{{ versionResource('assets/css/support/filepond-preview.css') }}" type="text/css"
+        as="style" />
 @endpush
 @section('content')
     <div class="row">
@@ -233,11 +236,12 @@
 @endsection
 @push('js')
     <script type="text/javascript" defer>
-        var url_upload = "{{ route('upload') }}";
-        var url_delete = "{{ route('delete', ':path') }}";
-        var csrf = {"X-CSRF-TOKEN": "{{ csrf_token() }}"};
+        var url_file_process = "{{ route('file.process') }}";
+        var url_file_revert = "{{ route('file.revert') }}";
+        var url_file_delete = "{{ route('file.destroy') }}";
     </script>
     <script src="{{ versionResource('assets/js/support/filepond.js') }}" defer></script>
+    <script src="{{ versionResource('assets/js/support/file/filepond-preview.js') }}" defer></script>
     <script src="{{ versionResource('assets/js/support/essential.js') }}" defer></script>
-    <script src="{{ versionResource('assets/js/support/handle-file.js') }}" defer></script>
+    <script src="{{ versionResource('assets/js/support/file/handle-file.js') }}" defer></script>
 @endpush

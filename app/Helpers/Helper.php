@@ -26,22 +26,56 @@ if (!function_exists('versionResource')) {
     }
 }
 
-if (!function_exists('saveImageSource')) {
-    function saveImageSource($folder, $image)
+if (!function_exists('saveFileSource')) {
+    function saveFileSource($file)
     {
-        $path = public_path('storeimages/' . $folder . '/');
-        $get_name_image = $image->getClientOriginalName();
-        $name_image = current(explode('.', $get_name_image));
-        $new_image =  $name_image . rand(0, 99) . '.' . $image->getClientOriginalExtension();
-        $image->move($path, $new_image);
-        return $new_image;
+        $fileName = $file->getClientOriginalName();
+        $getName = current(explode('.', $fileName));
+        $fileNameConvert = Str::slug($getName). '.' . $file->getClientOriginalExtension();
+        $folder = uniqid();
+        Storage::putFileAs('tmp/' . $folder, $file, $fileNameConvert);
+        $response = ['folder' => $folder, 'fileName' => $fileNameConvert];
+        return $response;
     }
 }
 
-if (!function_exists('removeImageSource')) {
-    function removeImageSource($folder, $name)
+if (!function_exists('saveImagesCK')) {
+    function saveImagesCK($file)
     {
-        unlink(public_path('storeimages/' . $folder . '/') . $name);
+        $fileName = $file->getClientOriginalName();
+        $getName = current(explode('.', $fileName));
+        $fileNameConvert = Str::slug($getName). '.' . $file->getClientOriginalExtension();
+        Storage::putFileAs('public/content/', $file, $fileNameConvert);
+        $url = asset('storage/content/' . $fileNameConvert);
+        $response = ['url' => $url, 'fileName' => $fileNameConvert];
+        return $response;
+    }
+}
+
+if (!function_exists('removeFileSource')) {
+    function removeFileSource($folder, $target)
+    {
+        if($target){
+            Storage::deleteDirectory('public/' . $folder);
+        }else{
+            Storage::deleteDirectory('tmp/' . $folder);
+        }
+    }
+}
+
+if (!function_exists('moveFileSource')) {
+    function moveFileSource($folder, $folderMove, $fileName)
+    {
+        Storage::move('tmp/' . $folder, 'public/'. $folderMove . '/' . $folder);
+        return $folderMove .'/' . $folder . '/' . $fileName;
+    }
+}
+
+if (!function_exists('getFolderForDestroyFile')) {
+    function getFolderForDestroyFile($folder)
+    {
+        $folderFormat = explode('/', $folder);
+        return $folderFormat[0] . '/' . $folderFormat[1];
     }
 }
 
@@ -51,11 +85,12 @@ if (!function_exists('saveImageFileDrive')) {
         $fileData = File::get($file);
         $get_name_file = $file->getClientOriginalName();
         $name_file = current(explode('.', $get_name_file));
-        $new_file =  $name_file . rand(0, 99) . '.' . $file->getClientOriginalExtension();
+        $new_file =  Str::slug($name_file) . rand(0, 99) . '.' . $file->getClientOriginalExtension();
         Storage::cloud()->put($new_file, $fileData);
         $content = collect(Storage::cloud()->listContents());
         $file_path = $content->where('name', '=', $new_file)->first();
-        return $file_path['path'];
+        $response = ['folder' => $file_path['path'], 'fileName' => $new_file];
+        return $response;
     }
 }
 

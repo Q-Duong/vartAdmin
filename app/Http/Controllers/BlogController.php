@@ -19,18 +19,7 @@ class BlogController extends Controller
         $getAllBlogCategory = BlogCategory::orderBy('blog_category_id', 'ASC')->get();
         return view('pages.admin.blog.create',compact('getAllBlogCategory'));
     }
-    public function upload_image_ck(Request $request)
-    {
-        if ($request->hasFile('upload')) {
-            $get_image = $request->file('upload');
-            $get_name_image = $get_image->getClientOriginalName();
-            $name_image = current(explode('.', $get_name_image));
-            $new_image =  $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
-            $get_image->move(public_path('storeimages/content/'), $new_image);
-            $url = asset('storeimages/content/' . $new_image);
-            return response()->json(['fileName' => $new_image, 'uploaded' => 1, 'url' => $url]);
-        }
-    }
+    
     public function store(Request $request)
     {
         $this->checkAddBlog($request);

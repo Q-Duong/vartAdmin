@@ -1,20 +1,25 @@
 function clearForm() {
     $(".popup-model-review").fadeOut(300);
-    $("#" + form_name)[0].reset();
+    $("#" + main_content)[0].reset();
     $(".img-thumb").html("");
     $(".img-thumb-en").html("");
     editor1.setData("");
     editor2.setData("");
+    FilePond.setOptions({
+        files: [],
+    });
+    $(".alert-error").addClass("hidden");
 }
 
 function loadContent() {
-    var _token = $('input[name="_token"]').val();
     $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
         url: url_load_content,
         method: "POST",
         data: {
             host_id: host_id,
-            _token: _token,
         },
         success: function (data) {
             $(".list-content").html(data.html);
@@ -28,9 +33,7 @@ function createContent(title) {
     $(".model-review-tile").html(title);
     $('input[name="type"]').val("create");
     $(".btn-content").html(
-        '<button type="button" class="primary-btn-submit button-submit">' +
-            title +
-            "</button>"
+        '<button type="button" class="primary-btn-submit button-submit">Create</button>'
     );
 }
 
@@ -39,20 +42,27 @@ function updateContent(e, title) {
     $(".model-review-tile").html(title);
     $('input[name="type"]').val("update");
     $(".btn-content").html(
-        '<button type="button" class="primary-btn-submit button-submit">' +
-            title +
-            "</button>"
+        '<button type="button" class="primary-btn-submit button-submit">Update</button>'
     );
-    $('input[name="' + main_content + '_content_id"]').val(
-        $("." + main_content + "_content_id_" + e).val()
+    $('input[name="' + main_content + '_id"]').val(
+        $("." + main_content + "_id_" + e).val()
     );
-    $('input[name="' + main_content + '_content_title"]').val(
-        $("." + main_content + "_content_title_" + e).val()
+    $('input[name="' + main_content + '_title"]').val(
+        $("." + main_content + "_title_" + e).val()
     );
-    $('input[name="' + main_content + '_content_title_en"]').val(
-        $("." + main_content + "_content_title_en_" + e).val()
+    $('input[name="' + main_content + '_title_en"]').val(
+        $("." + main_content + "_title_en_" + e).val()
     );
-    var content_image = $("." + main_content + "_content_image_" + e).val();
+    $('input[name="' + main_content + '_code"]').val(
+        $("." + main_content + "_code_" + e).val()
+    );
+    $('input[name="' + main_content + '_price"]').val(
+        $("." + main_content + "_price_" + e).val()
+    );
+    $('input[name="' + main_content + '_date"]').val(
+        $("." + main_content + "_date_" + e).val()
+    );
+    var content_image = $("." + main_content + "_image_" + e).val();
     if (content_image != "") {
         var html =
             '<img src="' +
@@ -64,9 +74,7 @@ function updateContent(e, title) {
     } else {
         $(".img-thumb").html("");
     }
-    var content_image_en = $(
-        "." + main_content + "_content_image_en_" + e
-    ).val();
+    var content_image_en = $("." + main_content + "_image_en_" + e).val();
     if (content_image_en != "") {
         var html_en =
             '<img src="' +
@@ -78,34 +86,54 @@ function updateContent(e, title) {
     } else {
         $(".img-thumb-en").html("");
     }
-    editor1.setData($("." + main_content + "_content_text_" + e).html());
-    editor2.setData($("." + main_content + "_content_text_en_" + e).html());
+    if (main_content == "conference_fee") {
+        editor1.setData($("." + main_content + "_content_" + e).html());
+        editor2.setData($("." + main_content + "_desc_" + e).html());
+        $(
+            '.conference_fee_type option[value="' +
+                $("." + main_content + "_type_" + e).val() +
+                '"]'
+        ).prop("selected", true);
+        $('.mail_type option[value="' + $(".mail_type_" + e).val() + '"]').prop(
+            "selected",
+            true
+        );
+    } else {
+        editor1.setData($("." + main_content + "_text_" + e).html());
+        editor2.setData($("." + main_content + "_text_en_" + e).html());
+    }
 }
 
 function deleteContent(e) {
-    var _token = $('input[name="_token"]').val();
-    url_del_content = url_del_content.replace(":id", e);
+    $(".loader-over").fadeIn();
     $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
         url: url_del_content,
         type: "DELETE",
         data: {
-            _token: _token,
+            id: e,
         },
         success: function (data) {
-            url_del_content = url_del_content.replace(e, ":id");
             successMsg(data.message);
             loadContent();
+            $(".loader-over").fadeOut();
         },
     });
 }
 $(document).on("click", ".button-submit", function () {
-    var formData = new FormData($("#" + form_name)[0]);
-    formData.append(main_content + "_content_text", editor1.getData());
-    formData.append(main_content + "_content_text_en", editor2.getData());
+    var formData = new FormData($("#" + main_content)[0]);
+    if (main_content == "conference_fee") {
+        formData.append(main_content + "_content", editor1.getData());
+        formData.append(main_content + "_desc", editor2.getData());
+    } else {
+        formData.append(main_content + "_text", editor1.getData());
+        formData.append(main_content + "_text_en", editor2.getData());
+    }
     $(".error").addClass("hidden");
     $(".button-submit").attr("disabled", true);
-    $(".loader").fadeIn();
-    $("#preloder").fadeIn("slow");
+    $(".loader-over").fadeIn();
     $.ajax({
         url: url_create_or_update_content,
         type: "POST",
@@ -123,8 +151,7 @@ $(document).on("click", ".button-submit", function () {
                 clearForm();
             }
             $(".button-submit").removeAttr("disabled");
-            $(".loader").fadeOut();
-            $("#preloder").fadeOut("slow");
+            $(".loader-over").fadeOut();
         },
     });
 });

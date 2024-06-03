@@ -1,4 +1,10 @@
 @extends('layouts.default_auth')
+@section('title', 'Create Vart - ')
+@push('css')
+    <link rel="stylesheet" href="{{ versionResource('assets/css/support/filepond.css') }}" type="text/css" as="style" />
+    <link rel="stylesheet" href="{{ versionResource('assets/css/support/filepond-preview.css') }}" type="text/css"
+        as="style" />
+@endpush
 @section('content')
     <div class="row">
         <div class="col-lg-12">
@@ -6,42 +12,35 @@
                 <header class="panel-heading">
                     Create Vart
                     <span class="tools pull-right">
-                        <a href="{{ route('listVart') }}" class="primary-btn-submit">Management</a>
+                        <a href="{{ route('vart.index') }}" class="primary-btn-submit">Management</a>
                         <a class="fa fa-chevron-down" href="javascript:;"></a>
                     </span>
                 </header>
                 <div class="panel-body">
                     <div class="position-center">
-                        <form action="{{ route('saveVart') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('vart.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
-                            <div class="form-group {{ $errors->has('vart_title') ? 'has-error' : '' }}">
+                            <div class="form-group @error('vart_title') has-error @enderror">
                                 <label>Vart Title</label>
-                                <input type="text" name="vart_title" class="input-control" placeholder="Enter Vart Title"
-                                    id="slug" onkeyup="ChangeToSlug();" value="{{ old('vart_title') }}">
-                                {!! $errors->first(
-                                    'vart_title',
-                                    '<div class="alert-error"><i class="fa fa-exclamation-circle"></i> :message</div>',
-                                ) !!}
+                                <input type="text" name="vart_title" class="input-control" placeholder="Enter Vart Title" value="{{ old('vart_title') }}">
+                                @error('vart_title')
+                                    <div class="alert-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="form-group {{ $errors->has('vart_slug') ? 'has-error' : '' }}">
-                                <label>Vart Slug</label>
-                                <input type="text" name="vart_slug" class="input-control" id="convert_slug"
-                                    value="{{ old('vart_slug') }}" readonly placeholder="Vart Slug">
-                                {!! $errors->first(
-                                    'vart_slug',
-                                    '<div class="alert-error"><i class="fa fa-exclamation-circle"></i> :message</div>',
-                                ) !!}
+                            <div class="form-group @error('vart_title_en') has-error @enderror">
+                                <label>Vart Title En</label>
+                                <input type="text" name="vart_title_en" class="input-control"
+                                    placeholder="Enter Vart Title En" value="{{ old('vart_title_en') }}">
+                                @error('vart_title_en')
+                                    <div class="alert-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="form-group {{ $errors->has('vart_image') ? 'has-error' : '' }}">
-                                <label>Vart Image</label>
-                                <input type="file" name="vart_image" class="input-control"
-                                    value="{{ old('vart_image') }}">
-                                {!! $errors->first(
-                                    'vart_image',
-                                    '<div class="alert-error"><i class="fa fa-exclamation-circle"></i> :message</div>',
-                                ) !!}
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Vart Image</label>
+                                <input type="file" name="vart_image" class="filepond">
                             </div>
-                            <button type="submit" class="primary-btn-submit">Add Vart</button>
+                            
+                            <button type="submit" class="primary-btn-submit button-submit">Create Vart</button>
                         </form>
                     </div>
                 </div>
@@ -50,6 +49,21 @@
     </div>
 @endsection
 @push('js')
-    <script src="{{ versionResource('backend/js/ckeditor/ckeditor.min.js') }}" defer></script>
-    <script src="{{ versionResource('backend/js/ckeditor/ckeditor-custom.js') }}" defer></script>
+    <script src="{{ versionResource('assets/js/support/file/filepond.js') }}" defer></script>
+    <script src="{{ versionResource('assets/js/support/file/filepond-preview.js') }}" defer></script>
+    <script src="{{ versionResource('assets/js/support/essential.js') }}" defer></script>
+    <script src="{{ versionResource('assets/js/support/file/handle-file.js') }}" defer></script>
+    <script>
+        var url_file_process = "{{ route('file.process') }}";
+        var url_file_revert = "{{ route('file.revert') }}";
+        var files = [];
+        @foreach (old('ord_list_file', []) as $file)
+            files.push({
+                source: '{{ $file }}',
+                options: {
+                    type: 'local'
+                }
+            });
+        @endforeach
+    </script>
 @endpush

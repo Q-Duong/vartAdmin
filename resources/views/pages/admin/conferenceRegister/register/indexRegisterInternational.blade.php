@@ -22,7 +22,7 @@
                         <th>@lang('conference.en.cost')</th>
                         <th>@lang('conference.en.create')</th>
                         <th>@lang('conference.en.status.status')</th>
-                        <th style="width:60px;">@lang('conference.en.management')</th>
+                        <th>@lang('conference.en.management')</th>
                     </tr>
                 </thead>
                 <tbody>

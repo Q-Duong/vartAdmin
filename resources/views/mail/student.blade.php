@@ -62,7 +62,7 @@
                     Ngoài ra, Ban tổ chức cũng chuẩn bị thêm một chương trình tham quan Huế 01 ngày (chủ
                     nhật, 23/06 từ 7:00-17:00) để tìm hiểu văn hóa, lịch sử Huế và hòa mình vào thiên nhiên, nhịp
                     sống tại nơi đây. Vui lòng xem link bên dưới (đặt tour trực tiếp với công ty lữ hành):
-                    <a href="https://drive.google.com/drive/folders/1LvTblCSj7gvnfTfmmzWd_eX8wiLabu6o?usp=sharing"
+                    <a href="https://images.vart.vn/DAI-NOI-CITADEL-THIEN-MU-PAGODA-TAM-GIANG-LAGOON.pdf"
                         target="_blank">Link</a>
                 </div>
                 <div style="margin-bottom: 25px; text-align: justify;">

@@ -6,7 +6,31 @@
             <div class="col-lg-2">
                 <div class="item-detial-main">
                     <span class="title-item-detail">
-                        Conference Fee Title
+                        Conference Fee Type
+                    </span>
+                    <div class="main-item-detail">
+                        <input type="hidden" class="conference_fee_type_{{ $conferenceFee->conference_fee_id }}"
+                            value="{{ $conferenceFee->conference_fee_type }}">
+                        {{ $conferenceFee->conference_fee_type == 1 ? 'National' : 'International' }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1">
+                <div class="item-detial-main">
+                    <span class="title-item-detail">
+                        Code
+                    </span>
+                    <div class="main-item-detail">
+                        <input type="hidden" class="conference_fee_code_{{ $conferenceFee->conference_fee_id }}"
+                            value="{{ $conferenceFee->conference_fee_code }}">
+                        {{ $conferenceFee->conference_fee_code }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="item-detial-main">
+                    <span class="title-item-detail">
+                        Title
                     </span>
                     <div class="main-item-detail">
                         <input type="hidden" class="conference_fee_title_{{ $conferenceFee->conference_fee_id }}"
@@ -18,7 +42,27 @@
             <div class="col-lg-2">
                 <div class="item-detial-main">
                     <span class="title-item-detail">
-                        Conference Price
+                        Mail Type
+                    </span>
+                    <div class="main-item-detail">
+                        <input type="hidden" class="mail_type_{{ $conferenceFee->conference_fee_id }}"
+                            value="{{ $conferenceFee->mail_type }}">
+                        @if ($conferenceFee->mail_type == 1)
+                            Theory
+                        @elseif ($conferenceFee->mail_type == 2)
+                            Practice
+                        @elseif ($conferenceFee->mail_type == 3)
+                            CME
+                        @else
+                            International
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1">
+                <div class="item-detial-main">
+                    <span class="title-item-detail">
+                        Price
                     </span>
                     <div class="main-item-detail">
                         <input type="hidden" class="conference_fee_price_{{ $conferenceFee->conference_fee_id }}"
@@ -42,7 +86,7 @@
             <div class="col-lg-2">
                 <div class="item-detial-main">
                     <span class="title-item-detail">
-                        Conference Fee Content
+                        Content
                     </span>
                     <div class="main-item-detail">
                         <div class="conference_fee_content_{{ $conferenceFee->conference_fee_id }}">
@@ -54,7 +98,7 @@
             <div class="col-lg-2">
                 <div class="item-detial-main">
                     <span class="title-item-detail">
-                        Conference Fee Description
+                        Description
                     </span>
                     <div class="main-item-detail">
                         <div class="conference_fee_desc_{{ $conferenceFee->conference_fee_id }}">
@@ -71,11 +115,11 @@
                     <div class="main-item-manage">
                         <div class="section-">
                             <button type="button"
-                                onclick="updateConferenceFee({{ $conferenceFee->conference_fee_id }})"
+                                onclick="updateContent({{ $conferenceFee->conference_fee_id }}, 'Update Conference Fee')"
                                 class="btn btn-info "><i class="far fa-edit"></i></button>
                         </div>
                         <div class="section-d">
-                            <button onclick="deleteConferenceFee({{ $conferenceFee->conference_fee_id }})"
+                            <button onclick="deleteContent({{ $conferenceFee->conference_fee_id }})"
                                 class="btn btn-danger "><i class="far fa-trash-alt"></i></button>
                         </div>
                     </div>

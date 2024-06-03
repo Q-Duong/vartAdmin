@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-    <title>VART</title>
+    <title>@yield('title')VART</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="vart, hội hình ảnh">
@@ -25,7 +25,7 @@
     <link href="{{ versionResource('backend/css/jquery.dataTables.min.css') }}" rel="stylesheet" as="style" />
     <link href="{{ versionResource('backend/css/responsive-jqueryui.min.css') }}" rel="stylesheet" as="style" />
     <link href="{{ versionResource('backend/css/themes-base-jquery-ui.css') }}" rel="stylesheet" as="style" />
-
+    <link href="{{ versionResource('assets/css/overview.built.css') }}" rel='stylesheet' type='text/css' as="style"/>
     <!-- font CSS -->
     {{-- <link
         href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic'
@@ -230,21 +230,21 @@
                                 </a>
                             </li>
                             <li class="sub-menu">
-                                <a class="{{ $route->uri == 'vart/create' || $route->uri == 'vart' ? 'active' : '' }}"
+                                <a class="{{ request()->routeIs('vart.index') || request()->routeIs('vart.create') || request()->routeIs('vart.edit') ? 'active' : '' }}"
                                     href="javascript:;">
                                     <i class="fas fa-th"></i>
                                     <span>VART</span>
                                 </a>
                                 <ul class="sub">
                                     <li>
-                                        <a class="{{ $route->uri == 'vart/create' ? 'active' : '' }}"
-                                            href="{{ Route('createVart') }}">
+                                        <a class="{{ request()->routeIs('vart.create') ? 'active' : '' }}"
+                                            href="{{ Route('vart.create') }}">
                                             <i class="far fa-plus-square"></i> Create VART
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ $route->uri == 'vart' ? 'active' : '' }}"
-                                            href="{{ Route('listVart') }}">
+                                        <a class="{{ request()->routeIs('vart.index') ? 'active' : '' }}"
+                                            href="{{ Route('vart.index') }}">
                                             <i class="far fa-list-alt"></i> List VART
                                         </a>
                                     </li>
@@ -272,42 +272,42 @@
                                 </ul>
                             </li>
                             <li class="sub-menu">
-                                <a class="{{ $route->uri == 'conference-category/create' || $route->uri == 'conference-category' ? 'active' : '' }}"
+                                <a class="{{ request()->routeIs('conference_category.index') || request()->routeIs('conference_category.create') || request()->routeIs('conference_category.edit') ? 'active' : '' }}"
                                     href="javascript:;">
                                     <i class="fas fa-th"></i>
                                     <span>Conference Category</span>
                                 </a>
                                 <ul class="sub">
                                     <li>
-                                        <a class="{{ $route->uri == 'conference-category/create' ? 'active' : '' }}"
-                                            href="{{ Route('createConferenceCategory') }}">
+                                        <a class="{{ request()->routeIs('conference_category.create') ? 'active' : '' }}"
+                                            href="{{ Route('conference_category.create') }}">
                                             <i class="far fa-plus-square"></i> Create Conference Category
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ $route->uri == 'conference-category' ? 'active' : '' }}"
-                                            href="{{ Route('listConferenceCategory') }}">
+                                        <a class="{{ request()->routeIs('conference_category.index') ? 'active' : '' }}"
+                                            href="{{ Route('conference_category.index') }}">
                                             <i class="far fa-list-alt"></i> List Conference Category
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="sub-menu">
-                                <a class="{{ $route->uri == 'conference/create' || $route->uri == 'conference' ? 'active' : '' }}"
+                                <a class="{{ request()->routeIs('conference.index') || request()->routeIs('conference.create') || request()->routeIs('conference.edit') ? 'active' : '' }}"
                                     href="javascript:;">
                                     <i class="fas fa-th"></i>
                                     <span>Conference</span>
                                 </a>
                                 <ul class="sub">
                                     <li>
-                                        <a class="{{ $route->uri == 'conference/create' ? 'active' : '' }}"
-                                            href="{{ Route('createConference') }}">
+                                        <a class="{{ request()->routeIs('conference.create') ? 'active' : '' }}"
+                                            href="{{ Route('conference.create') }}">
                                             <i class="far fa-plus-square"></i> Create Conference
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ $route->uri == 'conference' ? 'active' : '' }}"
-                                            href="{{ Route('listConference') }}">
+                                        <a class="{{ request()->routeIs('conference.index') ? 'active' : '' }}"
+                                            href="{{ Route('conference.index') }}">
                                             <i class="far fa-list-alt"></i> List Conference
                                         </a>
                                     </li>
@@ -548,9 +548,9 @@
         @endif
         <!--End Noti Popup -->
     </section>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
+
+    <div class="loader-over">
+        <span class="loader"></span>
     </div>
     <script src="{{ versionResource('backend/js/jquery2.0.3.min.js') }}"></script>
     <script src="{{ versionResource('backend/js/bootstrap.js') }}"></script>
@@ -569,7 +569,7 @@
 
     <script type="text/javascript">
         //Handle sales
-        var url_upload_image_ck = "{{ route('upload-image-ck', ['_token' => csrf_token()]) }}";
+        var url_upload_image_ck = "{{ route('file.upload_image_ck', ['_token' => csrf_token()]) }}";
         // Revenue Statistics Url
     </script>
 

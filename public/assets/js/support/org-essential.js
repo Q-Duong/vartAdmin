@@ -43,7 +43,5 @@ $(".select-textbox").on("change", function () {
     $(this).parent().removeClass("is-error");
 });
 $(".button-submit").click(function () {
-    $("#loading").show();
-    $(".loader").fadeIn();
-    $("#preloder").fadeIn("slow");
+    $(".loader-over").fadeIn();
 });

@@ -1,4 +1,10 @@
 @extends('layouts.default_auth')
+@section('title', 'Update Vart - ')
+@push('css')
+    <link rel="stylesheet" href="{{ versionResource('assets/css/support/filepond.css') }}" type="text/css" as="style" />
+    <link rel="stylesheet" href="{{ versionResource('assets/css/support/filepond-preview.css') }}" type="text/css"
+        as="style" />
+@endpush
 @section('content')
     <div class="row">
         <div class="col-lg-12">
@@ -6,40 +12,39 @@
                 <header class="panel-heading">
                     Update Vart
                     <span class="tools pull-right">
-                        <a href="{{ route('listVart') }}" class="primary-btn-submit">Management</a>
+                        <a href="{{ route('vart.index') }}" class="primary-btn-submit">Management</a>
                         <a class="fa fa-chevron-down" href="javascript:;"></a>
                     </span>
                 </header>
                 <div class="panel-body">
                     <div class="position-center">
-                        <form action="{{ Route('updateVart', $vart->vart_id) }}" method="post"
+                        <form action="{{ Route('vart.update', $vart->vart_id) }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
-                            <div class="form-group {{ $errors->has('vart_title') ? 'has-error' : '' }}">
+                            @method('patch')
+                            <div class="form-group @error('vart_title') has-error @enderror">
                                 <label>Vart Title</label>
                                 <input type="text" name="vart_title" class="input-control" placeholder="Enter Vart Title"
-                                    id="slug" onkeyup="ChangeToSlug();" value="{{ $vart->vart_title }}">
-                                {!! $errors->first(
-                                    'vart_title',
-                                    '<div class="alert-error"><i class="fa fa-exclamation-circle"></i> :message</div>',
-                                ) !!}
+                                    value="{{ $vart->vart_title }}">
+                                @error('vart_title')
+                                    <div class="alert-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="form-group {{ $errors->has('vart_slug') ? 'has-error' : '' }}">
-                                <label>Vart Slug</label>
-                                <input type="text" name="vart_slug" class="input-control" id="convert_slug"
-                                    value="{{ $vart->vart_slug }}" readonly>
-                                {!! $errors->first(
-                                    'vart_slug',
-                                    '<div class="alert-error"><i class="fa fa-exclamation-circle"></i> :message</div>',
-                                ) !!}
+                            <div class="form-group @error('vart_title_en') has-error @enderror">
+                                <label>Vart Title En</label>
+                                <input type="text" name="vart_title_en" class="input-control"
+                                    placeholder="Enter Vart Title" value="{{ $vart->vart_title_en }}">
+                                @error('vart_title_en')
+                                    <div class="alert-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Vart Image</label>
-                                <input type="file" name="vart_image" class="input-control">
-                                <img class="img-fluid" src="{{ asset('storeimages/vart/' . $vart->vart_image) }}"
-                                    alt="">
-                            </div>
-                            <button type="submit" class="primary-btn-submit">Update Vart</button>
+                                <input type="file" name="vart_image" class="filepond">
+                                @if ($vart->vart_image)
+                                    <img class="img-fluid" src="{{ asset('storage/' . $vart->vart_image) }}">
+                                @endif
+                                <button type="submit" class="primary-btn-submit">Update Vart</button>
                         </form>
                     </div>
                 </div>
@@ -49,7 +54,8 @@
                 <header class="panel-heading">
                     Vart Content
                     <span class="tools pull-right">
-                        <a href="javascript:;" onclick="createContent('Create Vart Content')" class="primary-btn-submit">Add Vart
+                        <a href="javascript:;" onclick="createContent('Create Vart Content')"
+                            class="primary-btn-submit">Create Vart
                             Content</a>
                         <a class="fa fa-chevron-down" href="javascript:;"></a>
                     </span>
@@ -59,7 +65,7 @@
                         <div class=" form-group item-detail">
                             <div class="row">
                                 <input type="hidden" class="vart_content_id_{{ $vartContent->vart_content_id }}"
-                                            value="{{ $vartContent->vart_content_id }}">
+                                    value="{{ $vartContent->vart_content_id }}">
                                 <div class="col-lg-2">
                                     <div class="item-detial-main">
                                         <span class="title-item-detail">
@@ -91,7 +97,8 @@
                                         <span class="title-item-detail">
                                             Vart Content Text
                                         </span>
-                                        <div class="main-item-detail vart_content_text_{{ $vartContent->vart_content_id }}">
+                                        <div
+                                            class="main-item-detail vart_content_text_{{ $vartContent->vart_content_id }}">
                                             {!! $vartContent->vart_content_text !!}
                                         </div>
                                     </div>
@@ -101,7 +108,8 @@
                                         <span class="title-item-detail">
                                             Vart Content Text En
                                         </span>
-                                        <div class="main-item-detail vart_content_text_en_{{ $vartContent->vart_content_id }}">
+                                        <div
+                                            class="main-item-detail vart_content_text_en_{{ $vartContent->vart_content_id }}">
                                             {!! $vartContent->vart_content_text_en !!}
                                         </div>
                                     </div>
@@ -116,7 +124,7 @@
                                                 class="vart_content_image_{{ $vartContent->vart_content_id }}"
                                                 value="{{ $vartContent->vart_content_image }}">
                                             @if ($vartContent->vart_content_image)
-                                                <img src="{{ asset('storeimages/vart/vartcontent/' . $vartContent->vart_content_image) }}"
+                                                <img src="{{ asset('storage/' . $vartContent->vart_content_image) }}"
                                                     class="main-item-detail-image">
                                             @else
                                                 <img src="{{ asset('backend/images/content_type/no_photo.jpeg') }}"
@@ -135,7 +143,7 @@
                                                 class="vart_content_image_en_{{ $vartContent->vart_content_id }}"
                                                 value="{{ $vartContent->vart_content_image_en }}">
                                             @if ($vartContent->vart_content_image_en)
-                                                <img src="{{ asset('storeimages/vart/vartcontent/' . $vartContent->vart_content_image_en) }}"
+                                                <img src="{{ asset('storage/' . $vartContent->vart_content_image_en) }}"
                                                     class="main-item-detail-image">
                                             @else
                                                 <img src="{{ asset('backend/images/content_type/no_photo.jpeg') }}"
@@ -156,8 +164,7 @@
                                                     class="btn btn-info "><i class="far fa-edit"></i></button>
                                             </div>
                                             <div class="section-d">
-                                                <button
-                                                    onclick="deleteContent({{ $vartContent->vart_content_id }})"
+                                                <button onclick="deleteContent({{ $vartContent->vart_content_id }})"
                                                     class="btn btn-danger "><i class="far fa-trash-alt"></i></button>
                                             </div>
                                         </div>
@@ -216,18 +223,16 @@
                             </div>
                             <div class="form-group">
                                 <label>Vart Content Image</label>
-                                <input type="file" name="vart_content_image" class="input-control">
+                                <input type="file" name="vart_content_image" class="filepond">
                                 <div class="img-thumb"></div>
                             </div>
                             <div class="form-group">
                                 <label>Vart Content Image En</label>
-                                <input type="file" name="vart_content_image_en" class="input-control">
+                                <input type="file" name="vart_content_image_en" class="filepond">
                                 <div class="img-thumb-en"></div>
                             </div>
                             <div class="btn-content">
-                                <button type="button" class="primary-btn-submit button-submit">
-                                    Add Vart Content
-                                </button>
+                                <button type="button" class="primary-btn-submit button-submit"></button>
                             </div>
                         </form>
                     </div>
@@ -238,18 +243,30 @@
     </div>
 @endsection
 @push('js')
-    <script src="{{ versionResource('backend/js/ckeditor/ckeditor.min.js') }}" defer></script>
-    <script src="{{ versionResource('backend/js/ckeditor/ckeditor-custom.js') }}" defer></script>
-    <script src="{{ versionResource('assets/js/support/org-curd.js') }}" defer></script>
+    <script src="{{ versionResource('assets/js/support/ckeditor/ckeditor.min.js') }}" defer></script>
+    <script src="{{ versionResource('assets/js/support/ckeditor/ckeditor-custom.js') }}" defer></script>
+    <script src="{{ versionResource('assets/js/support/file/filepond.js') }}" defer></script>
+    <script src="{{ versionResource('assets/js/support/file/filepond-preview.js') }}" defer></script>
     <script src="{{ versionResource('assets/js/support/essential.js') }}" defer></script>
-    <script type="text/javascript" defer>
-        var url_create_or_update_content = "{{ Route('createOrUpdateVartContent') }}";
-        var url_load_content = "{{ Route('loadVartContent') }}";
-        var url_del_content = "{{ Route('deleteVartContent', ':id') }}";
-        var assetImg = "{{ asset('storeimages/vart/vartcontent') }}";
-
-        var form_name = 'vart_content';
-        var main_content = 'vart';
+    <script src="{{ versionResource('assets/js/support/file/handle-file.js') }}" defer></script>
+    <script src="{{ versionResource('assets/js/support/curd.js') }}" defer></script>
+    <script type="text/javascript">
+        var url_create_or_update_content = "{{ route('vart_content.store_or_update') }}";
+        var url_load_content = "{{ route('vart_content.index') }}";
+        var url_del_content = "{{ route('vart_content.destroy') }}";
+        var assetImg = "{{ asset('storage/') }}";
+        var url_file_process = "{{ route('file.process') }}";
+        var url_file_revert = "{{ route('file.revert') }}";
+        var files = [];
+        @foreach (old('ord_list_file', []) as $file)
+            files.push({
+                source: '{{ $file }}',
+                options: {
+                    type: 'local'
+                }
+            });
+        @endforeach
+        var main_content = 'vart_content';
         var host_id = $('input[name="vart_id"]').val();
     </script>
 @endpush

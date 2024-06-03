@@ -24,7 +24,7 @@
                         <th>@lang('conference.en.image_card')</th>
                         <th>@lang('conference.en.file')</th>
                         <th>@lang('conference.en.status.status')</th>
-                        <th style="width:60px;">@lang('conference.en.management')</th>
+                        <th>@lang('conference.en.management')</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -56,7 +56,7 @@
                         <input type="hidden" class="vart_content_image_{{ $vartContent->vart_content_id }}"
                             value="{{ $vartContent->vart_content_image }}">
                         @if ($vartContent->vart_content_image)
-                            <img src="{{ asset('storeimages/vart/vartcontent/' . $vartContent->vart_content_image) }}"
+                            <img src="{{ asset('storage/' . $vartContent->vart_content_image) }}"
                                 class="main-item-detail-image">
                         @else
                             <img src="{{ asset('backend/images/content_type/no_photo.jpeg') }}"
@@ -74,7 +74,7 @@
                         <input type="hidden" class="vart_content_image_en_{{ $vartContent->vart_content_id }}"
                             value="{{ $vartContent->vart_content_image_en }}">
                         @if ($vartContent->vart_content_image_en)
-                            <img src="{{ asset('storeimages/vart/vartcontent/' . $vartContent->vart_content_image_en) }}"
+                            <img src="{{ asset('storage/' . $vartContent->vart_content_image_en) }}"
                                 class="main-item-detail-image">
                         @else
                             <img src="{{ asset('backend/images/content_type/no_photo.jpeg') }}"
