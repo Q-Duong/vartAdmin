@@ -235,12 +235,12 @@
     </div>
 @endsection
 @push('js')
-    <script type="text/javascript" defer>
+    <script type="text/javascript">
         var url_file_process = "{{ route('file.process') }}";
         var url_file_revert = "{{ route('file.revert') }}";
         var url_file_delete = "{{ route('file.destroy') }}";
     </script>
-    <script src="{{ versionResource('assets/js/support/filepond.js') }}" defer></script>
+    <script src="{{ versionResource('assets/js/support/file/filepond.js') }}" defer></script>
     <script src="{{ versionResource('assets/js/support/file/filepond-preview.js') }}" defer></script>
     <script src="{{ versionResource('assets/js/support/essential.js') }}" defer></script>
     <script src="{{ versionResource('assets/js/support/file/handle-file.js') }}" defer></script>
