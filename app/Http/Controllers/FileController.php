@@ -59,6 +59,18 @@ class FileController extends Controller
         if ($request->hasFile('conference_image_en')) {
             $folder = saveFileSource($request->file('conference_image_en'));
         }
+        if ($request->hasFile('album_path')) {
+			foreach ($request->file('album_path') as $key => $file) {
+				$folder = saveFileSource($file);
+				TempFile::create([
+					'folder' => $folder['folder'],
+					'filename' => $folder['fileName'],
+				]);
+			}
+			return response($folder['folder'], 200)->withHeaders([
+                'Content-Type' => 'application/json',
+            ]);
+		}
         
         TempFile::create([
             'folder' => $folder['folder'],

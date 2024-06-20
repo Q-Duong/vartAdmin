@@ -37,4 +37,9 @@ class Conference extends Model
     {
         $this->hasMany('App\Models\Report');
     }
+
+    public function album()
+    {
+        $this->hasMany('App\Models\Album');
+    }
 }

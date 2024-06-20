@@ -8,6 +8,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Conference\ConferenceCategoryController;
@@ -147,6 +148,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/edit', [ContactController::class, 'edit'])->name('edit-contact');
         Route::post('/save-info', [ContactController::class, 'save_info']);
         Route::post('/update', [ContactController::class, 'update'])->name('update-contact');
+    });
+
+    Route::prefix('album')->group(function () {
+        Route::get('/', [AlbumController::class, 'index'])->name('album.index');
+        Route::get('create', [AlbumController::class, 'create'])->name('album.create');
+        Route::post('save', [AlbumController::class, 'store'])->name('album.store');
     });
 
     //Vart

@@ -25,7 +25,8 @@
     <link href="{{ versionResource('backend/css/jquery.dataTables.min.css') }}" rel="stylesheet" as="style" />
     <link href="{{ versionResource('backend/css/responsive-jqueryui.min.css') }}" rel="stylesheet" as="style" />
     <link href="{{ versionResource('backend/css/themes-base-jquery-ui.css') }}" rel="stylesheet" as="style" />
-    <link href="{{ versionResource('assets/css/overview.built.css') }}" rel='stylesheet' type='text/css' as="style"/>
+    <link href="{{ versionResource('assets/css/overview.built.css') }}" rel='stylesheet' type='text/css'
+        as="style" />
     <!-- font CSS -->
     {{-- <link
         href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic'
@@ -176,10 +177,10 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li><a href="{{ route('user.profile') }}"><i
-                                            class=" fa fa-suitcase"></i>Profile</a>
+                                <li><a href="{{ route('user.profile') }}"><i class=" fa fa-suitcase"></i>Profile</a>
                                 </li>
-                                <li><a href="{{ route('user.settings') }}"><i class="fa fa-cog"></i> Settings</a></li>
+                                <li><a href="{{ route('user.settings') }}"><i class="fa fa-cog"></i> Settings</a>
+                                </li>
                                 <li><a href="#"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         <i class="fas fa-sign-out-alt"></i> Log Out
@@ -390,26 +391,7 @@
                                 </ul>
                             </li>
                             <li class="sub-menu">
-                                <a class="{{ $route->uri == 'courses/add' || $route->uri == 'courses/list' ? 'active' : '' }}"
-                                    href="javascript:;">
-                                    <i class="fas fa-th"></i>
-                                    <span>Albums</span>
-                                </a>
-                                <ul class="sub">
-                                    <li>
-                                        <a class="{{ $route->uri == 'courses/add' ? 'active' : '' }}" href="">
-                                            <i class="far fa-plus-square"></i> Add
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="{{ $route->uri == 'courses/list' ? 'active' : '' }}" href="">
-                                            <i class="far fa-list-alt"></i> List
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="sub-menu">
-                                <a class="{{ request()->routeIs('blog_category.index') || request()->routeIs('blog_category.create') || request()->routeIs('blog_category.edit')  ? 'active' : '' }}"
+                                <a class="{{ request()->routeIs('blog_category.index') || request()->routeIs('blog_category.create') || request()->routeIs('blog_category.edit') ? 'active' : '' }}"
                                     href="javascript:;">
                                     <i class="fas fa-th"></i>
                                     <span>Categogies Blog</span>
@@ -450,27 +432,29 @@
                                     </li>
                                 </ul>
                             </li>
-                            {{-- <li class="sub-menu">
-                                <a class="{{ $route->uri == 'slider/create' || $route->uri == 'slider' ? 'active' : '' }}"
+                        @endcan
+                        @canany(['isAdmin', 'isStaffAlbum'])
+                            <li class="sub-menu">
+                                <a class="{{ request()->routeIs(['album.index', 'album.create']) ? 'active' : '' }}"
                                     href="javascript:;">
-                                    <i class="fa fa-picture-o"></i>
-                                    <span>Slider</span>
+                                    <i class="fas fa-th"></i>
+                                    <span>Albums</span>
                                 </a>
                                 <ul class="sub">
                                     <li>
-                                        <a class="{{ $route->uri == 'slider/create' ? 'active' : '' }}"
-                                            href="{{ route('add-slider') }}">
-                                            <i class="far fa-plus-square"></i> Thêm slider
+                                        <a class="{{ request()->routeIs('album.create') ? 'active' : '' }}"
+                                            href="{{ route('album.create') }}">
+                                            <i class="far fa-plus-square"></i> Create
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="{{ $route->uri == 'post' ? 'active' : '' }}"
-                                            href="{{ route('list-slider') }}">
-                                            <i class="far fa-list-alt"></i> Quản lý slider
+                                        <a class="{{ request()->routeIs('album.index') ? 'active' : '' }}"
+                                            href="{{ route('album.index') }}">
+                                            <i class="far fa-list-alt"></i> List
                                         </a>
                                     </li>
                                 </ul>
-                            </li> --}}
+                            </li>
                         @endcan
                     </ul>
                     <!-- sidebar menu end-->
@@ -564,7 +548,7 @@
     <script src="{{ versionResource('backend/js/tool/select2.min.js') }}"></script>
     <script src="{{ versionResource('backend/js/tool/main.js') }}"></script>
     <script src="{{ versionResource('assets/js/support/essential.js') }}" defer></script>
-    
+
     @stack('js')
 
     <script type="text/javascript">
