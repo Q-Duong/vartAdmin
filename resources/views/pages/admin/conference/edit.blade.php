@@ -237,7 +237,7 @@
                                             Management
                                         </span>
                                         <div class="main-item-manage">
-                                            <div class="section-">
+                                            <div class="section-d">
                                                 <button type="button"
                                                     onclick="updateContent({{ $conferenceFee->conference_fee_id }}, 'Update Conference Fee')"
                                                     class="btn btn-info "><i class="far fa-edit"></i></button>

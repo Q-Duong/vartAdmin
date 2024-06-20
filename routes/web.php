@@ -13,6 +13,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Conference\ConferenceCategoryController;
 use App\Http\Controllers\Conference\ConferenceController;
 use App\Http\Controllers\Conference\ConferenceFeeController;
+use App\Http\Controllers\Conference\ExportController;
 use App\Http\Controllers\Conference\ReportController;
 use App\Http\Controllers\Conference\RegisterController;
 use App\Http\Controllers\HartController;
@@ -86,7 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('delete/{id}', [BlogController::class, 'destroy'])->name('blog.destroy');
     });
     //Export Excel
-    Route::post('/export-excel', [ConferenceController::class, 'export_excel'])->name('export-excel');
+    Route::post('/export-excel', [ExportController::class, 'export_excel'])->name('export-excel');
     
     //Report Management
     Route::prefix('report-management')->group(function () {
