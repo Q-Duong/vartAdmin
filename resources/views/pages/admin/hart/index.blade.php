@@ -23,11 +23,11 @@
                                     alt="">
                             </td>
                             <td>
-                                <a href="{{ Route('editHart', $hart->hart_id) }}" class="active style-edit"
-                                    ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i>
+                                <a href="{{ Route('hart.edit', $hart->id) }}" class="active style-edit" ui-toggle-class=""><i
+                                        class="fa fa-pencil-square-o text-success text-active"></i>
                                 </a>
                                 <a onclick="return confirm('Bạn có chắc muốn xóa bài viết?')"
-                                    href="{{ Route('deleteHart', $hart->hart_id) }}" class="active style-edit"
+                                    href="{{ Route('hart.destroy', $hart->id) }}" class="active style-edit"
                                     ui-toggle-class="">
                                     <i class="fa fa-times text-danger text"></i>
                                 </a>

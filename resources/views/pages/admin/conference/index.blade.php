@@ -22,8 +22,8 @@
                 <tbody>
                     @foreach ($getAllConference as $key => $conference)
                         <tr>
-                            <td>{{ $conference->conference_category->conference_category_name }}</td>
-                            <td>{{ $conference->conference_type->conference_type_name }}</td>
+                            <td>{{ $conference->conferenceCategory->conference_category_name }}</td>
+                            <td>{{ $conference->conferenceType->conference_type_name }}</td>
                             <td>{{ $conference->conference_code }}</td>
                             <td>{{ $conference->conference_title }}</td>
                             <td>{{ $conference->conference_title_en }}</td>
@@ -37,17 +37,18 @@
                             </td>
                             <td>
                                 @if ($conference->conference_image_en)
-                                    <img class="img-fluid" src="{{ assetHost('storage/' . $conference->conference_image_en) }}">
+                                    <img class="img-fluid"
+                                        src="{{ assetHost('storage/' . $conference->conference_image_en) }}">
                                 @else
                                     <img src="{{ asset('backend/images/content_type/no_photo.jpeg') }}"
                                         class="main-item-detail-image">
                                 @endif
                             </td>
                             <td class="management">
-                                <a href="{{ route('conference.edit', $conference->conference_id) }}" class="management-btn"
+                                <a href="{{ route('conference.edit', $conference->id) }}" class="management-btn"
                                     title="@lang('vart_define.button.update')"><i class="fa fa-pencil-square-o text-success text-active"></i>
                                 </a>
-                                <form action="{{ route('conference.destroy', $conference->conference_id) }}" method="POST">
+                                <form action="{{ route('conference.destroy', $conference->id) }}" method="POST">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="management-btn button-submit" title="@lang('vart_define.button.delete')"><i

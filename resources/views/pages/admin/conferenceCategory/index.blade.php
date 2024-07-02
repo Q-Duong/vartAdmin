@@ -20,11 +20,11 @@
                             <td>{{ $conferenceCategory->conference_category_name }}</td>
                             <td>{{ $conferenceCategory->conference_category_name_en }}</td>
                             <td class="management">
-                                <a href="{{ Route('conference_category.edit', $conferenceCategory->conference_category_id) }}"
+                                <a href="{{ Route('conference_category.edit', $conferenceCategory->id) }}"
                                     class="management-btn" title="@lang('vart_define.button.update')"><i
                                         class="fa fa-pencil-square-o text-success text-active"></i>
                                 </a>
-                                <form action="{{ Route('conference_category.destroy', $conferenceCategory->conference_category_id) }}"
+                                <form action="{{ Route('conference_category.destroy', $conferenceCategory->id) }}"
                                     method="POST">
                                     @method('delete')
                                     @csrf

@@ -30,7 +30,7 @@
                 <tbody>
                     @foreach ($getAllConferenceReport as $key => $report)
                         <tr>
-                            <td>{{ $report->report_id }}</td>
+                            <td>{{ $report->id }}</td>
                             <td>{{ $report->report_degree }}</td>
                             <td>{{ $report->report_name }}</td>
                             <td>{{ $report->report_gender == 0 ? 'Nam' : 'Nữ' }}</td>
@@ -76,14 +76,15 @@
                                 @endif
                             </td>
                             <td class="management">
-                                <a href="{{ Route('conference_report.edit', $report->report_id) }}" class="management-btn" title="@lang('vart_define.button.update')"><i
+                                <a href="{{ Route('conference_report.edit', $report->id) }}" class="management-btn"
+                                    title="@lang('vart_define.button.update')"><i
                                         class="fa fa-pencil-square-o text-success text-active"></i>
                                 </a>
-                                <form action="{{ Route('conference_report.destroy', $report->report_id) }}" method="POST">
+                                <form action="{{ Route('conference_report.destroy', $report->id) }}" method="POST">
                                     @method('delete')
                                     @csrf
-                                    <button type="submit" class="management-btn button-submit" title="@lang('vart_define.button.delete')"><i
-                                            class="fa fa-times text-danger text"></i></button>
+                                    <button type="submit" class="management-btn button-submit"
+                                        title="@lang('vart_define.button.delete')"><i class="fa fa-times text-danger text"></i></button>
                                 </form>
                             </td>
                         </tr>

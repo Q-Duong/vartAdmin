@@ -6,18 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Blog extends Model
 {
+    protected $table = 'blogs';
+
     public $timestamps = true;
+
     protected $fillable = [
-        'blog_title', 'blog_slug', 'blog_content', 'blog_image', 'blog_category_id'
+        'blog_title',
+        'blog_slug',
+        'blog_content',
+        'blog_image',
+        'blog_category_id'
     ];
-    protected $primaryKey = 'blog_id';
-    protected $table = 'blog';
 
     public function blog_category()
     {
-        return $this->belongsTo('App\Models\BlogCategory', 'blog_category_id');
+        return $this->belongsTo(BlogCategory::class);
     }
-    public function comment(){
-        return $this->hasMany('App\Models\Comment');
+    public function comment()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

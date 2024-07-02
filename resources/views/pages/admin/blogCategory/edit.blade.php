@@ -12,7 +12,7 @@
                 </header>
                 <div class="panel-body">
                     <div class="position-center">
-                        <form action="{{ route('blog_category.update', $blogCategory->blog_category_id) }}" method="post"
+                        <form action="{{ route('blog_category.update', $blogCategory->id) }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
                             @method('patch')

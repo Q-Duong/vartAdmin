@@ -11,15 +11,15 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $getAllBlog = Blog::orderBy('blog_id', 'DESC')->get();
-        return view('pages.admin.blog.index',compact('getAllBlog'));
+        $getAllBlog = Blog::orderBy('id', 'DESC')->get();
+        return view('pages.admin.blog.index', compact('getAllBlog'));
     }
     public function create()
     {
-        $getAllBlogCategory = BlogCategory::orderBy('blog_category_id', 'ASC')->get();
-        return view('pages.admin.blog.create',compact('getAllBlogCategory'));
+        $getAllBlogCategory = BlogCategory::orderBy('id', 'ASC')->get();
+        return view('pages.admin.blog.create', compact('getAllBlogCategory'));
     }
-    
+
     public function store(Request $request)
     {
         $this->checkAddBlog($request);
@@ -46,17 +46,17 @@ class BlogController extends Controller
             return Redirect()->back()->with('error', 'Vui lòng thêm hình ảnh');
         }
     }
-    public function edit($blog_id)
+    public function edit($id)
     {
-        $getAllBlogCategory = BlogCategory::orderBy('blog_category_id', 'ASC')->get();
-        $blog = Blog::find($blog_id);
-        return view('pages.admin.blog.edit',compact('getAllBlogCategory', 'blog'));
+        $getAllBlogCategory = BlogCategory::orderBy('id', 'ASC')->get();
+        $blog = Blog::find($id);
+        return view('pages.admin.blog.edit', compact('getAllBlogCategory', 'blog'));
     }
-    public function update(Request $request, $blog_id)
+    public function update(Request $request, $id)
     {
         $this->checkUpdateBlog($request);
         $data = $request->all();
-        $blog = Blog::find($blog_id);
+        $blog = Blog::find($id);
         $blog->blog_title = $data['blog_title'];
         $blog->blog_slug = $data['blog_slug'];
         $blog->blog_content = $data['blog_content'];
@@ -76,9 +76,9 @@ class BlogController extends Controller
         $blog->save();
         return Redirect::route('blog.index')->with('success', 'Cập nhật bài viết thành công');
     }
-    public function destroy($blog_id)
+    public function destroy($id)
     {
-        $blog = Blog::find($blog_id);
+        $blog = Blog::find($id);
         $blog_image = $blog->blog_image;
         if ($blog_image) {
             unlink(public_path('storeimages/blog/') . $blog_image);
@@ -86,7 +86,7 @@ class BlogController extends Controller
         $blog->delete();
         return Redirect()->back()->with('success', 'Xóa bài viết thành công');
     }
-    
+
     //Validation
     public function checkUpdateBlog(Request $request)
     {

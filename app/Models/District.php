@@ -6,17 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class District extends Model
 {
-    public $timestamps = false; //set time to false
-    protected $fillable = [
-    	'district_name', 'province_id'
-    ];
-    protected $primaryKey = 'district_id';
- 	protected $table = 'district';
+    protected $table = 'districts';
 
-    public function receiver(){
+    public $timestamps = true;
+
+    protected $fillable = [
+        'district_name',
+        'province_id'
+    ];
+
+    public function receiver()
+    {
         return $this->hasMany('App\Models\Receiver');
     }
-    public function delivery(){
+    public function delivery()
+    {
         return $this->hasMany('App\Models\Delivery');
     }
 }

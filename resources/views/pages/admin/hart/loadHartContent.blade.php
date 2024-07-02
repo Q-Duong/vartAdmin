@@ -73,12 +73,12 @@
                     </span>
                     <div class="main-item-manage">
                         <div class="section-">
-                            <button type="button" onclick="updateHartContent({{ $hartContent->hart_content_id }})"
+                            <button type="button" onclick="updateHartContent({{ $hartContent->id }})"
                                 class="btn btn-info "><i class="far fa-edit"></i></button>
                         </div>
                         <div class="section-d">
-                            <button onclick="deleteHartContent({{ $hartContent->hart_content_id }})"
-                                class="btn btn-danger "><i class="far fa-trash-alt"></i></button>
+                            <button onclick="destroyHartContent({{ $hartContent->id }})" class="btn btn-danger "><i
+                                    class="far fa-trash-alt"></i></button>
                         </div>
                     </div>
                 </div>

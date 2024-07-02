@@ -12,7 +12,8 @@
                 </header>
                 <div class="panel-body">
                     <div class="position-center">
-                        <form action="{{ Route('blog.store') }}" method="post" enctype="multipart/form-data" id="post">
+                        <form action="{{ Route('blog.store') }}" method="post" enctype="multipart/form-data"
+                            id="post">
                             @csrf
                             <div class="form-group {{ $errors->has('blog_title') ? 'has-error' : '' }}">
                                 <label for="exampleInputEmail1">Tên bài viết</label>
@@ -55,9 +56,9 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Danh mục bài viết</label>
-                                <select name="blog_category_id" class="input-control">
+                                <select name="id" class="input-control">
                                     @foreach ($getAllBlogCategory as $key => $blogCategory)
-                                        <option value="{{ $blogCategory->blog_category_id }}">{{ $blogCategory->blog_category_name }}
+                                        <option value="{{ $blogCategory->id }}">{{ $blogCategory->blog_category_name }}
                                         </option>
                                     @endforeach
                                 </select>

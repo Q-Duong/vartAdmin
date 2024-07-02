@@ -25,11 +25,10 @@
                             </td>
                             <td>{{ $blog->blog_category->blog_category_name }}</td>
                             <td>
-                                <a href="{{ Route('blog.edit', $blog->blog_id) }}" class="active style-edit"
-                                    ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i>
+                                <a href="{{ Route('blog.edit', $blog->id) }}" class="active style-edit" ui-toggle-class=""><i
+                                        class="fa fa-pencil-square-o text-success text-active"></i>
                                 </a>
-                                <form action="{{ Route('blog.destroy', $blog->blog_id) }}"
-                                    method="POST">
+                                <form action="{{ Route('blog.destroy', $blog->id) }}" method="POST">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="management-btn button-submit"><i

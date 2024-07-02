@@ -6,14 +6,13 @@
                 <header class="panel-heading">
                     Update Hart
                     <span class="tools pull-right">
-                        <a href="{{ route('listHart') }}" class="primary-btn-submit">Management</a>
+                        <a href="{{ route('hart.index') }}" class="primary-btn-submit">Management</a>
                         <a class="fa fa-chevron-down" href="javascript:;"></a>
                     </span>
                 </header>
                 <div class="panel-body">
                     <div class="position-center">
-                        <form action="{{ Route('updateHart', $hart->hart_id) }}" method="post"
-                            enctype="multipart/form-data">
+                        <form action="{{ Route('hart.update', $hart->id) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group {{ $errors->has('hart_title') ? 'has-error' : '' }}">
                                 <label>Hart Title</label>
@@ -49,7 +48,7 @@
                 <header class="panel-heading">
                     Hart Content
                     <span class="tools pull-right">
-                        <a href="javascript:;" onclick="addHartContent()" class="primary-btn-submit">Add Hart
+                        <a href="javascript:;" onclick="createHartContent()" class="primary-btn-submit">Add Hart
                             Content</a>
                         <a class="fa fa-chevron-down" href="javascript:;"></a>
                     </span>
@@ -59,7 +58,7 @@
                         <div class=" form-group item-detail">
                             <div class="row">
                                 <input type="hidden" class="hart_content_id_{{ $hartContent->hart_content_id }}"
-                                            value="{{ $hartContent->hart_content_id }}">
+                                    value="{{ $hartContent->hart_content_id }}">
                                 {{-- <div class="col-lg-2">
                                     <div class="item-detial-main">
                                         
@@ -101,7 +100,8 @@
                                         <span class="title-item-detail">
                                             Hart Content Text
                                         </span>
-                                        <div class="main-item-detail hart_content_text_{{ $hartContent->hart_content_id }}">
+                                        <div
+                                            class="main-item-detail hart_content_text_{{ $hartContent->hart_content_id }}">
                                             {!! $hartContent->hart_content_text !!}
                                         </div>
                                     </div>
@@ -132,13 +132,11 @@
                                         </span>
                                         <div class="main-item-manage">
                                             <div class="section-">
-                                                <button type="button"
-                                                    onclick="updateHartContent({{ $hartContent->hart_content_id }})"
+                                                <button type="button" onclick="updateHartContent({{ $hartContent->id }})"
                                                     class="btn btn-info "><i class="far fa-edit"></i></button>
                                             </div>
                                             <div class="section-d">
-                                                <button
-                                                    onclick="deleteHartContent({{ $hartContent->hart_content_id }})"
+                                                <button onclick="destroyHartContent({{ $hartContent->id }})"
                                                     class="btn btn-danger "><i class="far fa-trash-alt"></i></button>
                                             </div>
                                         </div>
@@ -160,7 +158,7 @@
                     <div class="panel-body">
                         <form id="hart_content">
                             @csrf
-                            <input type="hidden" name="hart_id" value="{{ $hart->hart_id }}">
+                            <input type="hidden" name="id" value="{{ $hart->id }}">
                             <input type="hidden" name="hart_content_id">
                             {{-- <div class="form-group">
                                 <label>Courses Content Type</label>
@@ -200,10 +198,10 @@
     <script src="{{ versionResource('backend/js/ckeditor/ckeditor.min.js') }}" defer></script>
     <script src="{{ versionResource('backend/js/ckeditor/ckeditor-custom.js') }}" defer></script>
     <script type="text/javascript" defer>
-        var url_add_hart_content = "{{ Route('addHartContent') }}";
+        var url_add_hart_content = "{{ Route('createHartContent') }}";
         var url_load_hart_content = "{{ Route('loadHartContent') }}";
         var url_update_hart_content = "{{ Route('updateHartContent') }}";
-        var url_del_hart_content = "{{ Route('deleteHartContent', ':id') }}";
+        var url_del_hart_content = "{{ Route('destroyHartContent', ':id') }}";
         var assetImg = "{{ asset('storeimages/hart/hartcontent/') }}";
 
         function clearForm() {
@@ -229,7 +227,7 @@
             });
         }
 
-        function addHartContent() {
+        function createHartContent() {
             clearForm();
             $('.popup-model-review').fadeIn(300);
             $('.model-review-tile').html('Add Hart Content');
@@ -256,7 +254,7 @@
             editor1.setData($('.hart_content_text_' + e).html());
         };
 
-        function deleteHartContent(e) {
+        function destroyHartContent(e) {
             var hart_content_id = e;
             var _token = $('input[name="_token"]').val();
             url_del_hart_content = url_del_hart_content.replace(":id", hart_content_id);

@@ -19,7 +19,7 @@
                 <div class="panel-body">
                     <div class="position-center">
                         <form
-                            action="{{ route('conference_category.update', $conferenceCategory->conference_category_id) }}"
+                            action="{{ route('conference_category.update', $conferenceCategory->id) }}"
                             method="post" enctype="multipart/form-data">
                             @csrf
                             @method('patch')

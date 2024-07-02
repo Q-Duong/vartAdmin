@@ -25,7 +25,8 @@
     <link href="{{ versionResource('backend/css/jquery.dataTables.min.css') }}" rel="stylesheet" as="style" />
     <link href="{{ versionResource('backend/css/responsive-jqueryui.min.css') }}" rel="stylesheet" as="style" />
     <link href="{{ versionResource('backend/css/themes-base-jquery-ui.css') }}" rel="stylesheet" as="style" />
-    <link href="{{ versionResource('assets/css/overview.built.css') }}" rel='stylesheet' type='text/css' as="style"/>
+    <link href="{{ versionResource('assets/css/overview.built.css') }}" rel='stylesheet' type='text/css'
+        as="style" />
     <!-- font CSS -->
     {{-- <link
         href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic'
@@ -176,10 +177,10 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li><a href="{{ route('user.profile') }}"><i
-                                            class=" fa fa-suitcase"></i>Profile</a>
+                                <li><a href="{{ route('user.profile') }}"><i class=" fa fa-suitcase"></i>Profile</a>
                                 </li>
-                                <li><a href="{{ route('user.settings') }}"><i class="fa fa-cog"></i> Settings</a></li>
+                                <li><a href="{{ route('user.settings') }}"><i class="fa fa-cog"></i> Settings</a>
+                                </li>
                                 <li><a href="#"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         <i class="fas fa-sign-out-alt"></i> Log Out
@@ -259,13 +260,13 @@
                                 <ul class="sub">
                                     <li>
                                         <a class="{{ $route->uri == 'hart/create' ? 'active' : '' }}"
-                                            href="{{ Route('createHart') }}">
+                                            href="{{ Route('hart.create') }}">
                                             <i class="far fa-plus-square"></i> Create HART
                                         </a>
                                     </li>
                                     <li>
                                         <a class="{{ $route->uri == 'hart' ? 'active' : '' }}"
-                                            href="{{ Route('listHart') }}">
+                                            href="{{ Route('hart.index') }}">
                                             <i class="far fa-list-alt"></i> List HART
                                         </a>
                                     </li>
@@ -409,7 +410,7 @@
                                 </ul>
                             </li>
                             <li class="sub-menu">
-                                <a class="{{ request()->routeIs('blog_category.index') || request()->routeIs('blog_category.create') || request()->routeIs('blog_category.edit')  ? 'active' : '' }}"
+                                <a class="{{ request()->routeIs('blog_category.index') || request()->routeIs('blog_category.create') || request()->routeIs('blog_category.edit') ? 'active' : '' }}"
                                     href="javascript:;">
                                     <i class="fas fa-th"></i>
                                     <span>Categogies Blog</span>
@@ -564,7 +565,7 @@
     <script src="{{ versionResource('backend/js/tool/select2.min.js') }}"></script>
     <script src="{{ versionResource('backend/js/tool/main.js') }}"></script>
     <script src="{{ versionResource('assets/js/support/essential.js') }}" defer></script>
-    
+
     @stack('js')
 
     <script type="text/javascript">

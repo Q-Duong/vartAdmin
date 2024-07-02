@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
-    public $timestamps = false; //set time to false
+    protected $table = 'profiles';
+
+    public $timestamps = true;
     protected $fillable = [
-        'profile_id',
         'profile_firstname',
         'profile_lastname',
         'profile_phone',
@@ -17,11 +18,9 @@ class Profile extends Model
         'date_of_birth',
         'profile_gender'
     ];
-    protected $primaryKey = 'profile_id';
-    protected $table = 'profile';
 
     public function user()
     {
-        return $this->hasOne('App\Models\User');
+        return $this->hasOne(User::class);
     }
 }

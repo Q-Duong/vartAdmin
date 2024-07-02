@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Countries extends Model
 {
-    public $timestamps = false;
-    protected $fillable = [
-        'country_code', 'country_name'
-    ];
-    protected $primaryKey = 'country_id';
     protected $table = 'countries';
+
+    public $timestamps = true;
+
+    protected $fillable = [
+        'country_code',
+        'country_name'
+    ];
 }

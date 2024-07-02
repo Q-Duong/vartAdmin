@@ -23,7 +23,7 @@ class ConferenceCategoryController extends Controller
 
     public function index()
     {
-        $getAllConferenceCategory = ConferenceCategory::orderBy('conference_category_id', 'DESC')->get();
+        $getAllConferenceCategory = ConferenceCategory::orderBy('id', 'DESC')->get();
         return view('pages.admin.conferenceCategory.index', compact('getAllConferenceCategory'));
     }
 

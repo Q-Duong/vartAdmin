@@ -24,10 +24,10 @@
                             @method('patch')
                             <div class="form-group">
                                 <label>Conference Category</label>
-                                <select name="conference_category_id" class="input-control">
+                                <select name="id" class="input-control">
                                     @foreach ($getAllConferenceCategory as $key => $conferenceCategory)
-                                        <option value="{{ $conferenceCategory->conference_category_id }}"
-                                            {{ $conferenceCategory->conference_category_id == $conference->conference_category_id ? 'selected' : '' }}>
+                                        <option value="{{ $conferenceCategory->id }}"
+                                            {{ $conferenceCategory->id == $conference->conference_category_id ? 'selected' : '' }}>
                                             {{ $conferenceCategory->conference_category_name }}
                                         </option>
                                     @endforeach
@@ -90,7 +90,8 @@
                                 <label for="exampleInputEmail1">Conference Image </label>
                                 <input type="file" name="conference_image" class="filepond">
                                 @if ($conference->conference_image)
-                                    <img class="img-fluid" src="{{ assetHost('storage/' . $conference->conference_image) }}">
+                                    <img class="img-fluid"
+                                        src="{{ assetHost('storage/' . $conference->conference_image) }}">
                                 @endif
                             </div>
                             <div class="form-group">
@@ -167,7 +168,8 @@
                                             Mail Type
                                         </span>
                                         <div class="main-item-detail">
-                                            <input type="hidden" class="mail_type_{{ $conferenceFee->conference_fee_id }}"
+                                            <input type="hidden"
+                                                class="mail_type_{{ $conferenceFee->conference_fee_id }}"
                                                 value="{{ $conferenceFee->mail_type }}">
                                             @if ($conferenceFee->mail_type == 1)
                                                 Theory

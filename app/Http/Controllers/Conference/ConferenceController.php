@@ -24,14 +24,14 @@ class ConferenceController extends Controller
 
     public function index()
     {
-        $getAllConference = Conference::orderBy('conference_id', 'DESC')->get();
+        $getAllConference = Conference::orderBy('id', 'DESC')->get();
         return view('pages.admin.conference.index', compact('getAllConference'));
     }
 
     public function create()
     {
-        $getAllConferenceCategory = ConferenceCategory::orderBy('conference_category_id', 'ASC')->get();
-        $getAllConferenceType = ConferenceType::orderBy('conference_type_id', 'ASC')->get();
+        $getAllConferenceCategory = ConferenceCategory::orderBy('id', 'ASC')->get();
+        $getAllConferenceType = ConferenceType::orderBy('id', 'ASC')->get();
         return view('pages.admin.conference.create', compact('getAllConferenceCategory', 'getAllConferenceType'));
     }
 
@@ -78,8 +78,8 @@ class ConferenceController extends Controller
 
     public function edit($id)
     {
-        $getAllConferenceCategory = ConferenceCategory::orderBy('conference_category_id', 'ASC')->get();
-        $getAllConferenceType = ConferenceType::orderBy('conference_type_id', 'ASC')->get();
+        $getAllConferenceCategory = ConferenceCategory::orderBy('id', 'ASC')->get();
+        $getAllConferenceType = ConferenceType::orderBy('id', 'ASC')->get();
         $conference = Conference::findOrFail($id);
         $getAllConferenceFee = ConferenceFee::where('conference_id', $id)->get();
         return view('pages.admin.conference.edit', compact('conference', 'getAllConferenceCategory', 'getAllConferenceType', 'getAllConferenceFee'));

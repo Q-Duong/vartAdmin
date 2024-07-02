@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Province extends Model
 {
-    public $timestamps = false; //set time to false
+    protected $table = 'provinces';
+
+    public $timestamps = false;
+
     protected $fillable = [
-        'province_name', 'province_type', 'sort'
+        'province_name',
+        'province_type',
+        'sort',
     ];
-    protected $primaryKey = 'province_id';
-    protected $table = 'province';
 }

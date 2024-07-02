@@ -9,8 +9,8 @@ class AboutController extends Controller
 {
     public function information()
     {
-        $contact = Contact::where('info_id', 1)->get();
-        return view('admin.Information.add_information')->with(compact('contact'));
+        $contact = Contact::where('id', 1)->get();
+        return view('pages.admin.Information.add_information', compact('contact'));
     }
     public function update_info(Request $request, $info_id)
     {
