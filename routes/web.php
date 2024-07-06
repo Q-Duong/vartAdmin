@@ -15,6 +15,7 @@ use App\Http\Controllers\Conference\ConferenceController;
 use App\Http\Controllers\Conference\ConferenceFeeController;
 use App\Http\Controllers\Conference\ReportController;
 use App\Http\Controllers\Conference\RegisterController;
+use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\HartController;
 use App\Http\Controllers\VartController;
 use App\Http\Controllers\ProfileController;
@@ -89,6 +90,9 @@ Route::group(['middleware' => 'auth'], function () {
     //Export Excel
     Route::post('/export-excel', [ConferenceController::class, 'export_excel'])->name('export-excel');
 
+
+    //Import Excel
+
     //Report Management
     Route::prefix('report-management')->group(function () {
         Route::prefix('report')->group(function () {
@@ -109,9 +113,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('register-management')->group(function () {
         Route::prefix('register')->group(function () {
             Route::get('/', [RegisterController::class, 'indexRegister'])->name('conference_register.index');
+            Route::post('copy/{id}', [RegisterController::class, 'copyRegister'])->name('conference_register.copy');
             Route::get('edit/{id}', [RegisterController::class, 'editRegister'])->name('conference_register.edit');
             Route::patch('update/{id}', [RegisterController::class, 'updateRegister'])->name('conference_register.update');
             Route::delete('delete/{id}', [RegisterController::class, 'destroyRegister'])->name('conference_register.destroy');
+            Route::post('/import-excel', [ExcelController::class, 'import'])->name('import-excel');
         });
         Route::prefix('en-register')->group(function () {
             Route::get('/', [RegisterController::class, 'indexRegisterInternational'])->name('conference_en_register.index');

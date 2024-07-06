@@ -97,6 +97,11 @@
                                     title="@lang('vart_define.button.update')"><i
                                         class="fa fa-pencil-square-o text-success text-active"></i>
                                 </a>
+                                <form action="{{ Route('conference_register.copy', $register->id) }}" method="POST">
+                                    @csrf
+                                    @method('POST')
+                                    <button type="submit" class="management-btn button-submit"></button>
+                                </form>
                                 <form action="{{ Route('conference_register.destroy', $register->id) }}" method="POST">
                                     @method('delete')
                                     @csrf
@@ -118,6 +123,8 @@
             </table>
         </div>
         {{ $getAllConferenceRegister->links('pagination::bootstrap-4') }}
+
+
         <div class="export-excel">
             <form action="{{ route('export-excel') }}" method="POST">
                 @csrf
@@ -126,6 +133,18 @@
                 <div class="col-md-3">
                     <button type="submit" class="primary-btn-filter">@lang('conference.en.export_excel')</button>
                 </div>
+            </form>
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importModal">
+                Import Excel
+            </button>
+            <form action="{{ route('import-excel') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <label for="file">Chọn file Excel</label>
+                    <input type="file" name="file" class="form-control" required>
+                </div>
+                <button type="submit" class="primary-btn-filter">Import</button>
             </form>
         </div>
     </div>

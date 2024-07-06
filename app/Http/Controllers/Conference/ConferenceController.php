@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\TempFile;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ConferenceController extends Controller
 {
@@ -136,7 +137,7 @@ class ConferenceController extends Controller
                 removeFileSource(getFolderForDestroyFile($conference->conference_image_en), true);
             }
             $conference->delete();
-            
+
             DB::commit();
             return Redirect()->back()->with('success', 'Successfully deleted');
         } catch (\Exception $e) {
