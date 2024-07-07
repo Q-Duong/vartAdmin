@@ -22,9 +22,9 @@
                             @csrf
                             <div class="form-group">
                                 <label>Conference Category</label>
-                                <select name="conference_category_id" class="input-control">
+                                <select name="id" class="input-control">
                                     @foreach ($getAllConferenceCategory as $key => $conferenceCategory)
-                                        <option value="{{ $conferenceCategory->conference_category_id }}">
+                                        <option value="{{ $conferenceCategory->id }}">
                                             {{ $conferenceCategory->conference_category_name }}</option>
                                     @endforeach
                                 </select>

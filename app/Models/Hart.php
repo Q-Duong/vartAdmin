@@ -6,15 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Hart extends Model
 {
-    public $timestamps = true;
-    protected $fillable = [
-        'hart_title', 'hart_slug', 'hart_image'
-    ];
-    protected $primaryKey = 'hart_id';
-    protected $table = 'hart';
+    protected $table = 'harts';
 
-    public function hart_content()
+    public $timestamps = true;
+
+    protected $fillable = [
+        'hart_title',
+        'hart_slug',
+        'hart_image'
+    ];
+
+    public function hartContent()
     {
-        $this->hasMany('App\Models\HartContent');
+        $this->hasMany(HartContent::class);
     }
 }

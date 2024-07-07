@@ -60,11 +60,11 @@
                                 @endif
                             </td>
                             <td class="management">
-                                <a href="{{ Route('conference_en_report.edit', $en_report->en_report_id) }}"
+                                <a href="{{ Route('conference_en_report.edit', $en_report->id) }}"
                                     class="management-btn" title="@lang('vart_define.button.update')"><i
                                         class="fa fa-pencil-square-o text-success text-active"></i>
                                 </a>
-                                <form action="{{ Route('conference_en_report.destroy', $en_report->en_report_id) }}"
+                                <form action="{{ Route('conference_en_report.destroy', $en_report->id) }}"
                                     method="POST">
                                     @method('delete')
                                     @csrf

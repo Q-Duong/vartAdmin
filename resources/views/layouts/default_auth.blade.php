@@ -260,13 +260,13 @@
                                 <ul class="sub">
                                     <li>
                                         <a class="{{ $route->uri == 'hart/create' ? 'active' : '' }}"
-                                            href="{{ Route('createHart') }}">
+                                            href="{{ Route('hart.create') }}">
                                             <i class="far fa-plus-square"></i> Create HART
                                         </a>
                                     </li>
                                     <li>
                                         <a class="{{ $route->uri == 'hart' ? 'active' : '' }}"
-                                            href="{{ Route('listHart') }}">
+                                            href="{{ Route('hart.index') }}">
                                             <i class="far fa-list-alt"></i> List HART
                                         </a>
                                     </li>
@@ -376,6 +376,25 @@
                                     href="javascript:;">
                                     <i class="fas fa-th"></i>
                                     <span>Forum</span>
+                                </a>
+                                <ul class="sub">
+                                    <li>
+                                        <a class="{{ $route->uri == 'courses/add' ? 'active' : '' }}" href="">
+                                            <i class="far fa-plus-square"></i> Add
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="{{ $route->uri == 'courses/list' ? 'active' : '' }}" href="">
+                                            <i class="far fa-list-alt"></i> List
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="sub-menu">
+                                <a class="{{ $route->uri == 'courses/add' || $route->uri == 'courses/list' ? 'active' : '' }}"
+                                    href="javascript:;">
+                                    <i class="fas fa-th"></i>
+                                    <span>Albums</span>
                                 </a>
                                 <ul class="sub">
                                     <li>

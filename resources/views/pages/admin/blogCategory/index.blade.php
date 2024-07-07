@@ -19,12 +19,10 @@
                             <td>{{ $blogCategory->blog_category_name }}</td>
                             <td>{{ $blogCategory->blog_category_slug }}</td>
                             <td>
-                                <a href="{{ route('blog_category.edit', $blogCategory->blog_category_id) }}"
-                                    class="management-btn" ui-toggle-class=""><i
-                                        class="fa fa-pencil-square-o text-success text-active"></i>
+                                <a href="{{ route('blog_category.edit', $blogCategory->id) }}" class="management-btn"
+                                    ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i>
                                 </a>
-                                <form action="{{ Route('blog_category.destroy', $blogCategory->blog_category_id) }}"
-                                    method="POST">
+                                <form action="{{ Route('blog_category.destroy', $blogCategory->id) }}" method="POST">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="management-btn button-submit"><i
@@ -39,7 +37,7 @@
     </div>
 @endsection
 @push('js')
-    <script src="{{ versionResource('backend/js/datatables/jquery.dataTables.min.js') }}" defer ></script>
+    <script src="{{ versionResource('backend/js/datatables/jquery.dataTables.min.js') }}" defer></script>
     <script type="text/javascript" defer>
         $(document).ready(function() {
             $('#myTable').DataTable();

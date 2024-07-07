@@ -32,31 +32,31 @@ class RegisterController extends Controller
 
     public function indexRegister()
     {
-        $getAllConferenceRegister = Register::join('payment', 'payment.payment_id', '=', 'register.payment_id')
-            ->join('conference_fee', 'payment.conference_fee_id', '=', 'conference_fee.conference_fee_id')
-            ->select(['register.register_id', 'register_code', 'register_degree', 'register_name', 'register_gender', 'register_date', 'register_month', 'register_year', 'register_work_unit', 'register_place_of_birth', 'register_nation', 'register_email', 'register_phone', 'register_object_group', 'conference_fee_title', 'payment_price', 'register_receiving_address', 'register.created_at', 'register_graduation_year', 'register_image', 'register_image_card', 'payment_image', 'payment_status'])
-            ->orderBy('register.register_id', 'ASC')->paginate(10);
+        $getAllConferenceRegister = Register::join('payments', 'payments.id', '=', 'registers.payment_id')
+            ->join('conference_fees', 'payments.conference_fee_id', '=', 'conference_fees.id')
+            ->select(['registers.id', 'register_code', 'register_degree', 'register_name', 'register_gender', 'register_date', 'register_month', 'register_year', 'register_work_unit', 'register_place_of_birth', 'register_nation', 'register_email', 'register_phone', 'register_object_group', 'conference_fee_title', 'payment_price', 'register_receiving_address', 'registers.created_at', 'register_graduation_year', 'register_image', 'register_image_card', 'payment_image', 'payment_status'])
+            ->orderBy('registers.id', 'ASC')->paginate(10);
         $conference_id = 1;
         return view('pages.admin.conferenceRegister.register.indexRegister', compact('getAllConferenceRegister', 'conference_id'));
     }
 
-    public function editRegister($register_id)
+    public function editRegister($id)
     {
-        $register = Register::join('payment', 'payment.payment_id', '=', 'register.payment_id')
-            ->join('conference_fee', 'payment.conference_fee_id', '=', 'conference_fee.conference_fee_id')
-            ->select(['register.register_id', 'register_code', 'register_degree', 'register_name', 'register_gender', 'register_date', 'register_month', 'register_year', 'register_work_unit', 'register_place_of_birth', 'register_nation', 'register_email', 'register_phone', 'register_object_group', 'conference_fee_title', 'payment_price', 'register_receiving_address', 'register.created_at', 'register_graduation_year', 'register_image', 'register_image_card', 'payment_image', 'payment_status'])->where('register.register_id', $register_id)->first();
+        $register = Register::join('payments', 'payments.id', '=', 'registers.payment_id')
+            ->join('conference_fees', 'payments.conference_fee_id', '=', 'conference_fees.id')
+            ->select(['registers.id', 'register_code', 'register_degree', 'register_name', 'register_gender', 'register_date', 'register_month', 'register_year', 'register_work_unit', 'register_place_of_birth', 'register_nation', 'register_email', 'register_phone', 'register_object_group', 'conference_fee_title', 'payment_price', 'register_receiving_address', 'registers.created_at', 'register_graduation_year', 'register_image', 'register_image_card', 'payment_image', 'payment_status'])->where('registers.id', $id)->first();
         $getAllAcademic = Academic::orderBy('academic_id', 'asc')->limit(10)->get();
         $getAllProvince = Province::orderby('sort', 'ASC')->orderByRaw("CONVERT(province_name USING utf8mb4) COLLATE utf8mb4_unicode_ci")->get();
         return view('pages.admin.conferenceRegister.register.editRegister', compact('register', 'getAllAcademic', 'getAllProvince'));
     }
 
-    public function updateRegister(Request $request, $register_id)
+    public function updateRegister(Request $request, $id)
     {
         $this->checkRegister($request);
         DB::beginTransaction();
         try {
             $data = $request->all();
-            $register = Register::findOrFail($register_id);
+            $register = Register::findOrFail($id);
             $register->register_name = mb_strtoupper($data['register_name'], 'UTF-8');
             $register->register_gender = $data['register_gender'];
             $register->register_date = $data['register_date'];
@@ -96,9 +96,9 @@ class RegisterController extends Controller
         }
     }
 
-    public function destroyRegister($register_id)
+    public function destroyRegister($id)
     {
-        $register = Register::findOrFail($register_id);
+        $register = Register::findOrFail($id);
         $payment = Payment::findOrFail($register->payment_id);
         if ($register->register_image) {
             deleteImageFileDrive($register->register_image);
@@ -115,28 +115,28 @@ class RegisterController extends Controller
 
     public function indexRegisterInternational()
     {
-        $getAllConferenceRegisterInternational = EnRegister::join('payment', 'payment.payment_id', '=', 'en_register.payment_id')
-            ->join('conference_fee', 'payment.conference_fee_id', '=', 'conference_fee.conference_fee_id')
-            ->select(['en_register.en_register_id', 'en_register_code', 'en_register_title', 'en_register_firstname', 'en_register_lastname', 'en_register_gender', 'en_register_work_unit', 'en_register_nation', 'en_register_email', 'en_register_phone', 'conference_fee_title', 'payment_price', 'en_register.created_at', 'payment_status'])
-            ->orderBy('en_register.en_register_id', 'ASC')->paginate(10);
+        $getAllConferenceRegisterInternational = EnRegister::join('payments', 'payments.id', '=', 'en_registers.payment_id')
+            ->join('conference_fees', 'payments.conference_fee_id', '=', 'conference_fees.id')
+            ->select(['en_registers.id', 'en_register_code', 'en_register_title', 'en_register_firstname', 'en_register_lastname', 'en_register_gender', 'en_register_work_unit', 'en_register_nation', 'en_register_email', 'en_register_phone', 'conference_fee_title', 'payment_price', 'en_registers.created_at', 'payment_status'])
+            ->orderBy('en_registers.id', 'ASC')->paginate(10);
         $conference_id = 1;
         return view('pages.admin.conferenceRegister.register.indexRegisterInternational', compact('getAllConferenceRegisterInternational', 'conference_id'));
     }
 
-    public function editRegisterInternational($en_register_id)
+    public function editRegisterInternational($id)
     {
-        $en_register = EnRegister::findOrFail($en_register_id);
+        $en_register = EnRegister::findOrFail($id);
         $getAllCountries = Countries::all();
         return view('pages.admin.conferenceRegister.register.editRegisterInternational', compact('en_register', 'getAllCountries'));
     }
 
-    public function updateRegisterInternational(Request $request, $en_register_id)
+    public function updateRegisterInternational(Request $request, $id)
     {
         $this->checkEnRegister($request);
         DB::beginTransaction();
         try {
             $data = $request->all();
-            $en_register = EnRegister::findOrFail($en_register_id);
+            $en_register = EnRegister::findOrFail($id);
             $en_register->en_register_title = $data['en_register_title'];
             $en_register->en_register_firstname = mb_strtoupper($data['en_register_firstname'], 'UTF-8');
             $en_register->en_register_lastname = mb_strtoupper($data['en_register_lastname'], 'UTF-8');
@@ -157,9 +157,9 @@ class RegisterController extends Controller
         }
     }
 
-    public function destroyRegisterInternational($en_register_id)
+    public function destroyRegisterInternational($id)
     {
-        $en_register = EnRegister::findOrFail($en_register_id);
+        $en_register = EnRegister::findOrFail($id);
         $payment = Payment::findOrFail($en_register->payment_id);
         $payment->delete();
         return Redirect()->back()->with('success',  __('alert.conference.successMessage_delete'));

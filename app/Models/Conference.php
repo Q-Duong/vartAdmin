@@ -6,36 +6,47 @@ use Illuminate\Database\Eloquent\Model;
 
 class Conference extends Model
 {
+    protected $table = 'conferences';
+
     public $timestamps = true;
+
     protected $fillable = [
-        'conference_code', 'conference_title', 'conference_title_en','conference_slug', 'conference_content', 'conference_content_en','conference_image', 'conference_image_en', 'conference_category_id', 'conference_type_id', 'conference_form_type'
+        'conference_code',
+        'conference_title',
+        'conference_title_en',
+        'conference_slug',
+        'conference_content',
+        'conference_content_en',
+        'conference_image',
+        'conference_image_en',
+        'conference_form_type',
+        'conference_category_id',
+        'conference_type_id',
     ];
-    protected $primaryKey = 'conference_id';
-    protected $table = 'conference';
 
-    public function conference_category()
+    public function conferenceCategory()
     {
-        return $this->belongsTo('App\Models\ConferenceCategory', 'conference_category_id');
+        return $this->belongsTo(ConferenceCategory::class);
     }
 
-    public function conference_type()
+    public function conferenceType()
     {
-        return $this->belongsTo('App\Models\ConferenceType', 'conference_type_id');
+        return $this->belongsTo(ConferenceType::class);
     }
 
-    public function conference_fee()
+    public function conferenceFee()
     {
-        $this->hasMany('App\Models\ConferenceFee');
+        $this->hasMany(ConferenceFee::class);
     }
 
     public function register()
     {
-        $this->hasMany('App\Models\Register');
+        $this->hasMany(Register::class);
     }
 
     public function report()
     {
-        $this->hasMany('App\Models\Report');
+        $this->hasMany(Report::class);
     }
 
     public function album()

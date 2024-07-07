@@ -12,7 +12,7 @@
                 </header>
                 <div class="panel-body">
                     <div class="position-center">
-                        <form action="{{ Route('conference_en_register.update', $en_register->en_register_id) }}"
+                        <form action="{{ Route('conference_en_register.update', $en_register->id) }}"
                             method="post">
                             @csrf
                             @method('patch')

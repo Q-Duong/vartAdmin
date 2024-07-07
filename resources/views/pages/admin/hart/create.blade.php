@@ -6,13 +6,13 @@
                 <header class="panel-heading">
                     Create Hart
                     <span class="tools pull-right">
-                        <a href="{{ route('listHart') }}" class="primary-btn-submit">Management</a>
+                        <a href="{{ route('hart.index') }}" class="primary-btn-submit">Management</a>
                         <a class="fa fa-chevron-down" href="javascript:;"></a>
                     </span>
                 </header>
                 <div class="panel-body">
                     <div class="position-center">
-                        <form action="{{ route('saveHart') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('hart.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group {{ $errors->has('hart_title') ? 'has-error' : '' }}">
                                 <label>Hart Title</label>

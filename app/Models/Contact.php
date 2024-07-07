@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
 {
-    public $timestamps = false; //set time to false
+    protected $table = 'contacts';
+
+    public $timestamps = true;
+
     protected $fillable = [
-    	'info_contact', 'info_map', 'info_logo'
+        'contact',
+        'map',
+        'logo'
     ];
-    protected $primaryKey = 'info_id';
- 	protected $table = 'tbl_infomation';
 }

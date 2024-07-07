@@ -12,13 +12,13 @@
                 </header>
                 <div class="panel-body">
                     <div class="position-center">
-                        <form action="{{ Route('saveHomePage') }}" method="post" enctype="multipart/form-data" id="post">
+                        <form action="{{ Route('saveHomePage') }}" method="post" enctype="multipart/form-data"
+                            id="post">
                             @csrf
                             <div class="form-group {{ $errors->has('home_page_title') ? 'has-error' : '' }}">
                                 <label for="exampleInputEmail1">Title</label>
                                 <input type="text" name="home_page_title" class="input-control"
-                                    placeholder="Điền tên bài viết"
-                                    value="{{ old('home_page_title') }}">
+                                    placeholder="Điền tên bài viết" value="{{ old('home_page_title') }}">
                                 {!! $errors->first(
                                     'home_page_title',
                                     '<div class="alert-error"><i class="fa fa-exclamation-circle"></i> :message</div>',
@@ -55,9 +55,9 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Danh mục bài viết</label>
-                                <select name="blog_category_id" class="input-control">
+                                <select name="id" class="input-control">
                                     @foreach ($getAllBlogCategory as $key => $blogCategory)
-                                        <option value="{{ $blogCategory->blog_category_id }}">{{ $blogCategory->blog_category_name }}
+                                        <option value="{{ $blogCategory->id }}">{{ $blogCategory->blog_category_name }}
                                         </option>
                                     @endforeach
                                 </select>

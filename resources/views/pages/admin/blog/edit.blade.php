@@ -53,11 +53,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Danh mục bài viết</label>
-                                <select name="blog_category_id" class="input-control">
+                                <select name="id" class="input-control">
                                     @foreach ($getAllBlogCategory as $key => $blogCategory)
                                         <option
-                                            {{ $blog->blog_category_id == $blogCategory->blog_category_id ? 'selected' : '' }}
-                                            value="{{ $blogCategory->blog_category_id }}">
+                                            {{ $blog->blog_category_id == $blogCategory->id ? 'selected' : '' }}
+                                            value="{{ $blogCategory->id }}">
                                             {{ $blogCategory->blog_category_name }}</option>
                                     @endforeach
                                 </select>

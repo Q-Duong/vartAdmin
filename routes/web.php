@@ -21,6 +21,7 @@ use App\Http\Controllers\HartController;
 use App\Http\Controllers\VartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\VartContentController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
@@ -88,21 +89,26 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('delete/{id}', [BlogController::class, 'destroy'])->name('blog.destroy');
     });
     //Export Excel
-    Route::post('/export-excel', [ExportController::class, 'export_excel'])->name('export-excel');
+
+    // Route::post('/export-excel', [ExportController::class, 'export_excel'])->name('export-excel');
     
+
+    Route::post('/export-excel', [ConferenceController::class, 'export_excel'])->name('export-excel');
+
+
     //Report Management
     Route::prefix('report-management')->group(function () {
         Route::prefix('report')->group(function () {
-            Route::get('/', [ReportController::class, 'indexReport'])->name('conference_report.index');
-            Route::get('edit/{id}', [ReportController::class, 'editReport'])->name('conference_report.edit');
-            Route::patch('update/{id}', [ReportController::class, 'updateReport'])->name('conference_report.update');
-            Route::delete('delete/{id}', [ReportController::class, 'destroyReport'])->name('conference_report.destroy');
+            Route::get('/', [ReportController::class, 'index'])->name('conference_report.index');
+            Route::get('edit/{id}', [ReportController::class, 'edit'])->name('conference_report.edit');
+            Route::patch('update/{id}', [ReportController::class, 'update'])->name('conference_report.update');
+            Route::delete('delete/{id}', [ReportController::class, 'destroy'])->name('conference_report.destroy');
         });
         Route::prefix('en-report')->group(function () {
-            Route::get('/', [ReportController::class, 'indexReportInternational'])->name('conference_en_report.index');
-            Route::get('edit/{id}', [ReportController::class, 'editReportInternational'])->name('conference_en_report.edit');
-            Route::patch('update/{id}', [ReportController::class, 'updateReportInternational'])->name('conference_en_report.update');
-            Route::delete('delete/{id}', [ReportController::class, 'destroyReportInternational'])->name('conference_en_report.destroy');
+            Route::get('/', [ReportController::class, 'indexInternational'])->name('conference_en_report.index');
+            Route::get('edit/{id}', [ReportController::class, 'editInternational'])->name('conference_en_report.edit');
+            Route::patch('update/{id}', [ReportController::class, 'updateInternational'])->name('conference_en_report.update');
+            Route::delete('delete/{id}', [ReportController::class, 'destroyInternational'])->name('conference_en_report.destroy');
         });
     });
 
@@ -173,16 +179,16 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Vart
     Route::prefix('hart')->group(function () {
-        Route::get('/create', [HartController::class, 'create'])->name('createHart');
-        Route::get('/', [HartController::class, 'list'])->name('listHart');
-        Route::get('/edit/{id}', [HartController::class, 'edit'])->name('editHart');
-        Route::get('/delete/{id}', [HartController::class, 'delete'])->name('deleteHart');
-        Route::post('/save', [HartController::class, 'save'])->name('saveHart');
-        Route::post('/update/{id}', [HartController::class, 'update'])->name('updateHart');
+        Route::get('/', [HartController::class, 'index'])->name('hart.index');
+        Route::get('/create', [HartController::class, 'create'])->name('hart.create');
+        Route::get('/edit/{id}', [HartController::class, 'edit'])->name('hart.edit');
+        Route::get('/delete/{id}', [HartController::class, 'destroy'])->name('hart.destroy');
+        Route::post('/save', [HartController::class, 'store'])->name('hart.store');
+        Route::post('/update/{id}', [HartController::class, 'update'])->name('hart.update');
         Route::post('/load-hart-content', [HartController::class, 'loadHartContent'])->name('loadHartContent');
-        Route::post('/add-hart-content', [HartController::class, 'addHartContent'])->name('addHartContent');
+        Route::post('/add-hart-content', [HartController::class, 'createHartContent'])->name('createHartContent');
         Route::post('/update-hart-content', [HartController::class, 'updateHartContent'])->name('updateHartContent');
-        Route::delete('/delete-hart-content/{id}', [HartController::class, 'deleteHartContent'])->name('deleteHartContent');
+        Route::delete('/delete-hart-content/{id}', [HartController::class, 'destroyHartContent'])->name('destroyHartContent');
     });
 
     //Conference Category
@@ -207,6 +213,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('per', [AdminController::class, 'per']);
 });
+
+// Invitation
+
+Route::get('/intitation', [InvitationController::class, 'index'])->name('invitation.index');
 
 Route::get('/config-cache', function () {
     Artisan::call('config:cache');

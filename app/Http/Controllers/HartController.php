@@ -8,18 +8,18 @@ use App\Models\HartContent;
 
 class HartController extends Controller
 {
-    public function add()
+    public function create()
     {
-        return view('admin.Hart.add');
+        return view('pages.admin.hart.create');
     }
 
-    public function list()
+    public function index()
     {
-        $getAllHart = Hart::orderBy('hart_id', 'DESC')->get();
-        return view('admin.Hart.list')->with(compact('getAllHart'));
+        $getAllHart = Hart::orderBy('id', 'DESC')->get();
+        return view('pages.admin.hart.index', compact('getAllHart'));
     }
 
-    public function save(Request $request)
+    public function store(Request $request)
     {
         // $this->checkPostAdd($request);
         $data = $request->all();
@@ -39,11 +39,11 @@ class HartController extends Controller
         return Redirect()->back()->with('success', 'Thêm dịch vụ thành công');
     }
 
-    public function edit($hart_id)
+    public function edit($id)
     {
-        $hart = Hart::find($hart_id);
-        $getAllHartContent = HartContent::where('hart_id', $hart_id)->get();
-        return view('admin.Hart.edit')->with(compact('hart', 'getAllHartContent'));
+        $hart = Hart::find($id);
+        $getAllHartContent = HartContent::where('hart_id', $id)->get();
+        return view('pages.admin.hart.edit', compact('hart', 'getAllHartContent'));
     }
 
     public function update(Request $request, $hart_id)
@@ -65,7 +65,7 @@ class HartController extends Controller
             $hart->hart_image = $new_image;
         }
         $hart->save();
-        return redirect()->route('listHart')->with('success', 'Cập nhật dịch vụ thành công');
+        return redirect()->route('hart.index')->with('success', 'Cập nhật dịch vụ thành công');
     }
 
     public function loadHartContent(Request $request)
@@ -75,7 +75,7 @@ class HartController extends Controller
         return response()->json(array('success' => true, 'html' => $html));
     }
 
-    public function addHartContent(Request $request)
+    public function createHartContent(Request $request)
     {
         // $this->checkPostAdd($request);
         $data = $request->all();
@@ -128,7 +128,7 @@ class HartController extends Controller
         return response()->json(array('message' => __('alert.blog.successfulNotification'), 'success' => true));
     }
 
-    public function deleteHartContent($hart_content_id)
+    public function destroyHartContent($hart_content_id)
     {
         $hartContent = HartContent::find($hart_content_id);
         if ($hartContent->hart_content_image != null) {
@@ -138,7 +138,7 @@ class HartController extends Controller
         return response()->json(array('message' => __('alert.blog.successfulNotification'), 'success' => true));
     }
 
-    public function delete($hart_id)
+    public function destroy($hart_id)
     {
         $hart = Hart::find($hart_id);
         if ($hart->hart_image) {

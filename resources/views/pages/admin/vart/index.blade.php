@@ -29,10 +29,10 @@
                                 @endif
                             </td>
                             <td class="management">
-                                <a href="{{ Route('vart.edit', $vart->vart_id) }}" class="management-btn"
+                                <a href="{{ Route('vart.edit', $vart->id) }}" class="management-btn"
                                     title="@lang('vart_define.button.update')"><i class="fa fa-pencil-square-o text-success text-active"></i>
                                 </a>
-                                <form action="{{ Route('vart.destroy', $vart->vart_id) }}" method="POST">
+                                <form action="{{ Route('vart.destroy', $vart->id) }}" method="POST">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="management-btn button-submit" title="@lang('vart_define.button.delete')"><i

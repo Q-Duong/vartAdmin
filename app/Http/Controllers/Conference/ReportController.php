@@ -26,28 +26,28 @@ class ReportController extends Controller
     {
     }
 
-    public function indexReport()
+    public function index()
     {
-        $getAllConferenceReport = Report::orderBy('report_id', 'ASC')->paginate(10);
+        $getAllConferenceReport = Report::orderBy('id', 'ASC')->paginate(10);
         $conference_id = 1;
-        return view('pages.admin.conferenceRegister.report.indexReport', compact('getAllConferenceReport', 'conference_id'));
+        return view('pages.admin.conferenceRegister.report.index', compact('getAllConferenceReport', 'conference_id'));
     }
 
-    public function editReport($report_id)
+    public function editReport($id)
     {
-        $report = Report::findOrFail($report_id);
+        $report = Report::findOrFail($id);
         $getAllAcademic = Academic::select(['academic_title'])->get();
         $getAllProvince = Province::orderby('sort', 'ASC')->orderByRaw("CONVERT(province_name USING utf8mb4) COLLATE utf8mb4_unicode_ci")->get();
-        return view('pages.admin.conferenceRegister.report.editReport', compact('report', 'getAllAcademic', 'getAllProvince'));
+        return view('pages.admin.conferenceRegister.report.edit', compact('report', 'getAllAcademic', 'getAllProvince'));
     }
 
-    public function updateReport(Request $request, $report_id)
+    public function updateReport(Request $request, $id)
     {
         $this->checkReport($request);
         DB::beginTransaction();
         try {
             $data = $request->all();
-            $report = Report::findOrFail($report_id);
+            $report = Report::findOrFail($id);
             $report->report_name = mb_strtoupper($data['report_name'], 'UTF-8');
             $report->report_degree = $data['report_degree'];
             $report->report_gender = $data['report_gender'];
@@ -84,9 +84,9 @@ class ReportController extends Controller
         }
     }
 
-    public function destroyReport($report_id)
+    public function destroyReport($id)
     {
-        $report = Report::findOrFail($report_id);
+        $report = Report::findOrFail($id);
         if ($report->report_image) {
             deleteImageFileDrive($report->report_image);
         }
@@ -100,27 +100,27 @@ class ReportController extends Controller
         return Redirect()->back()->with('success',  __('alert.conference.successMessage_delete'));
     }
 
-    public function indexReportInternational()
+    public function indexInternational()
     {
-        $getAllConferenceReportInternational = EnReport::orderBy('en_report_id', 'ASC')->paginate(10);
+        $getAllConferenceReportInternational = EnReport::orderBy('id', 'ASC')->paginate(10);
         $conference_id = 1;
-        return view('pages.admin.conferenceRegister.report.indexReportInternational', compact('getAllConferenceReportInternational', 'conference_id'));
+        return view('pages.admin.conferenceRegister.report.indexInternational', compact('getAllConferenceReportInternational', 'conference_id'));
     }
 
-    public function editReportInternational($en_report_id)
+    public function editInternational($id)
     {
-        $en_report = EnReport::findOrFail($en_report_id);
+        $en_report = EnReport::findOrFail($id);
         $getAllCountries = Countries::all();
-        return view('pages.admin.conferenceRegister.report.editReportInternational', compact('en_report', 'getAllCountries'));
+        return view('pages.admin.conferenceRegister.report.editInternational', compact('en_report', 'getAllCountries'));
     }
 
-    public function updateReportInternational(Request $request, $en_report_id)
+    public function updateReportInternational(Request $request, $id)
     {
         $this->checkEnReport($request);
         DB::beginTransaction();
         try {
             $data = $request->all();
-            $en_report = EnReport::findOrFail($en_report_id);
+            $en_report = EnReport::findOrFail($id);
             $en_report->en_report_title = $data['en_report_title'];
             $en_report->en_report_firstname = mb_strtoupper($data['en_report_firstname'], 'UTF-8');
             $en_report->en_report_lastname = mb_strtoupper($data['en_report_lastname'], 'UTF-8');
@@ -148,9 +148,9 @@ class ReportController extends Controller
         }
     }
 
-    public function destroyReportInternational($en_report_id)
+    public function destroyReportInternational($id)
     {
-        $en_report = EnReport::findOrFail($en_report_id);
+        $en_report = EnReport::findOrFail($id);
         if ($en_report->en_report_file) {
             deleteImageFileDrive($en_report->en_report_file);
         }

@@ -10,7 +10,7 @@ class BlogCategoryController extends Controller
 {
     public function index()
     {
-        $getAllBlogCategory = BlogCategory::orderBy('blog_category_id', 'ASC')->get();
+        $getAllBlogCategory = BlogCategory::orderBy('id', 'ASC')->get();
         return view('pages.admin.blogCategory.index', compact('getAllBlogCategory'));
     }
     public function create()
@@ -40,15 +40,15 @@ class BlogCategoryController extends Controller
 
         return Redirect()->back()->with('success', 'Thêm danh mục bài viết thành công');
     }
-    public function edit($blog_category_id)
+    public function edit($id)
     {
-        $blogCategory = BlogCategory::find($blog_category_id);
+        $blogCategory = BlogCategory::find($id);
         return view('pages.admin.blogCategory.edit', compact('blogCategory'));
     }
-    public function update(Request $request, $blog_category_id)
+    public function update(Request $request, $id)
     {
         $data = $request->all();
-        $blog_category = BlogCategory::find($blog_category_id);
+        $blog_category = BlogCategory::find($id);
         $blog_category->blog_category_name = $data['blog_category_name'];
         $blog_category->blog_category_slug = $data['blog_category_slug'];
         $get_image = $request->file('blog_category_image');
@@ -64,9 +64,9 @@ class BlogCategoryController extends Controller
 
         return Redirect::route('blog_category.index')->with('success', 'Cập nhật danh mục bài viết thành công');
     }
-    public function destroy($blog_category_id)
+    public function destroy($id)
     {
-        $blog_category = BlogCategory::find($blog_category_id);
+        $blog_category = BlogCategory::find($id);
         $blog_category->delete();
         return Redirect()->back()->with('success', 'Xóa danh mục bài viết thành công');
     }

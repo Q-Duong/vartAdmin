@@ -6,15 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+    protected $table = 'comments';
+
     public $timestamps = true;
+
     protected $fillable = [
-        'comment_name', 'comment_email', 'comment_message', 'blog_id', 'comment_status'
+        'comment_name',
+        'comment_email',
+        'comment_message',
+        'comment_status',
+        'blog_id',
     ];
-    protected $primaryKey = 'comment_id';
-    protected $table = 'comment';
 
     public function blog()
     {
-        return $this->belongsTo('App\Models\Blog', 'blog_id');
+        return $this->belongsTo(Blog::class);
     }
 }

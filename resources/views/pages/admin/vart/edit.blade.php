@@ -18,8 +18,7 @@
                 </header>
                 <div class="panel-body">
                     <div class="position-center">
-                        <form action="{{ Route('vart.update', $vart->vart_id) }}" method="post"
-                            enctype="multipart/form-data">
+                        <form action="{{ Route('vart.update', $vart->id) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @method('patch')
                             <div class="form-group @error('vart_title') has-error @enderror">
@@ -186,7 +185,7 @@
                     <div class="panel-body">
                         <form id="vart_content">
                             @csrf
-                            <input type="hidden" name="vart_id" value="{{ $vart->vart_id }}">
+                            <input type="hidden" name="id" value="{{ $vart->id }}">
                             <input type="hidden" name="vart_content_id">
                             <input type="hidden" name="type">
                             <div class="form-group">
@@ -267,6 +266,6 @@
             });
         @endforeach
         var main_content = 'vart_content';
-        var host_id = $('input[name="vart_id"]').val();
+        var host_id = $('input[name="id"]').val();
     </script>
 @endpush

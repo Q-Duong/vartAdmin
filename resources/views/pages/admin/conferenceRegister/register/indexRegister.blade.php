@@ -37,7 +37,7 @@
                 <tbody>
                     @foreach ($getAllConferenceRegister as $key => $register)
                         <tr>
-                            <td>{{ $register->register_id }}</td>
+                            <td>{{ $register->id }}</td>
                             <td>{{ $register->register_code }}</td>
                             <td>{{ $register->register_degree }}</td>
                             <td>{{ $register->register_name }}</td>
@@ -93,23 +93,23 @@
                                 @endif
                             </td>
                             <td class="management">
-                                <a href="{{ Route('conference_register.edit', $register->register_id) }}"
-                                    class="management-btn" title="@lang('vart_define.button.update')"><i
+                                <a href="{{ Route('conference_register.edit', $register->id) }}" class="management-btn"
+                                    title="@lang('vart_define.button.update')"><i
                                         class="fa fa-pencil-square-o text-success text-active"></i>
                                 </a>
-                                <form action="{{ Route('conference_register.destroy', $register->register_id) }}"
-                                    method="POST">
+                                <form action="{{ Route('conference_register.destroy', $register->id) }}" method="POST">
                                     @method('delete')
                                     @csrf
-                                    <button type="submit" class="management-btn button-submit" title="@lang('vart_define.button.delete')"><i
-                                            class="fa fa-times text-danger text"></i></button>
+                                    <button type="submit" class="management-btn button-submit"
+                                        title="@lang('vart_define.button.delete')"><i class="fa fa-times text-danger text"></i></button>
                                 </form>
-                                <form action="{{ Route('sendMailReply', $register->register_id) }}" method="POST">
+                                <form action="{{ Route('sendMailReply', $register->id) }}" method="POST">
                                     @method('patch')
                                     @csrf
                                     <input type="hidden" name="email" value="{{ $register->register_email }}">
                                     <input type="hidden" name="type" value="register">
-                                    <button type="submit" class="management-btn button-submit" title="@lang('vart_define.button.mail')"><i class="far fa-envelope"></i></button>
+                                    <button type="submit" class="management-btn button-submit"
+                                        title="@lang('vart_define.button.mail')"><i class="far fa-envelope"></i></button>
                                 </form>
                             </td>
                         </tr>

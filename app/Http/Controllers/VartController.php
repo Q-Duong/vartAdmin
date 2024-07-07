@@ -22,7 +22,7 @@ class VartController extends Controller
 
     public function index()
     {
-        $getAllVart = Vart::orderBy('vart_id', 'DESC')->get();
+        $getAllVart = Vart::orderBy('id', 'DESC')->get();
         return view('pages.admin.vart.index', compact('getAllVart'));
     }
 
