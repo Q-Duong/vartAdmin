@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class EnRegister extends Model
 {
+    protected $table = 'en_registers';
+
     public $timestamps = true;
+
     protected $fillable = [
         'en_register_code',
         'en_register_title',
@@ -21,7 +24,6 @@ class EnRegister extends Model
         'conference_id',
         'payment_id',
     ];
-    protected $table = 'en_registers';
 
     public function conference()
     {

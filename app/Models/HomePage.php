@@ -12,7 +12,12 @@ class HomePage extends Model
 
     protected $fillable = [
         'home_page_title',
+        'home_page_title_vn',
         'home_page_content',
-        'home_page_image'
+        'home_page_content_vn',
+        'home_page_image',
+        'home_page_themes',
+        'home_page_position',
+        'home_page_link'
     ];
 }

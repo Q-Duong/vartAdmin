@@ -9,9 +9,10 @@ class Hart extends Model
     protected $table = 'harts';
 
     public $timestamps = true;
-
+        
     protected $fillable = [
         'hart_title',
+        'hart_title_en',
         'hart_slug',
         'hart_image'
     ];

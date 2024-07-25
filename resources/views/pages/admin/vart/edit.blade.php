@@ -206,7 +206,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Vart Content Text</label>
-                                <textarea name="vart_content_text" rows=8 class="textarea-control" id="editor1"></textarea>
+                                <textarea name="vart_content_text" rows=8 class="textarea-control" id="editor3"></textarea>
                                 <div class="alert-error error hidden vart_content_text">
                                     <i class="fa fa-exclamation-circle"></i>
                                     <span class="vart_content_text_message"></span>
@@ -214,7 +214,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Vart Content Text En</label>
-                                <textarea name="vart_content_text_en" rows=8 class="textarea-control" id="editor2"></textarea>
+                                <textarea name="vart_content_text_en" rows=8 class="textarea-control" id="editor4"></textarea>
                                 <div class="alert-error error hidden vart_content_text_en">
                                     <i class="fa fa-exclamation-circle"></i>
                                     <span class="vart_content_text_en_message"></span>

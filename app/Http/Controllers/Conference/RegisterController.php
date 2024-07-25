@@ -9,20 +9,11 @@ use App\Models\Register;
 use App\Models\Countries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\ExcelExportVNReport;
-use App\Exports\ExcelExportENReport;
-use App\Exports\ExcelExportVnRegister;
-use App\Exports\ExcelExportEnRegister;
 use App\Mail\ReplyMail;
 use App\Models\Academic;
 use App\Models\EnRegister;
 use App\Models\TempFile;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redirect;
 
 class RegisterController extends Controller
 {
@@ -38,6 +29,21 @@ class RegisterController extends Controller
             ->orderBy('registers.id', 'ASC')->paginate(10);
         $conference_id = 1;
         return view('pages.admin.conferenceRegister.register.indexRegister', compact('getAllConferenceRegister', 'conference_id'));
+    }
+
+    public function copyRegister($id)
+    {
+        $findRegister = Register::find($id);
+
+        if (!$findRegister) {
+            return redirect()->route('conference_register.index')->with('error', 'Record not found !!!.');
+        }
+
+        $newRegister = $findRegister->replicate();
+
+        $newRegister->save();
+
+        return  redirect()->route('conference_register.index')->with('success', 'Copied Register Successfully');
     }
 
     public function editRegister($id)
@@ -179,25 +185,7 @@ class RegisterController extends Controller
         return Redirect()->back()->with('success', __('alert.mail.successMessage'));
     }
 
-    public function export_excel(Request $request)
-    {
-        switch ($request->export_type) {
-            case ('vnrp'):
-                return Excel::download(new ExcelExportVNReport($request->conference_id), 'ReportVN.xlsx');
-                break;
-            case ('enrp'):
-                return Excel::download(new ExcelExportENReport($request->conference_id), 'ReportEN.xlsx');
-                break;
-            case ('vnrt'):
-                return Excel::download(new ExcelExportVnRegister($request->conference_id), 'RegisterVN.xlsx');
-                break;
-            case ('enrt'):
-                return Excel::download(new ExcelExportEnRegister($request->conference_id), 'RegisterEN.xlsx');
-                break;
-            default:
-                return Redirect::back();
-        }
-    }
+
 
     //Validation
 

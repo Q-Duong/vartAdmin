@@ -3,8 +3,8 @@ function clearForm() {
     $("#" + main_content)[0].reset();
     $(".img-thumb").html("");
     $(".img-thumb-en").html("");
-    editor1.setData("");
-    editor2.setData("");
+    editor3.setData("");
+    editor4.setData("");
     FilePond.setOptions({
         files: [],
     });
@@ -87,8 +87,8 @@ function updateContent(e, title) {
         $(".img-thumb-en").html("");
     }
     if (main_content == "conference_fee") {
-        editor1.setData($("." + main_content + "_content_" + e).html());
-        editor2.setData($("." + main_content + "_desc_" + e).html());
+        editor3.setData($("." + main_content + "_content_" + e).html());
+        editor4.setData($("." + main_content + "_desc_" + e).html());
         $(
             '.conference_fee_type option[value="' +
                 $("." + main_content + "_type_" + e).val() +
@@ -99,8 +99,8 @@ function updateContent(e, title) {
             true
         );
     } else {
-        editor1.setData($("." + main_content + "_text_" + e).html());
-        editor2.setData($("." + main_content + "_text_en_" + e).html());
+        editor3.setData($("." + main_content + "_text_" + e).html());
+        editor4.setData($("." + main_content + "_text_en_" + e).html());
     }
 }
 
@@ -125,11 +125,11 @@ function deleteContent(e) {
 $(document).on("click", ".button-submit", function () {
     var formData = new FormData($("#" + main_content)[0]);
     if (main_content == "conference_fee") {
-        formData.append(main_content + "_content", editor1.getData());
-        formData.append(main_content + "_desc", editor2.getData());
+        formData.append(main_content + "_content", editor3.getData());
+        formData.append(main_content + "_desc", editor4.getData());
     } else {
-        formData.append(main_content + "_text", editor1.getData());
-        formData.append(main_content + "_text_en", editor2.getData());
+        formData.append(main_content + "_text", editor3.getData());
+        formData.append(main_content + "_text_en", editor4.getData());
     }
     $(".error").addClass("hidden");
     $(".button-submit").attr("disabled", true);

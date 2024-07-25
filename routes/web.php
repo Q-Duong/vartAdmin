@@ -17,6 +17,7 @@ use App\Http\Controllers\Conference\ConferenceFeeController;
 use App\Http\Controllers\Conference\ExportController;
 use App\Http\Controllers\Conference\ReportController;
 use App\Http\Controllers\Conference\RegisterController;
+use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\HartController;
 use App\Http\Controllers\VartController;
 use App\Http\Controllers\ProfileController;
@@ -45,8 +46,20 @@ Route::get('/', [AdminController::class, 'login']);
 Route::group(['middleware' => 'auth'], function () {
     Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
     //Dashboard
-    Route::get('/dashboard', [AdminController::class, 'show_dashboard'])->name('dashboard');
-
+    Route::get('/dashboard', [AdminController::class, 'show_dashboard'])->name('dashboard.index');
+    // HomePage
+    Route::prefix('home-page')->group(function () {
+        Route::get('/', [HomeController::class, 'index'])->name('homePage.index');
+        Route::post('create-or-update', [HomeController::class, 'storeOrUpdate'])->name('homePage.store_or_update');
+        Route::post('render', [HomeController::class, 'render'])->name('homePage.render');
+        Route::delete('delete', [HomeController::class, 'destroy'])->name('homePage.destroy');
+    });
+    //Contact
+    Route::prefix('contact')->group(function () {
+        Route::get('/edit', [ContactController::class, 'edit'])->name('contact.edit');
+        Route::post('/store', [ContactController::class, 'store'])->name('contact.store');
+        Route::patch('/update', [ContactController::class, 'update'])->name('contact.update');
+    });
     // Route::post('/revenue-statistics-by-date', [AdminController::class, 'revenue_statistics_by_date'])->name('url-revenue-statistics-by-date');
     // Route::post('/optional-revenue-statistics', [AdminController::class, 'optional_revenue_statistics'])->name('url-optional-revenue-statistics');
     // Route::post('/revenue-statistics-for-the-month', [AdminController::class, 'revenue_statistics_for_the_month'])->name('url-revenue-statistics-for-the-month');
@@ -66,8 +79,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('file')->group(function () {
         Route::post('process', [FileController::class, 'process'])->name('file.process');
         Route::delete('revert', [FileController::class, 'revert'])->name('file.revert');
-        Route::delete('/delete', [FileController::class, 'destroy'])->name('file.destroy');
-        Route::post('/upload-image-ck', [FileController::class, 'upload_image_ck'])->name('file.upload_image_ck');
+        Route::delete('delete', [FileController::class, 'destroy'])->name('file.destroy');
+        Route::post('upload-image-ck', [FileController::class, 'upload_image_ck'])->name('file.upload_image_ck');
     });
 
     //Blog Category
@@ -116,9 +129,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('register-management')->group(function () {
         Route::prefix('register')->group(function () {
             Route::get('/', [RegisterController::class, 'indexRegister'])->name('conference_register.index');
+            Route::post('copy/{id}', [RegisterController::class, 'copyRegister'])->name('conference_register.copy');
             Route::get('edit/{id}', [RegisterController::class, 'editRegister'])->name('conference_register.edit');
             Route::patch('update/{id}', [RegisterController::class, 'updateRegister'])->name('conference_register.update');
             Route::delete('delete/{id}', [RegisterController::class, 'destroyRegister'])->name('conference_register.destroy');
+            Route::post('/import-excel', [ExcelController::class, 'import'])->name('import-excel');
         });
         Route::prefix('en-register')->group(function () {
             Route::get('/', [RegisterController::class, 'indexRegisterInternational'])->name('conference_en_register.index');
@@ -135,6 +150,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('save', [ConferenceController::class, 'store'])->name('conference.store');
         Route::get('edit/{id}', [ConferenceController::class, 'edit'])->name('conference.edit');
         Route::patch('update/{id}', [ConferenceController::class, 'update'])->name('conference.update');
+        Route::post('create-or-update', [ConferenceController::class, 'store_or_update'])->name('conference.store_or_update');
         Route::delete('delete/{id}', [ConferenceController::class, 'destroy'])->name('conference.destroy');
         //ConferenceFee
         Route::prefix('fee')->group(function () {
@@ -142,18 +158,6 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('save-or-update', [ConferenceFeeController::class, 'storeOrUpdate'])->name('conference_fee.store_or_update');
             Route::delete('delete', [ConferenceFeeController::class, 'destroy'])->name('conference_fee.destroy');
         });
-    });
-
-    Route::prefix('home-page')->group(function () {
-        Route::get('/edit', [HomeController::class, 'edit'])->name('editHomePage');
-        Route::post('/save', [HomeController::class, 'save'])->name('saveHomePage');
-        Route::post('/update', [HomeController::class, 'update'])->name('updateHomePage');
-    });
-
-    Route::prefix('contact')->group(function () {
-        Route::get('/edit', [ContactController::class, 'edit'])->name('edit-contact');
-        Route::post('/save-info', [ContactController::class, 'save_info']);
-        Route::post('/update', [ContactController::class, 'update'])->name('update-contact');
     });
 
     Route::prefix('album')->group(function () {

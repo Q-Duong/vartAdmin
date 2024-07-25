@@ -14,13 +14,4 @@ class Wards extends Model
         'wards_name',
         'district_id'
     ];
-
-    public function receiver()
-    {
-        return $this->hasMany('App\Models\Receiver');
-    }
-    public function delivery()
-    {
-        return $this->hasMany('App\Models\Delivery');
-    }
 }

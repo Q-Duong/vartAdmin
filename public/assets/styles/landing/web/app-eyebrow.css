@@ -1,0 +1,198 @@
+/* Input, Select, File style */
+.is-error .form-textbox {
+	border-color: #de071c;
+	background: #fef0f0;
+}
+
+.is-error .select-textbox {
+	border-color: #de071c;
+	background: #fef0f0;
+	color: #de071c;
+}
+
+.is-error .file-style{
+	border-color: #de071c;
+	background: #fef0f0;
+	color: #de071c;
+}
+
+.is-error .check-success {
+	color: #de071c;
+}
+
+.is-error .form-textbox~.form-label {
+	color: #de071c;
+}
+
+.is-error .form-textbox:focus {
+	background: hsla(0, 0%, 100%, .8);
+	border-color: #9c07f9;
+}
+
+.is-error .select-textbox:focus {
+	background: hsla(0, 0%, 100%, .8);
+	border-color: #9c07f9;
+}
+
+.is-error .file-style:focus {
+	background: hsla(0, 0%, 100%, .8);
+	border-color: #9c07f9;
+}
+
+.is-error .form-textbox.form-textbox-entered~.form-label, .is-error .form-textbox:focus~.form-label, .is-error .form-textbox~.form-label {
+	color: #de071c;
+}
+
+.form-element {
+	position: relative;
+}
+
+.form-textbox {
+	font-size: 17px;
+	line-height: 1.23543;
+	font-weight: 400;
+	letter-spacing: -.022em;
+	display: inline-block;
+	box-sizing: border-box;
+	vertical-align: top;
+	width: 100%;
+	height: 3.3em;
+	margin-bottom: 14px;
+	padding-top: 18px;
+	padding-left: 16px;
+	padding-right: 16px;
+	color: #333;
+	text-align: left;
+	border: 1px solid #d6d6d6;
+	border-radius: 12px;
+	background: hsla(0, 0%, 100%, .8);
+	background-clip: padding-box;
+}
+
+.form-textbox:focus {
+	appearance: none;
+	outline: 0;
+	border-color: #9c07f9;
+	box-shadow: 0 0 0 3px rgb(156, 25, 251, .2);
+}
+
+.form-textbox.form-textbox-entered~.form-label, .form-textbox:focus~.form-label, .form-textbox:autofill~.form-label, .form-textbox:-webkit-autofill~.form-label, .form-textbox:focus~.form-label {
+	top: 7px;
+	color: #666;
+	font-size: 13px;
+	line-height: 1.75;
+	font-weight: 400;
+	letter-spacing: -.01em;
+    z-index: 0;
+}
+
+.form-textbox~.form-label {
+	position: absolute;
+	top: 18px;
+	left: 17px;
+	color: #888;
+	padding: 0;
+	z-index: 1;
+	transition-timing-function: ease-in;
+	transition-duration: .125s;
+    pointer-events: none;
+}
+
+.text-area {
+	height: 150px;
+	resize: none;
+}
+
+.select-textbox {
+	font-size: 17px;
+	line-height: 1.23543;
+	font-weight: 400;
+	letter-spacing: -.022em;
+	display: inline-block;
+	box-sizing: border-box;
+	vertical-align: top;
+	width: 100%;
+	height: 3.3em;
+	margin-bottom: 14px;
+	padding-left: 12px;
+	padding-right: 16px;
+	color: #333;
+	text-align: left;
+	border: 1px solid #d6d6d6;
+	border-radius: 12px;
+	background: hsla(0, 0%, 100%, .8);
+	background-clip: padding-box;
+}
+
+.select-textbox:focus {
+	outline: 0;
+	border-color: #9c07f9;
+	box-shadow: 0 0 0 3px rgb(156, 25, 251, .2);
+}
+
+.form-textbox-label, .select-label, .text-area-label {
+    color: #666;
+    font-weight: 600;
+    padding-bottom: 2px;
+}
+
+.input-control {
+	clear: both;
+	height: 39px;
+	width: 100%;
+	border: 0.1rem solid #ced4da;
+	border-radius: 10px;
+	font-size: 16px;
+	color: #666;
+	padding-left: 12px;
+	margin-bottom: 20px;
+	cursor: auto;
+	-webkit-transition: all, 0.6s;
+	-o-transition: all, 0.6s;
+}
+
+.input-control:focus {
+	border: 0.1rem solid #346fdb;
+	outline: none;
+}
+
+.input-control:hover {
+	border: 0.1rem solid #346fdb;
+	-webkit-transition: all, 0.6s;
+	-o-transition: all, 0.6s;
+	transition: all, 0.6s;
+}
+
+.input-control::placeholder {
+	color: #b7b7b7;
+}
+
+.file {
+	display: none;
+}
+
+.file-style {
+	width: 100%;
+	display: block;
+	background-color: #f5f4f4;
+	margin-bottom: 14px;
+	cursor: pointer;
+	text-align: center;
+	border-radius: 15px;
+	border: 2px dashed #cdc8c8;
+}
+
+.file-style i {
+	font-size: 26px;
+	margin-top: 15px;
+}
+
+.check-success {
+	color: #74c0fc;
+}
+
+.form-checkbox {
+	height: 14px;
+	width: 14px;
+}
+/* End Input, Select, File style */

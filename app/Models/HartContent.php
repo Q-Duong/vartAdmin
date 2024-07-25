@@ -13,7 +13,9 @@ class HartContent extends Model
     protected $fillable = [
         'hart_content_themes',
         'hart_content_title',
+        'hart_content_title_en',
         'hart_content_text',
+        'hart_content_text_en',
         'hart_content_image',
         'hart_id',
     ];

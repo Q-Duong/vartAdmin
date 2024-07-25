@@ -14,6 +14,6 @@ class Invitation extends Model
     protected $fillable = [
         'details',
         'conference_id',
-        'conference_type_id',
+        'type',
     ];
 }

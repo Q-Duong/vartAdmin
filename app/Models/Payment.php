@@ -8,7 +8,7 @@ class Payment extends Model
 {
   protected $table = 'payments';
 
-  public $timestamps = true; //set time to false
+  public $timestamps = true;
 
   protected $fillable = [
     'payment_price',
@@ -17,7 +17,7 @@ class Payment extends Model
     'payment_status',
     'conference_fee_id',
   ];
-
+  
   public function register()
   {
     return $this->hasOne(Register::class);

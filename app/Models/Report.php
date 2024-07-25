@@ -11,6 +11,7 @@ class Report extends Model
     public $timestamps = true;
 
     protected $fillable = [
+        'conference_id',
         'report_name',
         'report_gender',
         'report_date',
@@ -22,11 +23,14 @@ class Report extends Model
         'report_place_of_birth',
         'report_work_unit',
         'report_graduation_year',
+        'report_topics',
+        'report_file_title',
         'report_image',
         'report_image_card',
         'report_file',
         'report_policy',
-        'conference_id',
+        'report_file_background',
+        'report_share',
         'report_status',
     ];
 

@@ -9,6 +9,7 @@ class Profile extends Model
     protected $table = 'profiles';
 
     public $timestamps = true;
+    
     protected $fillable = [
         'profile_firstname',
         'profile_lastname',

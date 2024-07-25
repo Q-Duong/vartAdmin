@@ -11,7 +11,8 @@ class ConferenceType extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'conference_type_name'
+        'conference_type_name',
+        'conference_type_name_en'
     ];
 
     public function conference()

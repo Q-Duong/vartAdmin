@@ -78,6 +78,10 @@ function formatQuantity(input) {
             $('.notifications-popup-error').removeClass('active');
         }, 3000);
     });
-
+    $(document).on("keyup click", "input", function () {
+        $(this).val() == ""
+            ? $(this).removeClass("form-textbox-entered")
+            : $(this).addClass("form-textbox-entered");
+    });
 
 })(jQuery);

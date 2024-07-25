@@ -20,6 +20,8 @@ class Conference extends Model
         'conference_image',
         'conference_image_en',
         'conference_form_type',
+        'status',
+        'display',
         'conference_category_id',
         'conference_type_id',
     ];
@@ -52,5 +54,15 @@ class Conference extends Model
     public function album()
     {
         $this->hasMany('App\Models\Album');
+    }
+
+    public function invitationLetter()
+    {
+        $this->hasMany(InvitationLetter::class);
+    }
+
+    public function verifyLetter()
+    {
+        $this->hasMany(VerifyLetter::class);
     }
 }

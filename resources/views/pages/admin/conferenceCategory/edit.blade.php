@@ -1,9 +1,11 @@
 @extends('layouts.default_auth')
 @section('title', 'Update Conference Category - ')
 @push('css')
-    <link rel="stylesheet" href="{{ versionResource('assets/css/support/filepond.css') }}" type="text/css" as="style" />
-    <link rel="stylesheet" href="{{ versionResource('assets/css/support/filepond-preview.css') }}" type="text/css"
+    <link rel="stylesheet" href="{{ versionResource('assets/styles/support/filepond.css') }}" type="text/css" as="style" />
+    <link rel="stylesheet" href="{{ versionResource('assets/styles/support/filepond-preview.css') }}" type="text/css"
         as="style" />
+    <link rel="stylesheet" href="{{ versionResource('assets/styles/landing/web/app-eyebrow.css') }}" type="text/css"
+        as="style">
 @endpush
 @section('content')
     <div class="row">
@@ -18,31 +20,33 @@
                 </header>
                 <div class="panel-body">
                     <div class="position-center">
-                        <form
-                            action="{{ route('conference_category.update', $conferenceCategory->id) }}"
-                            method="post" enctype="multipart/form-data">
+                        <form action="{{ route('conference_category.update', $conferenceCategory->id) }}" method="post"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('patch')
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Conference Category Name</label>
-                                <input type="text" name="conference_category_name" class="input-control"
-                                    placeholder="Enter Conference Category Name"
+                            <div class="form-element">
+                                <input
+                                    class="form-textbox {{ $conferenceCategory->conference_category_name ? 'form-textbox-entered' : '' }}"
+                                    name="conference_category_name"
                                     value="{{ $conferenceCategory->conference_category_name }}">
+                                <span class="form-label">Conference Category Name</span>
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Conference Category Name En</label>
-                                <input type="text" name="conference_category_name_en" class="input-control"
-                                    placeholder="Enter Conference Category Name"
+                            <div class="form-element">
+                                <input
+                                    class="form-textbox {{ $conferenceCategory->conference_category_name_en ? 'form-textbox-entered' : '' }}"
+                                    name="conference_category_name_en"
                                     value="{{ $conferenceCategory->conference_category_name_en }}">
+                                <span class="form-label">Conference Category Name En</span>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Conference Category Image</label>
                                 <input type="file" name="conference_category_image" class="filepond">
                                 @if ($conferenceCategory->conference_category_image)
-                                    <img class="img-fluid" src="{{ assetHost('storage/' . $conferenceCategory->conference_category_image) }}">
+                                    <img class="img-fluid"
+                                        src="{{ assetHost('storage/' . $conferenceCategory->conference_category_image) }}">
                                 @endif
                             </div>
-                            <button type="submit" class="primary-btn-submit button-submit">Update Conference Category</button>
+                            <button type="submit" class="primary-btn-submit button-submit">Update</button>
                         </form>
                     </div>
                 </div>

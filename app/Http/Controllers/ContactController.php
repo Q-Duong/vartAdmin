@@ -7,11 +7,6 @@ use App\Models\Contact;
 
 class ContactController extends Controller
 {
-    public function contact(Request $request)
-    {
-        $contact = Contact::find(1);
-        return view('pages.contact.contact', compact('contact'));
-    }
     public function edit()
     {
         $contact = Contact::find(1);
@@ -19,10 +14,9 @@ class ContactController extends Controller
     }
     public function update(Request $request)
     {
-        $data = $request->all();
         $contact = Contact::find(1);
-        $contact->info_contact = $data['info_contact'];
-        $contact->info_map = $data['info_map'];
+        $contact->contact = $request->contact;
+        $contact->map = $request->map;
         $contact->save();
         return redirect()->back()->with('success', 'Cập nhật thông tin thành công');
     }

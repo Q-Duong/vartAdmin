@@ -6,7 +6,7 @@
             List Conference Category
         </div>
         <div class="table-responsive table-content">
-            <table class="table table-striped b-t b-light">
+            <table class="table table-striped b-t b-light table-bordered">
                 <thead>
                     <tr>
                         <th>Conference Category Name</th>
