@@ -35,4 +35,9 @@ class EnReport extends Model
     {
         return $this->belongsTo(Conference::class);
     }
+
+    public function topic()
+    {
+        return $this->belongsTo(Topic::class);
+    }
 }

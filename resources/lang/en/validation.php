@@ -223,16 +223,5 @@ return [
         'wards_id_required' => 'Chọn phường / xã',
         'errors_exists_message' => 'You have registered for the conference, please contact the organizers for instructions.',
         'register_name_regex' => 'Please enter a valid full name.',
-
-        'en_register_firstname_required' => 'Please enter your first name.',
-        'en_register_lastname_required' => 'Please enter your last name.',
-        'en_register_phone_required' => 'Please enter your phone number.',
-        'en_register_email_required' => 'Please enter your email.',
-        'en_register_work_unit_required' => ' Please enter your workplace.',
-        'en_register_email_email' => 'Please enter a valid email.',
-        'en_register_phone_numeric' => 'Please enter a valid phone number.',
-        'en_register_firstname_regex' => 'Please enter a valid first name.',
-        'en_register_lastname_regex' => 'Please enter a valid last name.',
-        'en_register_email_exists' => 'Email has been registered for the conference',
     ],
 ];

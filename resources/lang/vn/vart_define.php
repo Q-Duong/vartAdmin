@@ -20,6 +20,7 @@ return [
         'create' => 'Create',
         'update' => 'Update',
         'delete' => 'Delete',
+        'copy' => 'Copy',
         'mail' => 'Send mail',
     ]
 ];

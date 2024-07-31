@@ -38,7 +38,7 @@ class LoginController extends Controller
      */
     function showLoginForm(){
         if(Auth::check()){
-            return Redirect::route('dashboard');
+            return Redirect::route('dashboard.index');
         }else{
             return view('pages.login.index');
         }
@@ -49,7 +49,7 @@ class LoginController extends Controller
                 'email' => $data['account_username'],
                 'password' => $data['account_password']
             ],true)){
-            return Redirect::route('dashboard');
+            return Redirect::route('dashboard.index');
         }else{
             return Redirect::route('login')->with('error','Tài khoản hoặc mật khẩu không đúng');
         }

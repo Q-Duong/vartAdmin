@@ -108,8 +108,8 @@
                 @endcan
                 @canany(['isAdmin', 'isSubAdmin', 'isStaffReport'])
                     <li class="sub-menu">
-                        <a class="{{ request()->routeIs('conference_report.index') || request()->routeIs('conference_report.edit') ? 'active' : '' }}"
-                            href="{{ route('conference_report.index') }}">
+                        <a class="{{ request()->routeIs('conference_report.index') || request()->routeIs('conference_report.edit') || request()->routeIs('report_management.index') ? 'active' : '' }}"
+                            href="{{ route('report_management.index') }}">
                             <i class="far fa-list-alt"></i>
                             <span>@lang('conference.en.report_title')</span>
                         </a>
@@ -117,8 +117,8 @@
                 @endcan
                 @canany(['isAdmin', 'isSubAdmin', 'isStaffReport', 'isStaffInter'])
                     <li class="sub-menu">
-                        <a class="{{ request()->routeIs('conference_en_report.index') || request()->routeIs('conference_en_report.edit') ? 'active' : '' }}"
-                            href="{{ Route('conference_en_report.index') }}">
+                        <a class="{{ request()->routeIs('conference_en_report.index') || request()->routeIs('conference_en_report.edit') || request()->routeIs('report_management_en.index') ? 'active' : '' }}"
+                            href="{{ Route('report_management_en.index') }}">
                             <i class="far fa-list-alt"></i>
                             <span>@lang('conference.en.en_report_title')</span>
                         </a>
@@ -126,8 +126,8 @@
                 @endcan
                 @canany(['isAdmin', 'isSubAdmin', 'isStaffRegister'])
                     <li class="sub-menu">
-                        <a class="{{ request()->routeIs('conference_register.index') || request()->routeIs('conference_register.edit') ? 'active' : '' }}"
-                            href="{{ Route('conference_register.index') }}">
+                        <a class="{{ request()->routeIs('conference_register.index') || request()->routeIs('conference_register.edit') || request()->routeIs('register_management.index') ? 'active' : '' }}"
+                            href="{{ Route('register_management.index') }}">
                             <i class="far fa-list-alt"></i>
                             <span>@lang('conference.en.register_title')</span>
                         </a>
@@ -135,8 +135,8 @@
                 @endcan
                 @canany(['isAdmin', 'isSubAdmin', 'isStaffRegister', 'isStaffInter'])
                     <li class="sub-menu">
-                        <a class="{{ request()->routeIs('conference_en_register.index') || request()->routeIs('conference_en_register.edit') ? 'active' : '' }}"
-                            href="{{ Route('conference_en_register.index') }}">
+                        <a class="{{ request()->routeIs('conference_en_register.index') || request()->routeIs('conference_en_register.edit') || request()->routeIs('register_management_en.index') ? 'active' : '' }}"
+                            href="{{ Route('register_management_en.index') }}">
                             <i class="far fa-list-alt"></i>
                             <span>@lang('conference.en.en_register_title')</span>
                         </a>

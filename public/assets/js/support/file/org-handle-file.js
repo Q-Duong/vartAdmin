@@ -23,7 +23,7 @@ Array.from(inputElements).forEach((inputElement) => {
 
 function deleteFile(e, p, id) {
     if (confirm("Do you want to delete this file?")) {
-        $(".loader-over").fadeIn();
+        $(".loading-container").show();
         $.ajax({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -39,7 +39,7 @@ function deleteFile(e, p, id) {
                 url_file_delete = url_file_delete.replace(p, ":path");
                 $("." + e + "_section").addClass("hidden");
                 $("." + e).removeClass("hidden");
-                $(".loader-over").fadeOut();
+                $(".loading-container").fadeOut();
                 successMsg(data.message);
             },
         });

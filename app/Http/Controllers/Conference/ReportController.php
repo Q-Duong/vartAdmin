@@ -7,18 +7,15 @@ use App\Models\EnReport;
 use App\Models\Province;
 use App\Models\Report;
 use App\Models\Countries;
-use App\Exports\ExcelExportVNReport;
-use App\Exports\ExcelExportENReport;
-use App\Exports\ExcelExportVnRegister;
-use App\Exports\ExcelExportEnRegister;
+use App\Http\Controllers\ValidateController;
 use App\Models\Academic;
+use App\Models\Conference;
 use App\Models\TempFile;
+use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Redirect;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
+
 
 class ReportController extends Controller
 {
@@ -28,63 +25,107 @@ class ReportController extends Controller
 
     public function index()
     {
-        $getAllConferenceReport = Report::orderBy('id', 'ASC')->paginate(10);
-        $conference_id = 1;
-        return view('pages.admin.conferenceRegister.report.index', compact('getAllConferenceReport', 'conference_id'));
+        $conferences = Conference::select('id', 'conference_title', 'conference_code')->orderBy('id', 'DESC')->get();
+        return view('pages.admin.conferenceRegister.report.vn.list', compact('conferences'));
     }
 
-    public function editReport($id)
+    public function indexNational($code)
+    {
+        $conference = Conference::select('id', 'conference_title', 'conference_code')->firstWhere('conference_code', $code);
+        $getAllConferenceReport = Report::join('topics', 'topics.id', 'reports.report_topics')
+            ->select(
+                'reports.conference_id',
+                'reports.id',
+                'reports.created_at',
+                'report_code',
+                'report_degree',
+                'report_name',
+                'report_gender',
+                'report_date',
+                'report_month',
+                'report_year',
+                'report_phone',
+                'report_email',
+                'report_work_unit',
+                'report_place_of_birth',
+                'report_graduation_year',
+                'report_file_title',
+                'report_image',
+                'report_image_card',
+                'report_file',
+                'report_policy',
+                'report_file_background',
+                'report_share',
+                'report_status',
+                'topic_title_en'
+            )
+            ->where('reports.conference_id', $conference->id)
+            ->orderBy('reports.id', 'DESC')
+            ->paginate(10);
+        return view('pages.admin.conferenceRegister.report.vn.index', compact('getAllConferenceReport', 'conference'));
+    }
+
+    public function edit($code, $id)
     {
         $report = Report::findOrFail($id);
         $getAllAcademic = Academic::select(['academic_title'])->get();
         $getAllProvince = Province::orderby('sort', 'ASC')->orderByRaw("CONVERT(province_name USING utf8mb4) COLLATE utf8mb4_unicode_ci")->get();
-        return view('pages.admin.conferenceRegister.report.edit', compact('report', 'getAllAcademic', 'getAllProvince'));
+        $topics = Topic::get();
+        return view('pages.admin.conferenceRegister.report.vn.edit', compact('code', 'report', 'getAllAcademic', 'getAllProvince', 'topics'));
     }
 
-    public function updateReport(Request $request, $id)
+    public function update(Request $request, $code)
     {
-        $this->checkReport($request);
+        $validator = Validator::make($request->all(), app(ValidateController::class)->validateReport('vn'), app(ValidateController::class)->messageReport());
+        if ($validator->fails()) {
+            return response()->json(array('errors' => true, 'validator' => $validator->errors()));
+        }
         DB::beginTransaction();
         try {
-            $data = $request->all();
-            $report = Report::findOrFail($id);
-            $report->report_name = mb_strtoupper($data['report_name'], 'UTF-8');
-            $report->report_degree = $data['report_degree'];
-            $report->report_gender = $data['report_gender'];
-            $report->report_date = $data['report_date'];
-            $report->report_month = $data['report_month'];
-            $report->report_year = $data['report_year'];
-            $report->report_work_unit = $data['report_work_unit'];
-            $report->report_place_of_birth = $data['report_place_of_birth'];
-            $report->report_email = $data['report_email'];
-            $report->report_phone = $data['report_phone'];
-            $report->report_graduation_year = $data['report_graduation_year'];
-            $report->report_status = $data['report_status'];
-            if (!empty($data['report_file'])) {
-                $report->report_file = $data['report_file'];
-                $tempFile = TempFile::where('folder', $data['report_file'])->first();
+            $report = Report::findOrFail($request->report_id);
+            $report->report_name = mb_strtoupper($request->report_name, 'UTF-8');
+            $report->report_degree = $request->report_degree;
+            $report->report_gender = $request->report_gender;
+            $report->report_date = $request->report_date;
+            $report->report_month = $request->report_month;
+            $report->report_year = $request->report_year;
+            $report->report_work_unit = $request->report_work_unit;
+            $report->report_place_of_birth = $request->report_place_of_birth;
+            $report->report_email = $request->report_email;
+            $report->report_phone = $request->report_phone;
+            $report->report_graduation_year = $request->report_graduation_year;
+            $report->report_file_title = $request->report_file_title;
+            $report->report_status = $request->report_status;
+            if (!empty($request->report_file)) {
+                $report->report_file = $request->report_file;
+                $tempFile = TempFile::firstWhere('folder', $request->report_file);
                 $tempFile->delete();
             }
-            if (!empty($data['report_image'])) {
-                $report->report_image = $data['report_image'];
-                $tempFile = TempFile::where('folder', $data['report_image'])->first();
+            if (!empty($request->report_image)) {
+                $report->report_image = $request->report_image;
+                $tempFile = TempFile::firstWhere('folder', $request->report_image);
                 $tempFile->delete();
             }
-            if (!empty($data['report_image_card'])) {
-                $report->report_image_card = $data['report_image_card'];
-                $tempFile = TempFile::where('folder', $data['report_image_card'])->first();
+            if (!empty($request->report_image_card)) {
+                $report->report_image_card = $request->report_image_card;
+                $tempFile = TempFile::firstWhere('folder', $request->report_image_card);
+                $tempFile->delete();
+            }
+            if (!empty($request->report_file_background)) {
+                $report->report_file_background = $request->report_file_background;
+                $tempFile = TempFile::firstWhere('folder', $request->report_file_background);
                 $tempFile->delete();
             }
             $report->save();
             DB::commit();
-            return redirect()->route('conference_report.index')->with('success',  __('alert.conference.successMessage_update'));
+            return response()->json(array('success' => true, 'message' => __('alert.conference.successMessage_update'), 'route' => route('conference_report.index', $code)));
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->route('conference_report.index')->with('error',  __('alert.conference.errorMessage_update'));
+            return response()->json(array('success' => false, 'message' => __('alert.conference.errorMessage_update'), 'route' => route('conference_report.index', $code)));
         }
     }
 
-    public function destroyReport($id)
+    public function destroy($id)
     {
         $report = Report::findOrFail($id);
         if ($report->report_image) {
@@ -96,59 +137,97 @@ class ReportController extends Controller
         if ($report->report_file) {
             deleteImageFileDrive($report->report_file);
         }
+        if ($report->report_file_background) {
+            deleteImageFileDrive($report->report_file_background);
+        }
         $report->delete();
         return Redirect()->back()->with('success',  __('alert.conference.successMessage_delete'));
     }
 
-    public function indexInternational()
+    public function indexEn()
     {
-        $getAllConferenceReportInternational = EnReport::orderBy('id', 'ASC')->paginate(10);
-        $conference_id = 1;
-        return view('pages.admin.conferenceRegister.report.indexInternational', compact('getAllConferenceReportInternational', 'conference_id'));
+        $conferences = Conference::select('id', 'conference_title_en', 'conference_code')->orderBy('id', 'DESC')->get();
+        return view('pages.admin.conferenceRegister.report.en.list', compact('conferences'));
     }
 
-    public function editInternational($id)
+    public function indexInternational($code)
+    {
+        $conference = Conference::select('id', 'conference_title_en', 'conference_code')->firstWhere('conference_code', $code);
+        $getAllConferenceReportInternational = EnReport::join('topics', 'topics.id', 'en_reports.en_report_topics')
+            ->select(
+                'en_reports.conference_id',
+                'en_reports.id',
+                'en_reports.created_at',
+                'en_report_code',
+                'en_report_firstname',
+                'en_report_lastname',
+                'en_report_title',
+                'en_report_date',
+                'en_report_month',
+                'en_report_year',
+                'en_report_email',
+                'en_report_profession',
+                'en_report_organization',
+                'en_report_department',
+                'en_report_nationality',
+                'en_report_topics',
+                'en_report_file',
+                'en_report_file_title',
+                'en_report_share',
+                'en_report_status',
+                'topic_title_en'
+            )
+            ->where('en_reports.conference_id', $conference->id)
+            ->orderBy('en_reports.id', 'DESC')
+            ->paginate(10);
+        return view('pages.admin.conferenceRegister.report.en.index', compact('getAllConferenceReportInternational', 'conference'));
+    }
+
+    public function editInternational($code, $id)
     {
         $en_report = EnReport::findOrFail($id);
         $getAllCountries = Countries::all();
-        return view('pages.admin.conferenceRegister.report.editInternational', compact('en_report', 'getAllCountries'));
+        $topics = Topic::get();
+        return view('pages.admin.conferenceRegister.report.en.edit', compact('code', 'en_report', 'getAllCountries', 'topics'));
     }
 
-    public function updateReportInternational(Request $request, $id)
+    public function updateInternational(Request $request, $code)
     {
-        $this->checkEnReport($request);
+        $validator = Validator::make($request->all(), app(ValidateController::class)->validateReport('en'), app(ValidateController::class)->messageReport());
+        if ($validator->fails()) {
+            return response()->json(array('errors' => true, 'validator' => $validator->errors()));
+        }
         DB::beginTransaction();
         try {
-            $data = $request->all();
-            $en_report = EnReport::findOrFail($id);
-            $en_report->en_report_title = $data['en_report_title'];
-            $en_report->en_report_firstname = mb_strtoupper($data['en_report_firstname'], 'UTF-8');
-            $en_report->en_report_lastname = mb_strtoupper($data['en_report_lastname'], 'UTF-8');
-            $en_report->en_report_date = $data['en_report_date'];
-            $en_report->en_report_month = $data['en_report_month'];
-            $en_report->en_report_year = $data['en_report_year'];
-            $en_report->en_report_email = $data['en_report_email'];
-            $en_report->en_report_profession = $data['en_report_profession'];
-            $en_report->en_report_organization = $data['en_report_organization'];
-            $en_report->en_report_department = $data['en_report_department'];
-            $en_report->en_report_nationality = $data['en_report_nationality'];
-            $en_report->en_report_file_title = $data['en_report_file_title'];
-            $en_report->en_report_status = $data['en_report_status'];
-            if (!empty($data['en_report_file'])) {
-                $en_report->en_report_file = $data['en_report_file'];
-                $tempFile = TempFile::where('folder', $data['en_report_file'])->first();
+            $en_report = EnReport::findOrFail($request->en_report_id);
+            $en_report->en_report_title = $request->en_report_title;
+            $en_report->en_report_firstname = mb_strtoupper($request->en_report_firstname, 'UTF-8');
+            $en_report->en_report_lastname = mb_strtoupper($request->en_report_lastname, 'UTF-8');
+            $en_report->en_report_date = $request->en_report_date;
+            $en_report->en_report_month = $request->en_report_month;
+            $en_report->en_report_year = $request->en_report_year;
+            $en_report->en_report_email = $request->en_report_email;
+            $en_report->en_report_profession = $request->en_report_profession;
+            $en_report->en_report_organization = $request->en_report_organization;
+            $en_report->en_report_department = $request->en_report_department;
+            $en_report->en_report_nationality = $request->en_report_nationality;
+            $en_report->en_report_file_title = $request->en_report_file_title;
+            $en_report->en_report_status = $request->en_report_status;
+            if (!empty($request->en_report_file)) {
+                $en_report->en_report_file = $request->en_report_file;
+                $tempFile = TempFile::firstWhere('folder', $request->en_report_file);
                 $tempFile->delete();
             }
             $en_report->save();
             DB::commit();
-            return redirect()->route('conference_en_report.index')->with('success',  __('alert.conference.successMessage_update'));
+            return response()->json(array('success' => true, 'message' => __('alert.conference.successMessage_update'), 'route' => route('conference_en_report.index', $code)));
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->route('conference_en_report.index')->with('error',  __('alert.conference.errorMessage_update'));
+            return response()->json(array('success' => false, 'message' => __('alert.conference.errorMessage_update'), 'route' => route('conference_en_report.index', $code)));
         }
     }
 
-    public function destroyReportInternational($id)
+    public function destroyInternational($id)
     {
         $en_report = EnReport::findOrFail($id);
         if ($en_report->en_report_file) {
@@ -156,127 +235,5 @@ class ReportController extends Controller
         }
         $en_report->delete();
         return Redirect()->back()->with('success',  __('alert.conference.successMessage_update'));
-    }
-
-    public function export_excel(Request $request)
-    {
-        switch ($request->export_type) {
-            case ('vnrp'):
-                return Excel::download(new ExcelExportVNReport($request->conference_id), 'ReportVN.xlsx');
-                break;
-            case ('enrp'):
-                return Excel::download(new ExcelExportENReport($request->conference_id), 'ReportEN.xlsx');
-                break;
-            case ('vnrt'):
-                return Excel::download(new ExcelExportVnRegister($request->conference_id), 'RegisterVN.xlsx');
-                break;
-            case ('enrt'):
-                return Excel::download(new ExcelExportEnRegister($request->conference_id), 'RegisterEN.xlsx');
-                break;
-            default:
-                return Redirect::back();
-        }
-    }
-
-    //Validation
-
-    public function checkReport(Request $request)
-    {
-        $this->validate(
-            $request,
-            [
-                'report_name' => 'required|string|regex:/^([^0-9]*)$/',
-                'report_phone' => 'required|numeric|digits_between:10,10',
-                'report_email' => 'required|email|unique:users,email',
-                'report_work_unit' => 'required',
-            ],
-            [
-                'report_name.required' => __('validation.report.report_name_required'),
-                'report_phone.required' => __('validation.report.report_phone_required'),
-                'report_email.required' => __('validation.report.report_email_required'),
-                'report_work_unit.required' => __('validation.report.report_work_unit_required'),
-                'report_name.regex' => __('validation.report.report_name_regex'),
-                'report_phone.numeric' => __('validation.report.report_phone_numeric'),
-                'report_phone.digits_between' => __('validation.report.report_phone_digits_between'),
-                'report_email.email' => __('validation.report.report_email_email'),
-            ]
-        );
-    }
-
-    public function checkEnReport(Request $request)
-    {
-        $this->validate(
-            $request,
-            [
-                'en_report_firstname' => 'required|string|regex:/^([^0-9]*)$/',
-                'en_report_lastname' => 'required|string|regex:/^([^0-9]*)$/',
-                'en_report_email' => 'required|email|unique:users,email',
-                'en_report_organization' => 'required',
-                'en_report_department' => 'required',
-                'en_report_file_title' => 'required',
-            ],
-            [
-                'en_report_firstname.required' => __('validation.report.en_report_firstname_required'),
-                'en_report_lastname.required' => __('validation.report.en_report_lastname_required'),
-                'en_report_email.required' => __('validation.report.report_email_required'),
-                'en_report_organization.required' => __('validation.report.en_report_organization_required'),
-                'en_report_department.required' => __('validation.report.en_report_department_required'),
-                'en_report_file_title.required' => __('validation.report.en_report_file_title_required'),
-                'en_report_firstname.regex' => __('validation.report.en_report_firstname_regex'),
-                'en_report_lastname.regex' => __('validation.report.en_report_lastname_regex'),
-            ]
-        );
-    }
-
-    public function checkRegister(Request $request)
-    {
-        $this->validate(
-            $request,
-            [
-                'register_name' => 'required|string|regex:/^([^0-9]*)$/',
-                'register_email' => 'required|email|unique:users,email',
-                'register_phone' => 'required|numeric|digits_between:10,10',
-                'register_nation' => 'required',
-                'register_receiving_address' => 'required',
-                'register_object_group' => 'required',
-            ],
-            [
-                'register_name.required' => __('validation.register.register_name_required'),
-                'register_phone.required' => __('validation.register.register_phone_required'),
-                'register_email.required' => __('validation.register.register_email_required'),
-                'register_object_group.required' => __('validation.register.register_object_group_required'),
-                'register_receiving_address.required' => __('validation.register.register_receiving_address_required'),
-                'register_nation.required' => __('validation.register.register_nation_required'),
-                'register_name.regex' => __('validation.register.register_name_regex'),
-                'register_email.email' => __('validation.register.register_email_email'),
-                'register_phone.numeric' => __('validation.register.register_phone_numeric'),
-                'register_phone.digits_between' => __('validation.register.register_phone_digits_between'),
-            ]
-        );
-    }
-
-    public function checkEnRegister(Request $request)
-    {
-        $this->validate(
-            $request,
-            [
-                'en_register_firstname' => 'required|string|regex:/^([^0-9]*)$/',
-                'en_register_lastname' => 'required|string|regex:/^([^0-9]*)$/',
-                'en_register_email' => 'required|email|unique:users,email',
-                'en_register_phone' => 'required|numeric',
-                'en_register_work_unit' => 'required',
-            ],
-            [
-                'en_register_firstname.required' => __('validation.register.en_register_firstname_required'),
-                'en_register_lastname.required' => __('validation.register.en_register_lastname_required'),
-                'en_register_email.required' => __('validation.register.en_register_email_required'),
-                'en_register_phone.required' => __('validation.register.en_register_phone_required'),
-                'en_register_work_unit.required' => __('validation.register.en_register_work_unit_required'),
-                'en_register_email.email' => __('validation.register.en_register_email_email'),
-                'en_register_phone.numeric' => __('validation.register.en_register_phone_numeric'),
-                'en_register_firstname.regex' => __('validation.register.en_register_firstname_regex'),
-                'en_register_lastname.regex' => __('validation.register.en_register_lastname_regex'),
-            ]
-        );
     }
 }

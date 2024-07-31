@@ -2,7 +2,7 @@
 
 return [
     'masterPages' =>[
-        'notification' => 'Thông Báo',
+        'notification' => 'Notification',
     ],
     'blog' =>[
         'successfulNotification' => 'Thank you for leaving a comment',

@@ -61,6 +61,30 @@ return [
             'refreshToken' => env('GOOGLE_DRIVE_REFRESH_TOKEN'),
             'folderId' => env('GOOGLE_DRIVE_FOLDER_ID'),
         ],
+
+        'payment' => [
+            'driver' => 'google',
+            'clientId' => env('GOOGLE_DRIVE_CLIENT_PAYMENT_ID'),
+            'clientSecret' => env('GOOGLE_DRIVE_CLIENT_PAYMENT_SECRET'),
+            'refreshToken' => env('GOOGLE_DRIVE_REFRESH_PAYMENT_TOKEN'),
+            'folderId' => env('GOOGLE_DRIVE_FOLDER_PAYMENT_ID'),
+        ],
+
+        'docs' => [
+            'driver' => 'google',
+            'clientId' => env('GOOGLE_DRIVE_CLIENT_DOCS_ID'),
+            'clientSecret' => env('GOOGLE_DRIVE_CLIENT_DOCS_SECRET'),
+            'refreshToken' => env('GOOGLE_DRIVE_REFRESH_DOCS_TOKEN'),
+            'folderId' => env('GOOGLE_DRIVE_FOLDER_DOCS_ID'),
+        ],
+
+        'background' => [
+            'driver' => 'google',
+            'clientId' => env('GOOGLE_DRIVE_CLIENT_BACKGROUND_ID'),
+            'clientSecret' => env('GOOGLE_DRIVE_CLIENT_BACKGROUND_SECRET'),
+            'refreshToken' => env('GOOGLE_DRIVE_REFRESH_BACKGROUND_TOKEN'),
+            'folderId' => env('GOOGLE_DRIVE_FOLDER_BACKGROUND_ID'),
+        ],
     ],
 
     /*

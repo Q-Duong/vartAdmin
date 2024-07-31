@@ -87,14 +87,14 @@ if (!function_exists('getFolderForDestroyFile')) {
 }
 
 if (!function_exists('saveImageFileDrive')) {
-    function saveImageFileDrive($file)
+    function saveImageFileDrive($file, $disk)
     {
         $fileData = File::get($file);
         $get_name_file = $file->getClientOriginalName();
         $name_file = current(explode('.', $get_name_file));
         $new_file =  Str::slug($name_file) . rand(0, 99) . '.' . $file->getClientOriginalExtension();
-        Storage::cloud()->put($new_file, $fileData);
-        $content = collect(Storage::cloud()->listContents());
+        Storage::disk($disk)->put($new_file, $fileData);
+        $content = collect(Storage::disk($disk)->listContents());
         $file_path = $content->where('name', '=', $new_file)->first();
         $response = ['folder' => $file_path['path'], 'fileName' => $new_file];
         return $response;

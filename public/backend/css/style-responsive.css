@@ -201,6 +201,7 @@
         margin-right: 0px !important;
     }
     .brand{
+        background: linear-gradient(45deg, #346fdb 1%, #9beaff);
         width: 100%;
         float: none;
         position: fixed;

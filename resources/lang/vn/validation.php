@@ -162,8 +162,12 @@ return [
 
     'report' => [
         'report_name_required' => 'Nhập họ và tên',
+        'report_name_regex' => 'Nhập họ và tên đúng định dạng.',
         'report_phone_required' => 'Nhập số điện thoại',
+        'report_phone_numeric' => 'Nhập số điện thoại hợp lệ',
+        'report_phone_digits_between' => 'Nhập số điện thoại hợp lệ',
         'report_email_required' => 'Nhập Email',
+        'report_email_email' => 'Nhập Email hợp lệ',
         'report_place_of_birth_required' => 'Chọn nơi sinh',
         'report_work_unit_required' => 'Nhập đơn vị công tác',
         'report_graduation_year_required' => 'Nhập năm tốt nghiệp',
@@ -171,9 +175,6 @@ return [
         'report_image_card_required' => 'Thêm ảnh chụp thẻ sinh viên',
         'report_file_required' => 'Thêm tóm tắt (Abstract), Bài báo cáo khoa học',
         'report_policy_accepted' => 'Vui lòng bấm xác nhận',
-        'report_phone_numeric' => 'Nhập số điện thoại hợp lệ',
-        'report_phone_digits_between' => 'Nhập số điện thoại hợp lệ',
-        'report_email_email' => 'Nhập Email hợp lệ',
         'report_graduation_year_numeric' => 'Nhập năm tốt nghiệp hợp lệ',
         'report_graduation_year_digits_between' => 'Nhập năm tốt nghiệp hợp lệ',
         'report_image_file' => 'Thêm ảnh đúng định dạng',
@@ -181,7 +182,17 @@ return [
         'report_image_card_file' => 'Thêm ảnh đúng định dạng',
         'report_image_card_image' => 'Thêm ảnh đúng định dạng',
         'report_file_file' => 'Thêm Bài giảng, Bài báo cáo khoa học đúng định dạng',
-        'report_name_regex' => 'Nhập họ và tên đúng định dạng.',
+        
+
+        'en_report_firstname_required' => 'Please enter your first name.',
+        'en_report_firstname_regex' => 'Please enter a valid first name.',
+        'en_report_lastname_required' => 'Please enter your last name.',
+        'en_report_lastname_regex' => 'Please enter a valid last name.',
+        'en_report_email_required' => 'Please enter your email.',
+        'en_report_email_email' => 'Please enter a valid email.',
+        'en_report_organization_required' => 'Please enter your organization.',
+        'en_report_department_required' => 'Please enter your department.',
+        'en_report_file_title_required' => 'Please enter your title of abstract, paper.',
     ],
 
     'register' => [
@@ -220,5 +231,16 @@ return [
         'errors_exists_email' => 'Email của bạn đã được đăng ký.',
         'register_name_regex' => 'Nhập họ và tên đúng định dạng.',
         'register_code_required' => 'Vui lòng nhập mã code.',
+
+        'en_register_firstname_required' => 'Please enter your first name.',
+        'en_register_firstname_regex' => 'Please enter a valid first name.',
+        'en_register_lastname_required' => 'Please enter your last name.',
+        'en_register_lastname_regex' => 'Please enter a valid last name.',
+        'en_register_phone_required' => 'Please enter your phone number.',
+        'en_register_phone_numeric' => 'Please enter a valid phone number.',
+        'en_register_email_required' => 'Please enter your email.',
+        'en_register_email_email' => 'Please enter a valid email.',
+        'en_register_email_exists' => 'Email has been registered for the conference',
+        'en_register_work_unit_required' => ' Please enter your workplace.',
     ],
 ];

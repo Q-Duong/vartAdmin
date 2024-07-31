@@ -12,6 +12,7 @@ class Report extends Model
 
     protected $fillable = [
         'conference_id',
+        'report_code',
         'report_name',
         'report_gender',
         'report_date',
@@ -37,5 +38,10 @@ class Report extends Model
     public function conference()
     {
         return $this->belongsTo(Conference::class);
+    }
+
+    public function topic()
+    {
+        return $this->belongsTo(Topic::class);
     }
 }

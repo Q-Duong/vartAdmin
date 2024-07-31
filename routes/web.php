@@ -23,6 +23,7 @@ use App\Http\Controllers\VartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\SupportController;
 use App\Http\Controllers\VartContentController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
@@ -101,26 +102,25 @@ Route::group(['middleware' => 'auth'], function () {
         Route::patch('update/{id}', [BlogController::class, 'update'])->name('blog.update');
         Route::delete('delete/{id}', [BlogController::class, 'destroy'])->name('blog.destroy');
     });
-    //Export Excel
-
-    // Route::post('/export-excel', [ExportController::class, 'export_excel'])->name('export-excel');
-    
-
-    Route::post('/export-excel', [ConferenceController::class, 'export_excel'])->name('export-excel');
-
+    //Excel
+    Route::post('export-excel', [SupportController::class, 'export'])->name('export.excel');
+    Route::get('print', [SupportController::class, 'print'])->name('invitation.print');
+    Route::post('send-mail-reply/{id}', [SupportController::class, 'sendMailReply'])->name('mail.reply');
 
     //Report Management
     Route::prefix('report-management')->group(function () {
         Route::prefix('report')->group(function () {
-            Route::get('/', [ReportController::class, 'index'])->name('conference_report.index');
-            Route::get('edit/{id}', [ReportController::class, 'edit'])->name('conference_report.edit');
-            Route::patch('update/{id}', [ReportController::class, 'update'])->name('conference_report.update');
+            Route::get('/', [ReportController::class, 'index'])->name('report_management.index');
+            Route::get('{code}', [ReportController::class, 'indexNational'])->name('conference_report.index');
+            Route::get('{code}/edit/{id}', [ReportController::class, 'edit'])->name('conference_report.edit');
+            Route::post('{code}/update', [ReportController::class, 'update'])->name('conference_report.update');
             Route::delete('delete/{id}', [ReportController::class, 'destroy'])->name('conference_report.destroy');
         });
         Route::prefix('en-report')->group(function () {
-            Route::get('/', [ReportController::class, 'indexInternational'])->name('conference_en_report.index');
-            Route::get('edit/{id}', [ReportController::class, 'editInternational'])->name('conference_en_report.edit');
-            Route::patch('update/{id}', [ReportController::class, 'updateInternational'])->name('conference_en_report.update');
+            Route::get('/', [ReportController::class, 'indexEn'])->name('report_management_en.index');
+            Route::get('{code}', [ReportController::class, 'indexInternational'])->name('conference_en_report.index');
+            Route::get('{code}/edit/{id}', [ReportController::class, 'editInternational'])->name('conference_en_report.edit');
+            Route::post('{code}/update', [ReportController::class, 'updateInternational'])->name('conference_en_report.update');
             Route::delete('delete/{id}', [ReportController::class, 'destroyInternational'])->name('conference_en_report.destroy');
         });
     });
@@ -128,20 +128,29 @@ Route::group(['middleware' => 'auth'], function () {
     //Register Management
     Route::prefix('register-management')->group(function () {
         Route::prefix('register')->group(function () {
-            Route::get('/', [RegisterController::class, 'indexRegister'])->name('conference_register.index');
-            Route::post('copy/{id}', [RegisterController::class, 'copyRegister'])->name('conference_register.copy');
-            Route::get('edit/{id}', [RegisterController::class, 'editRegister'])->name('conference_register.edit');
-            Route::patch('update/{id}', [RegisterController::class, 'updateRegister'])->name('conference_register.update');
-            Route::delete('delete/{id}', [RegisterController::class, 'destroyRegister'])->name('conference_register.destroy');
+            Route::get('/', [RegisterController::class, 'index'])->name('register_management.index');
+            Route::get('{code}', [RegisterController::class, 'indexNational'])->name('conference_register.index');
+            Route::post('{code}/copy/{id}', [RegisterController::class, 'copy'])->name('conference_register.copy');
+            Route::get('{code}/edit/{id}', [RegisterController::class, 'edit'])->name('conference_register.edit');
+            Route::post('{code}/update', [RegisterController::class, 'update'])->name('conference_register.update');
+            Route::delete('delete/{id}', [RegisterController::class, 'destroy'])->name('conference_register.destroy');
             Route::post('/import-excel', [ExcelController::class, 'import'])->name('import-excel');
         });
         Route::prefix('en-register')->group(function () {
-            Route::get('/', [RegisterController::class, 'indexRegisterInternational'])->name('conference_en_register.index');
-            Route::get('edit/{id}', [RegisterController::class, 'editRegisterInternational'])->name('conference_en_register.edit');
-            Route::patch('update/{id}', [RegisterController::class, 'updateRegisterInternational'])->name('conference_en_register.update');
-            Route::delete('delete/{id}', [RegisterController::class, 'destroyRegisterInternational'])->name('conference_en_register.destroy');
+            Route::get('/', [RegisterController::class, 'indexEn'])->name('register_management_en.index');
+            Route::get('{code}', [RegisterController::class, 'indexInternational'])->name('conference_en_register.index');
+            Route::get('{code}/edit/{id}', [RegisterController::class, 'editInternational'])->name('conference_en_register.edit');
+            Route::post('{code}/update', [RegisterController::class, 'updateInternational'])->name('conference_en_register.update');
+            Route::delete('delete/{id}', [RegisterController::class, 'destroyInternational'])->name('conference_en_register.destroy');
         });
-        Route::patch('send-mail-reply/{id}', [RegisterController::class, 'sendMailReply'])->name('sendMailReply');
+    });
+
+    Route::get('test-mail', function () {
+        return view('mail.report.hart.international')->with([
+            'title' => 'mr.',
+            'name' => 'Dương',
+            'code' => 'DVs',
+        ]);
     });
 
     Route::prefix('conference')->group(function () {

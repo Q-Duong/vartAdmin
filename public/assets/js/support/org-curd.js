@@ -105,7 +105,7 @@ function updateContent(e, title) {
 }
 
 function deleteContent(e) {
-    $(".loader-over").fadeIn();
+    $(".loading-container").fadeIn();
     $.ajax({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -118,7 +118,7 @@ function deleteContent(e) {
         success: function (data) {
             successMsg(data.message);
             loadContent();
-            $(".loader-over").fadeOut();
+            $(".loading-container").fadeOut();
         },
     });
 }
@@ -133,7 +133,7 @@ $(document).on("click", ".button-submit", function () {
     }
     $(".error").addClass("hidden");
     $(".button-submit").attr("disabled", true);
-    $(".loader-over").fadeIn();
+    $(".loading-container").fadeIn();
     $.ajax({
         url: url_create_or_update_content,
         type: "POST",
@@ -151,7 +151,7 @@ $(document).on("click", ".button-submit", function () {
                 clearForm();
             }
             $(".button-submit").removeAttr("disabled");
-            $(".loader-over").fadeOut();
+            $(".loading-container").fadeOut();
         },
     });
 });

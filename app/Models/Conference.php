@@ -46,14 +46,29 @@ class Conference extends Model
         $this->hasMany(Register::class);
     }
 
+    public function en_register()
+    {
+        return $this->hasMany(EnRegister::class);
+    }
+
+    public function vip()
+    {
+        $this->hasMany(Vip::class);
+    }
+
     public function report()
     {
         $this->hasMany(Report::class);
     }
 
+    public function en_report()
+    {
+        $this->hasMany(EnReport::class);
+    }
+
     public function album()
     {
-        $this->hasMany('App\Models\Album');
+        $this->hasMany(Album::class);
     }
 
     public function invitationLetter()

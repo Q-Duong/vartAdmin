@@ -14,4 +14,14 @@ class Topic extends Model
         'topic_title',
         'topic_title_en',
     ];
+
+    public function report()
+    {
+        $this->hasMany(Report::class);
+    }
+
+    public function en_report()
+    {
+        $this->hasMany(EnReport::class);
+    }
 }

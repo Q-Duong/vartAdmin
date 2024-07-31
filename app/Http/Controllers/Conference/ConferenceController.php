@@ -48,12 +48,12 @@ class ConferenceController extends Controller
 
     public function store_or_update(Request $request)
     {
-        // $validator = Validator::make($request->all(), app(ValidateController::class)->validateConference($request->action));
-        // if ($validator->fails()) {
-        //     return response()->json(array('errors' => true, 'validator' => $validator->errors()));
-        // }
-        // DB::beginTransaction();
-        // try {
+        $validator = Validator::make($request->all(), app(ValidateController::class)->validateConference($request->action));
+        if ($validator->fails()) {
+            return response()->json(array('errors' => true, 'validator' => $validator->errors()));
+        }
+        DB::beginTransaction();
+        try {
             if($request->action == 'create'){
                 if (Conference::where('conference_title', $request->conference_title)->exists()) {
                     return response()->json(array('errorsExists' => true, 'validator' => ['conference_title' => 'Title already exists.'], 'message' => 'Title already exists.'));
@@ -117,12 +117,12 @@ class ConferenceController extends Controller
                 $conference->save();
                 $message = __('alert.conference.successMessage_update');
             }
-        //     DB::commit();
-        //     return response()->json(array('success' => true, 'route' => route('conference.index')));
-        // } catch (\Exception $e) {
-        //     DB::rollback();
-        //     return response()->json(array('success' => false, 'route' => route('conference.index')));
-        // }
+            DB::commit();
+            return response()->json(array('success' => true, 'route' => route('conference.index')));
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(array('success' => false, 'route' => route('conference.index')));
+        }
     }
 
     public function destroy($id)

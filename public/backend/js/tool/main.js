@@ -1,18 +1,18 @@
-$('.close-model').on('click', function() {
-    $('.popup-model-review').fadeOut(300);
+$(".close-model").on("click", function () {
+    $(".popup-model-review").fadeOut(300);
 });
 
-$('.overlay-model-review').on('click', function() {
-    $('.popup-model-review').fadeOut(300);
+$(".overlay-model-review").on("click", function () {
+    $(".popup-model-review").fadeOut(300);
 });
 
 //Handle Money and Quantity
 function formatNumber(n) {
-    return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
 function formatNumber1(n) {
-    return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, "")
+    return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, "");
 }
 
 function formatCurrency(input, blur) {
@@ -31,13 +31,11 @@ function formatCurrency(input, blur) {
         right_side = formatNumber(right_side);
 
         input_val = left_side;
-
     } else {
         input_val = formatNumber(input_val);
     }
 
     input.val(input_val);
-
 
     var updated_len = input_val.length;
     caret_pos = updated_len - original_len + caret_pos;
@@ -59,23 +57,22 @@ function formatQuantity(input) {
 }
 
 (function ($) {
-    
     $(window).on("load", function () {
-        $(".loader-over").fadeOut();
+        $(".loading-container").fadeOut();
     });
 
     // Tool select2
-    $(document).ready(function() {
-        $('.select-2').select2();
+    $(document).ready(function () {
+        $(".select-2").select2();
     });
 
     // Handle Notifications
-    $(document).ready(function() {
-        setTimeout(function() {
-            $('.notifications-popup-success').removeClass('active');
+    $(document).ready(function () {
+        setTimeout(function () {
+            $(".notifications-popup-success").removeClass("active");
         }, 3000);
-        setTimeout(function() {
-            $('.notifications-popup-error').removeClass('active');
+        setTimeout(function () {
+            $(".notifications-popup-error").removeClass("active");
         }, 3000);
     });
     $(document).on("keyup click", "input", function () {
@@ -83,5 +80,4 @@ function formatQuantity(input) {
             ? $(this).removeClass("form-textbox-entered")
             : $(this).addClass("form-textbox-entered");
     });
-
 })(jQuery);

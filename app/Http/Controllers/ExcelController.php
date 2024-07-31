@@ -23,7 +23,7 @@ class ExcelController extends Controller
 
         return redirect()->back()->with('success', 'Registers imported successfully.');
     }
-    public function export_excel(Request $request)
+    public function export(Request $request)
     {
         switch ($request->export_type) {
             case ('vnrp'):

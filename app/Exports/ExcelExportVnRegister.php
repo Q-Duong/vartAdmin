@@ -47,17 +47,41 @@ class ExcelExportVnRegister implements WithHeadings, FromQuery, WithMapping
 
     public function query()
     {
-        return Register::join('payment', 'payment.payment_id', '=', 'register.payment_id')
-            ->join('conference_fee', 'payment.conference_fee_id', '=', 'conference_fee.conference_fee_id')
-            ->where('register.conference_id', $this->conference_id)
-            ->select(['register.register_id', 'register_code', 'register_degree', 'register_name', 'register_gender', 'register_date', 'register_month', 'register_year', 'register_work_unit', 'register_place_of_birth', 'register_nation', 'register_email', 'register_phone', 'register_object_group', 'conference_fee_title', 'payment_price', 'register_receiving_address', 'register.created_at', 'register_graduation_year', 'register_image', 'register_image_card', 'payment_image', 'payment_status']);
+        return Register::join('payments', 'payments.id', '=', 'registers.payment_id')
+            ->join('conference_fees', 'payments.conference_fee_id', '=', 'conference_fees.id')
+            ->where('registers.conference_id', $this->conference_id)
+            ->select(
+                'registers.id',
+                'register_code',
+                'register_degree',
+                'register_name',
+                'register_gender',
+                'register_date',
+                'register_month',
+                'register_year',
+                'register_work_unit',
+                'register_place_of_birth',
+                'register_nation',
+                'register_email',
+                'register_phone',
+                'register_object_group',
+                'conference_fee_title',
+                'payment_price',
+                'register_receiving_address',
+                'registers.created_at',
+                'register_graduation_year',
+                'register_image',
+                'register_image_card',
+                'payment_image',
+                'payment_status')
+            ->orderBy('registers.id', 'DESC');
     }
 
     public function map($register): array
     {
         return [
-            \Carbon\Carbon::parse($register->created_at)->format('d/m/Y H:i:s'),
-            $register->register_id,
+            \Carbon\Carbon::parse($register->created_at)->format('H:i:s d/m/Y'),
+            $register->id,
             $register->register_code,
             $register->register_degree,
             $register->register_name,

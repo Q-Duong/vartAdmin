@@ -78,7 +78,7 @@ body a:hover {
 
 /*sidebar navigation*/
 #sidebar {
-    width: 280px;
+    width: 274px;
     height: 86%;
     position: fixed;
     background: #ffffff;
@@ -299,7 +299,7 @@ ul.sidebar-menu li a.active i, ul.sidebar-menu li ul.sub li a.active {
 .wrapper {
     display: inline-block;
     margin-top: 80px;
-    padding: 15px;
+    padding-top: 15px;
     width: 100%;
 }
 
@@ -2045,6 +2045,14 @@ ul.bs-glyphicons-list {
     -webkit-transition: all, 0.6s;
     -o-transition: all, 0.6s;
     transition: all, 0.6s;
+}
+
+.btn-copy{
+    color: #0071e3;
+}
+
+.btn-mail{
+    color: #FCB322;
 }
 
 .btn-edit {}
@@ -3796,10 +3804,6 @@ div#graph10, div#graph11 {
     }
 
     .market-update-gd {
-        padding: 0;
-    }
-
-    .market-update-gd {
         margin: 0.8em 0;
     }
 
@@ -4162,7 +4166,7 @@ table.table.table-bordered.table-dark tr th {
     position: relative;
     border-radius: 15px;
     background-color: #f1f0ef;
-
+    margin-bottom: 14px;
 }
 
 .file-content {

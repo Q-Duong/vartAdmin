@@ -24,6 +24,8 @@
     <link href="{{ versionResource('backend/css/themes-base-jquery-ui.css') }}" rel="stylesheet" as="style" />
     <link href="{{ versionResource('assets/styles/overview.built.css') }}" rel='stylesheet' type='text/css'
         as="style" />
+    <link rel="stylesheet" href="{{ versionResource('assets/styles/landing/web/essential.built.css') }}" type="text/css"
+        as="style">
     <link rel="stylesheet" href="{{ versionResource('backend/css/font.css') }}" type="text/css" as="style" />
     {{-- <link rel="stylesheet" href="{{ versionResource('backend/css/morris.css') }}" type="text/css" />  --}}
     <!-- calendar -->
@@ -53,7 +55,7 @@
     <script src="{{ versionResource('backend/js/jquery2.0.3.min.js') }}"></script>
     <script src="{{ versionResource('backend/js/bootstrap.js') }}"></script>
     <!-- Ux Ui -->
-    
+
     <script src="{{ versionResource('backend/js/ux-ui/jquery.dcjqaccordion.2.7.min.js') }}" defer></script>
     <script src="{{ versionResource('backend/js/ux-ui/jquery.slimscroll.min.js') }}" defer></script>
     <script src="{{ versionResource('backend/js/ux-ui/jquery.nicescroll.min.js') }}" defer></script>

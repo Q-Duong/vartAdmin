@@ -1,4 +1,5 @@
 @extends('layouts.default_auth')
+@section('title', __('conference.en.en_register_title') . ' - ')
 @section('content')
     <div class="table-agile-info">
         <div class="panel-heading">
@@ -8,6 +9,7 @@
             <table class="table table-striped b-t b-light table-bordered">
                 <thead>
                     <tr>
+                        <th>@lang('conference.en.create')</th>
                         <th>@lang('conference.en.id')</th>
                         <th>@lang('conference.en.code')</th>
                         <th>@lang('conference.en.title.title')</th>
@@ -20,7 +22,6 @@
                         <th>@lang('conference.en.phone')</th>
                         <th>@lang('conference.en.type_register')</th>
                         <th>@lang('conference.en.cost')</th>
-                        <th>@lang('conference.en.create')</th>
                         <th>@lang('conference.en.status.status')</th>
                         <th>@lang('conference.en.management')</th>
                     </tr>
@@ -28,6 +29,7 @@
                 <tbody>
                     @foreach ($getAllConferenceRegisterInternational as $key => $en_register)
                         <tr>
+                            <td>{{ \Carbon\Carbon::parse($en_register->created_at)->format('H:i:s d/m/Y') }}</td>
                             <td>{{ $en_register->id }}</td>
                             <td>{{ $en_register->en_register_code }}</td>
                             <td>{{ $en_register->en_register_title }}</td>
@@ -40,7 +42,6 @@
                             <td>{{ $en_register->en_register_phone }}</td>
                             <td>{{ $en_register->conference_fee_title }}</td>
                             <td>{{ '$' . number_format($en_register->payment_price, 2) }}</td>
-                            <td>{{ \Carbon\Carbon::parse($en_register->created_at)->format('d/m/Y H:i:s') }}</td>
                             <td>
                                 @if ($en_register->payment_status == 1)
                                     <span style="color: #27c24c;">@lang('conference.en.status.step1')</span>
@@ -53,24 +54,22 @@
                                 @endif
                             </td>
                             <td class="management">
-                                <a href="{{ Route('conference_en_register.edit', $en_register->id) }}"
+                                <a href="{{ Route('conference_en_register.edit', [$conference->conference_code, $en_register->id]) }}"
                                     class="management-btn" title="@lang('vart_define.button.update')"><i
                                         class="fa fa-pencil-square-o text-success text-active"></i>
                                 </a>
                                 <form action="{{ Route('conference_en_register.destroy', $en_register->id) }}"
-                                    method="POST">
+                                    method="POST" id="delete-form">
                                     @method('delete')
                                     @csrf
-                                    <button type="submit" class="management-btn button-submit"
+                                    <button type="submit" class="management-btn button-delete"
                                         title="@lang('vart_define.button.delete')"><i class="fa fa-times text-danger text"></i></button>
                                 </form>
-                                <form action="{{ Route('sendMailReply', $en_register->id) }}" method="POST">
-                                    @method('patch')
+                                <form action="{{ Route('mail.reply', $en_register->id) }}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="email" value="{{ $en_register->en_register_email }}">
                                     <input type="hidden" name="type" value="en_register">
                                     <button type="submit" class="management-btn button-submit"
-                                        title="@lang('vart_define.button.mail')"><i class="far fa-envelope"></i></button>
+                                        title="@lang('vart_define.button.mail')"><i class="far fa-envelope btn-mail"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -80,9 +79,9 @@
         </div>
         {{ $getAllConferenceRegisterInternational->links('pagination::bootstrap-4') }}
         <div class="export-excel">
-            <form action="{{ route('export-excel') }}" method="POST">
+            <form action="{{ route('export.excel') }}" method="POST">
                 @csrf
-                <input type="hidden" name="conference_id" value="{{ $conference_id }}">
+                <input type="hidden" name="conference_id" value="{{ $conference->id }}">
                 <input type="hidden" name="export_type" value="enrt">
                 <div class="col-md-3">
                     <button type="submit" class="primary-btn-filter">@lang('conference.en.export_excel')</button>
