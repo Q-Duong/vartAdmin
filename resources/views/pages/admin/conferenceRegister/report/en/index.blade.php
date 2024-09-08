@@ -86,7 +86,7 @@
                 </tbody>
             </table>
         </div>
-        {{ $getAllConferenceReportInternational->links('pagination::bootstrap-4') }}
+        {{ $getAllConferenceReportInternational->links('pagination::custom') }}
         <div class="export-excel">
             <form action="{{ route('export.excel') }}" method="POST">
                 @csrf

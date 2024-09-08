@@ -146,7 +146,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::get('test-mail', function () {
-        return view('mail.report.hart.international')->with([
+        return view('mail.report.hart.national')->with([
             'title' => 'mr.',
             'name' => 'Dương',
             'code' => 'DVs',

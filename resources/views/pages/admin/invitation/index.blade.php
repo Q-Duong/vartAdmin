@@ -18,6 +18,6 @@
                 </tbody>
             </table>
         </div>
-        {{ $getInvitation->links('pagination::bootstrap-4') }}
+        {{ $getInvitation->links('pagination::custom') }}
     </div>
 @endsection

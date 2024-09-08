@@ -40,8 +40,9 @@ class ReportMail extends Mailable
                 $modelContent = [
                     'title' => $this->title,
                     'name' => $this->name,
+                    'code' => $this->code,
                 ];
-                $subject = 'Xác nhận nộp bài báo cáo';
+                $subject = 'Thư mời tham gia báo cáo';
                 $mail = $mailFrom->with($modelContent)->view('mail.report.hart.national')->subject($subject);
                 return $mail;
 

@@ -26,7 +26,8 @@
         as="style" />
     <link rel="stylesheet" href="{{ versionResource('assets/styles/landing/web/essential.built.css') }}" type="text/css"
         as="style">
-    <link rel="stylesheet" href="{{ versionResource('backend/css/font.css') }}" type="text/css" as="style" />
+    <link rel="stylesheet" href="{{ versionResource('assets/styles/landing/web/unified.css') }}" type="text/css"
+        as="style">
     {{-- <link rel="stylesheet" href="{{ versionResource('backend/css/morris.css') }}" type="text/css" />  --}}
     <!-- calendar -->
     <link rel="stylesheet" href="{{ versionResource('backend/css/monthly.css') }}" as="style" />

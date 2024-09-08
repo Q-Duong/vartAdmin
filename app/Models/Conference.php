@@ -21,6 +21,7 @@ class Conference extends Model
         'conference_image_en',
         'conference_form_type',
         'status',
+        'prioritize',
         'display',
         'conference_category_id',
         'conference_type_id',

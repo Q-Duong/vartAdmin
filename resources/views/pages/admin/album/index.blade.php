@@ -26,7 +26,7 @@
                     @endforeach
                 </tbody>
             </table>
-            {{ $getAllImages->links('pagination::bootstrap-4') }}
+            {{ $getAllImages->links('pagination::custom') }}
         </div>
     </div>
 @endsection

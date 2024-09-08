@@ -30,41 +30,41 @@
             </h4>
         </div>
         <div style="text-align: right; font-style: italic; margin: 40px 50px; font-size: 15px;">
-            <strong>TP. Hồ Chí Minh, ngày {{ \Carbon\Carbon::now()->day }} tháng {{ \Carbon\Carbon::now()->month }} năm
-                {{ \Carbon\Carbon::now()->year }}</strong>
+            <b>TP. Hồ Chí Minh, ngày {{ \Carbon\Carbon::now()->day }} tháng {{ \Carbon\Carbon::now()->month }} năm
+                {{ \Carbon\Carbon::now()->year }}</b>
         </div>
         <div>
             <h3 style="text-align: center; color: #601e89;">
-                XÁC NHẬN NỘP BÀI BÁO CÁO
+                    THƯ MỜI THAM GIA BÁO CÁO
             </h3>
         </div>
         <div style="width: 86%; margin: 50px auto;">
             <div style="margin: 0 0 20px 30px;">
-                Kính gửi<strong> {{ $title == 0 ? 'Ông' : 'Bà' }} <span
-                        style=" text-transform: uppercase">{{ $name }}</span></strong>,
+                Kính gửi<b> {{ $title == 0 ? 'Ông' : 'Bà' }} <span
+                        style=" text-transform: uppercase">{{ $name }}</span></b>,
             </div>
             <div>
                 <div style="margin-bottom: 25px; text-align: justify;">
-                    <span style="margin-left: 30px;">Cảm ơn <strong>{{ $title == 0 ? 'Ông' : 'Bà' }} <span
-                                style="text-transform: uppercase">{{ $name }}</span></strong></span> đã đăng ký
-                    tham gia và nộp bài thành công.
+                    <span style="margin-left: 30px;">Cảm ơn <b>{{ $title == 0 ? 'Ông' : 'Bà' }} <span
+                                style="text-transform: uppercase">{{ $name }}</span></b></span> đã đăng ký
+                    tham gia.
                     <div style="text-align: center;">
                         <br><b>"Xu thế Kỹ thuật hình ảnh y học từ nghiên cứu đến thực
                             hành"</b>
                     </div>
-                    <br>Thông báo bình duyệt bài thành công sẽ được gửi đến email trong thời gian sớm nhất. Vui lòng thường xuyên kiểm tra email.
+                    <br>Ban tổ chức xin thông báo: Bài báo cáo của Quý đại biểu đã được bình duyệt và mời Quý đại biểu tham dự báo cáo.
                 </div>
                 <div style="margin-bottom: 25px; text-align: justify;">
                     Quý đại biểu có thể bấm vào đường <a href="https://vart.vn/invitation"
-                        target="_blank"><strong>Link</strong></a> và điền <strong>Password: Hart2024</strong>
+                        target="_blank"><b>Link</b></a> và điền <b>Mã code: {{$code}}</b>
                     để lấy thư mời.
                 </div>
                 <div style="margin-left: 50%;">
-                    <div style="text-align: center;"><strong>TM.BAN THƯỜNG VỤ LIÊN CHI HỘI</strong></div>
-                    <div style="text-align: center;"><strong>CHỦ TỊCH</strong></div>
+                    <div style="text-align: center;"><b>TM.BAN THƯỜNG VỤ LIÊN CHI HỘI</b></div>
+                    <div style="text-align: center;"><b>CHỦ TỊCH</b></div>
                     <img src="https://images.vart.vn/gmail/sign-hart.png"
                         style="height: 70px; width: 120px; margin-left: 90px">
-                    <div style="text-align: center;"><strong>Ths.Thái Văn Lộc</strong></div>
+                    <div style="text-align: center;"><b>Ths.Thái Văn Lộc</b></div>
                 </div>
             </div>
         </div>
