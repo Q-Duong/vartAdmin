@@ -9,12 +9,10 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AlbumController;
-use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Conference\ConferenceCategoryController;
 use App\Http\Controllers\Conference\ConferenceController;
 use App\Http\Controllers\Conference\ConferenceFeeController;
-use App\Http\Controllers\Conference\ExportController;
 use App\Http\Controllers\Conference\ReportController;
 use App\Http\Controllers\Conference\RegisterController;
 use App\Http\Controllers\ExcelController;
@@ -143,6 +141,13 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('{code}/update', [RegisterController::class, 'updateInternational'])->name('conference_en_register.update');
             Route::delete('delete/{id}', [RegisterController::class, 'destroyInternational'])->name('conference_en_register.destroy');
         });
+        Route::prefix('vip')->group(function () {
+            Route::get('/', [RegisterController::class, 'indexV'])->name('register_management_vip.index');
+            Route::get('{code}', [RegisterController::class, 'indexVip'])->name('conference_vip_register.index');
+            Route::get('{code}/edit/{id}', [RegisterController::class, 'editVip'])->name('conference_vip_register.edit');
+            Route::post('{code}/update', [RegisterController::class, 'updateVip'])->name('conference_vip_register.update');
+            Route::delete('delete/{id}', [RegisterController::class, 'destroyVip'])->name('conference_vip_register.destroy');
+        });
     });
 
     Route::get('test-mail', function () {
@@ -228,8 +233,10 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 // Invitation
-
-Route::get('/intitation', [InvitationController::class, 'index'])->name('invitation.index');
+Route::prefix('invitation')->group(function () {
+    Route::get('/', [InvitationController::class, 'index'])->name('invitation.index');
+    Route::get('{code}', [InvitationController::class, 'indexDetails'])->name('invitation.index_details');
+});
 
 Route::get('/config-cache', function () {
     Artisan::call('config:cache');

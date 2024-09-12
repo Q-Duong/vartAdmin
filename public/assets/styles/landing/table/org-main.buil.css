@@ -23,13 +23,6 @@
 }
 
 .table-agile-info {
-    /* background: #eef9f0;
-    padding: 2em;
-    border-radius: 4px;
-    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
-    box-shadow: 0 1px 1px rgba(0,0,0,.05); */
-
-    /* padding: 0 1.5em; */
     background: #ffffff;
     border-radius: 15px;
     margin-top: 6px;
@@ -43,6 +36,97 @@ table.table.table-bordered.table-dark {
 table.table.table-bordered.table-dark tr th {
     color: #111111;
 }
+
+@media (max-width: 800px) {
+    .table td, .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+        padding: 7px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .table td, .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+        padding: 6px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .table td, .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+        padding: 5px !important;
+    }
+}
+
+@media (max-width: 414px) {
+    .table td, .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+        padding: 6px !important;
+    }
+}
+
+@media (max-width: 375px) {
+    .table td, .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+        font-size: 0.75em;
+    }
+}
+
+@media (max-width: 320px) {
+    .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+        font-size: 0.75em;
+    }
+}
+
+.table-scroll {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    margin: auto;
+    overflow: auto;
+    left: 0;
+}
+
+.table-scroll table {
+    width: 100%;
+    min-width: 1280px;
+    margin: auto;
+    border-collapse: separate;
+}
+
+.table-scroll .section-title {
+    height: 60px;
+}
+
+.table-scroll th,
+.table-scroll td {
+    border: 1px solid #ddd;
+}
+
+.table-scroll .section-title th {
+    background: #f8f8f8;
+}
+
+.table-scroll .section-title th:first-child {
+    border-top-left-radius: 15px;
+}
+
+.table-scroll .section-title th:last-child {
+    border-top-right-radius: 15px;
+}
+
+.section-title>th {
+    padding: 15px 8px !important;
+}
+
+.section-filter>th {
+    background: #f8f8f8;
+}
+
+.table-scroll>.table>thead>.section-title>th {
+    border-top: 1px solid #ddd !important;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    line-height: 1.42857143;
+    vertical-align: middle;
+}
+
 
 .management {
     display: flex;
@@ -71,45 +155,4 @@ table.table.table-bordered.table-dark tr th {
     -webkit-transition: all, 0.6s;
     -o-transition: all, 0.6s;
     transition: all, 0.6s;
-}
-
-@media (max-width: 800px) {
-    .table td, .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-        padding: 7px !important;
-    }
-}
-@media (max-width: 768px) {
-    .table td, .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-        padding: 6px !important;
-    }
-}
-@media (max-width: 480px) {
-    .table td, .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-        padding: 5px !important;
-    }
-}
-@media (max-width: 414px) {
-    .table td, .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-        padding: 6px !important;
-    }
-}
-@media (max-width: 384px) {
-    .table td, .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-        padding: 3px !important;
-    }
-}
-@media (max-width: 375px) {
-    .table td, .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-        padding: 4px !important;
-        font-size: 0.75em;
-    }
-}
-@media (max-width: 320px) {
-    .table td, .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-        padding: 0px !important;
-    }
-
-    .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
-        font-size: 0.75em;
-    }
 }

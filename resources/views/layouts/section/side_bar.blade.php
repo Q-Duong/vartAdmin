@@ -142,6 +142,24 @@
                         </a>
                     </li>
                 @endcan
+                @canany(['isAdmin', 'isSubAdmin', 'isStaffRegister', 'isStaffInter'])
+                    <li class="sub-menu">
+                        <a class="{{ request()->routeIs('conference_vip_register.index') || request()->routeIs('conference_vip_register.edit') || request()->routeIs('register_management_vip.index') ? 'active' : '' }}"
+                            href="{{ Route('register_management_vip.index') }}">
+                            <i class="far fa-list-alt"></i>
+                            <span>@lang('conference.en.vip_register_title')</span>
+                        </a>
+                    </li>
+                @endcan
+                @canany(['isAdmin', 'isSubAdmin'])
+                    <li class="sub-menu">
+                        <a class="{{ request()->routeIs('invitation.index') || request()->routeIs('invitation.index_details') ? 'active' : '' }}"
+                            href="{{ Route('invitation.index') }}">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            <span>@lang('vart_define.en.invitation_history')</span>
+                        </a>
+                    </li>
+                @endcan
                 @can('isAdmin')
                     <li class="sub-menu">
                         <a class="{{ request()->routeIs('blog_category.index') || request()->routeIs('blog_category.create') || request()->routeIs('blog_category.edit') ? 'active' : '' }}"

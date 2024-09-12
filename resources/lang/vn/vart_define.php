@@ -22,5 +22,8 @@ return [
         'delete' => 'Delete',
         'copy' => 'Copy',
         'mail' => 'Send mail',
+    ],
+    'en' => [
+        'invitation_history' => 'Invitation History'
     ]
 ];

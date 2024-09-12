@@ -14,14 +14,13 @@ use App\Models\Academic;
 use App\Models\Conference;
 use App\Models\EnRegister;
 use App\Models\TempFile;
+use App\Models\Vip;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    public function __construct()
-    {
-    }
-
+    public function __construct() {}
+    //VN
     public function index()
     {
         $conferences = Conference::select('id', 'conference_title', 'conference_code')->orderBy('id', 'DESC')->get();
@@ -31,48 +30,23 @@ class RegisterController extends Controller
     public function indexNational($code)
     {
         $conference = Conference::select('id', 'conference_title', 'conference_code')->firstWhere('conference_code', $code);
-        $getAllConferenceRegister = Register::join('payments', 'payments.id', '=', 'registers.payment_id')
-            ->join('conference_fees', 'payments.conference_fee_id', '=', 'conference_fees.id')
-            ->select(
-                'registers.conference_id',
-                'payment_id',
-                'registers.id',
-                'register_code',
-                'register_degree',
-                'register_name',
-                'register_gender',
-                'register_date',
-                'register_month',
-                'register_year',
-                'register_work_unit',
-                'register_place_of_birth',
-                'register_nation',
-                'register_email',
-                'register_phone',
-                'register_object_group',
-                'conference_fee_title',
-                'payment_price',
-                'register_receiving_address',
-                'registers.created_at',
-                'register_graduation_year',
-                'register_image',
-                'register_image_card',
-                'payment_image',
-                'payment_status'
-            )
-            ->where('registers.conference_id', $conference->id)
-            ->orderBy('registers.id', 'DESC')
-            ->paginate(10);
-        return view('pages.admin.conferenceRegister.register.vn.index', compact('getAllConferenceRegister', 'conference'));
+        $getAllConferenceRegister = Register::getAllRegisterWithPaginate($conference->id);
+        $totalAmount = Register::getAllRegisterAmount($conference->id);
+        $totalTheory = Register::getAllRegisterByParamCode($conference->id, 'LT');
+        $totalPractice = Register::getAllRegisterByParamCode($conference->id, 'TH');
+        $totalCME = Register::getAllRegisterByParamCode($conference->id, 'CE');
+        $totalStatus = Register::getAllRegisterAmountStatus($conference->id);
+        return view('pages.admin.conferenceRegister.register.vn.index', compact('getAllConferenceRegister', 'conference', 'totalAmount', 'totalTheory', 'totalPractice', 'totalCME', 'totalStatus'));
     }
 
-    function str_replace_last($search, $replace, $subject) {
+    function str_replace_last($search, $replace, $subject)
+    {
         $pos = strrpos($subject, $search);
-    
+
         if ($pos !== false) {
             $subject = substr_replace($subject, $replace, $pos, strlen($search));
         }
-    
+
         return $subject;
     }
 
@@ -197,7 +171,7 @@ class RegisterController extends Controller
         $payment->delete();
         return Redirect()->back()->with('success',  __('alert.conference.successMessage_delete'));
     }
-
+    //EN
     public function indexEn()
     {
         $conferences = Conference::select('id', 'conference_title_en', 'conference_code')->orderBy('id', 'DESC')->get();
@@ -223,7 +197,8 @@ class RegisterController extends Controller
                 'conference_fee_title',
                 'payment_price',
                 'en_registers.created_at',
-                'payment_status')
+                'payment_status'
+            )
             ->where('en_registers.conference_id', $conference->id)
             ->orderBy('en_registers.id', 'DESC')
             ->paginate(10);
@@ -272,6 +247,111 @@ class RegisterController extends Controller
         $en_register = EnRegister::findOrFail($id);
         $payment = Payment::findOrFail($en_register->payment_id);
         $payment->delete();
+        return Redirect()->back()->with('success',  __('alert.conference.successMessage_delete'));
+    }
+    //VIP
+    public function indexV()
+    {
+        $conferences = Conference::select('id', 'conference_title', 'conference_code')->orderBy('id', 'DESC')->get();
+        return view('pages.admin.conferenceRegister.register.vip.list', compact('conferences'));
+    }
+
+    public function indexVip($code)
+    {
+        $conference = Conference::select('id', 'conference_title', 'conference_code')->firstWhere('conference_code', $code);
+        $getAllConferenceRegisterVip = Vip::where('conference_id', $conference->id)
+            ->orderBy('id', 'DESC')
+            ->paginate(10);
+        return view('pages.admin.conferenceRegister.register.vip.index', compact('getAllConferenceRegisterVip', 'conference'));
+    }
+
+    public function editVip($code, $id)
+    {
+        $register = Register::join('payments', 'payments.id', '=', 'registers.payment_id')
+            ->join('conference_fees', 'payments.conference_fee_id', '=', 'conference_fees.id')
+            ->select(
+                'registers.conference_id',
+                'payment_id',
+                'registers.id',
+                'register_code',
+                'register_degree',
+                'register_name',
+                'register_gender',
+                'register_date',
+                'register_month',
+                'register_year',
+                'register_work_unit',
+                'register_place_of_birth',
+                'register_nation',
+                'register_email',
+                'register_phone',
+                'register_object_group',
+                'conference_fee_title',
+                'payment_price',
+                'register_receiving_address',
+                'registers.created_at',
+                'register_graduation_year',
+                'register_image',
+                'register_image_card',
+                'payment_image',
+                'payment_status'
+            )->firstWhere('registers.id', $id);
+        $getAllAcademic = Academic::orderBy('id', 'asc')->get();
+        $getAllProvince = Province::orderby('sort', 'ASC')->orderByRaw("CONVERT(province_name USING utf8mb4) COLLATE utf8mb4_unicode_ci")->get();
+        return view('pages.admin.conferenceRegister.register.vn.edit', compact('code', 'register', 'getAllAcademic', 'getAllProvince'));
+    }
+
+    public function updateVip(Request $request, $code)
+    {
+        $validator = Validator::make($request->all(), app(ValidateController::class)->validateRegister('vn'), app(ValidateController::class)->messageRegister());
+        if ($validator->fails()) {
+            return response()->json(array('errors' => true, 'validator' => $validator->errors()));
+        }
+        DB::beginTransaction();
+        try {
+            $register = Register::findOrFail($request->register_id);
+            $register->register_name = mb_strtoupper($request->register_name, 'UTF-8');
+            $register->register_gender = $request->register_gender;
+            $register->register_date = $request->register_date;
+            $register->register_month = $request->register_month;
+            $register->register_year = $request->register_year;
+            $register->register_place_of_birth = $request->register_place_of_birth;
+            $register->register_nation = $request->register_nation;
+            $register->register_object_group = $request->register_object_group;
+            $register->register_work_unit = $request->register_work_unit;
+            $register->register_email = $request->register_email;
+            $register->register_phone = $request->register_phone;
+            $register->register_graduation_year = $request->register_graduation_year;
+            if (!empty($request->register_image)) {
+                $register->register_image = $request->register_image;
+                $tempFile = TempFile::firstWhere('folder', $request->register_image);
+                $tempFile->delete();
+            }
+            if (!empty($request->register_image_card)) {
+                $register->register_image_card = $request->register_image_card;
+                $tempFile = TempFile::firstWhere('folder', $request->register_image_card);
+                $tempFile->delete();
+            }
+            $register->save();
+            $payment = Payment::findOrFail($register->payment_id);
+            $payment->payment_status = $request->payment_status;
+            if (!empty($request->payment_image)) {
+                $payment->payment_image = $request->payment_image;
+                $tempFile = TempFile::firstWhere('folder', $request->payment_image);
+                $tempFile->delete();
+            }
+            $payment->save();
+            DB::commit();
+            return response()->json(array('success' => true, 'message' => __('alert.conference.successMessage_update'), 'route' => route('conference_register.index', $code)));
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(array('success' => false, 'message' => __('alert.conference.errorMessage_update'), 'route' => route('conference_register.index', $code)));
+        }
+    }
+
+    public function destroyVip($id)
+    {
+        $register = Register::findOrFail($id);
         return Redirect()->back()->with('success',  __('alert.conference.successMessage_delete'));
     }
 }

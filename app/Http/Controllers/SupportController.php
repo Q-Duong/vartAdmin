@@ -8,6 +8,7 @@ use App\Exports\ExcelExportVNReport;
 use App\Exports\ExcelExportENReport;
 use App\Exports\ExcelExportVnRegister;
 use App\Exports\ExcelExportEnRegister;
+use App\Exports\ExcelExportVipRegister;
 use App\Mail\RegisterMail;
 use App\Models\EnRegister;
 use App\Models\Payment;
@@ -36,6 +37,9 @@ class SupportController extends Controller
                 break;
             case ('enrt'):
                 return Excel::download(new ExcelExportEnRegister($request->conference_id), 'RegisterEN.xlsx');
+                break;
+            case ('viprt'):
+                return Excel::download(new ExcelExportVipRegister($request->conference_id), 'RegisterVip.xlsx');
                 break;
             default:
                 return Redirect::back();

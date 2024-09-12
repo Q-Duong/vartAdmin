@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Builders\RegisterBuilder;
 use Illuminate\Database\Eloquent\Model;
 
 class Register extends Model
@@ -42,5 +43,9 @@ class Register extends Model
     public function payment()
     {
         return $this->belongsTo(Payment::class);
+    }
+    public function newEloquentBuilder($query): RegisterBuilder
+    {
+        return new RegisterBuilder($query);
     }
 }

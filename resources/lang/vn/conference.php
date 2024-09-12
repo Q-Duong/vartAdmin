@@ -48,6 +48,7 @@ return [
         'en_report_title' => 'International Report List',
         'register_title' => 'Registration List',
         'en_register_title' => 'International Registration List',
+        'vip_register_title' => 'Vip Registration List',
         'id' => 'ID',
         'code' => 'Code',
         'degree' => 'Academic degree',

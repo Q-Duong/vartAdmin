@@ -37,14 +37,45 @@
     --sk-enviro-neutral: rgb(232, 232, 237);
 }
 
+.pagination-info {
+    padding: 0 22px;
+    max-width: 330px;
+    margin: 20px auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 734px) {
+    .pagination-info {
+        padding: 0 10px;
+    }
+}
+
+.pagination-info__text {
+    color: #666;
+    font-size: 15px;
+    line-height: 1.2353641176;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+@media only screen and (max-width: 734px) {
+    .pagination-info__text {
+        font-size: 14px;
+    }
+}
+
 .pagination-ctrl {
-    margin-top: 60px;
-    margin-bottom: 60px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 @media only screen and (max-width: 734px) {
     .pagination-ctrl {
-        margin-top:13px;
+        margin-top: 13px;
         margin-bottom: 45px
     }
 }
@@ -66,13 +97,13 @@
 
 @media only screen and (max-width: 734px) {
     .pagination-ctrl__content {
-        padding:0 16px
+        padding: 0 16px
     }
 }
 
 @media only screen and (max-width: 734px) {
     .pagination-ctrl__content {
-        max-width:314px
+        max-width: 314px
     }
 }
 
@@ -94,14 +125,14 @@
     margin-top: 0;
 }
 
-.pagination-ctrl__btn:disabled,.pagination-ctrl__btn.disabled {
+.pagination-ctrl__btn:disabled, .pagination-ctrl__btn.disabled {
     pointer-events: none;
     opacity: .4
 }
 
 @media(hover: hover) {
     .pagination-ctrl__btn:hover {
-        background-color:#e8e8ed;
+        background-color: #e8e8ed;
         color: #1d1d1f;
         text-decoration: none
     }
@@ -116,13 +147,13 @@
     opacity: .4
 }
 
-.pagination-ctrl__btn:hover,.pagination-ctrl__btn:focus {
+.pagination-ctrl__btn:hover, .pagination-ctrl__btn:focus {
     text-decoration: none
 }
 
 @media(hover: hover) {
     .pagination-ctrl a.pagination-ctrl__btn:hover {
-        text-decoration:none
+        text-decoration: none
     }
 }
 
@@ -204,4 +235,89 @@ a.icon {
     width: 1px;
     padding: 0;
     border: 0;
+}
+
+.filter-section {
+    margin: 15px;
+}
+
+@media only screen and (max-width: 734px) {
+    .filter-section {
+        margin: 15px 0;
+    }
+}
+
+.filter-tiles {
+    border-radius: 10px;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .15), 2px 2px 6px 2px rgba(60, 64, 67, .15);
+    background-color: #fff;
+}
+
+@media only screen and (max-width: 991px) {
+    .filter-tiles:first-child {
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+
+    .filter-tiles {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+}
+
+.filter-title {
+    border-bottom: 2px solid #ced4da;
+    border-radius: 10px 10px 0 0;
+    padding: 10px 0;
+}
+
+.filter-title-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: #346fdb;
+    letter-spacing: 0.04em;
+    font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    padding: 0 16px;
+}
+
+@media (max-width: 375px) {
+    .filter-title-text {
+        font-size: .76em;
+    }
+}
+
+.filter-content {
+    padding: 15px;
+}
+
+.filter-content-block {
+    display: flex;
+    align-items: center;
+}
+
+.filter-content-title {
+    font-weight: 600;
+    color: #444;
+    font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+@media (max-width: 375px) {
+    .filter-content-title {
+        font-size: 13px;
+    }
+}
+
+.filter-content-details{
+    font-weight: 600;
+    color: #444;
+    font-size: 16px;
+    font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+@media (max-width: 375px) {
+    .filter-content-details {
+        font-size: 13px;
+    }
 }
