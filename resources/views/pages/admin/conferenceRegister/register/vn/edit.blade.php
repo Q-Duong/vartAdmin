@@ -4,8 +4,8 @@
     <link rel="stylesheet" href="{{ versionResource('assets/styles/support/filepond.css') }}" type="text/css" as="style" />
     <link rel="stylesheet" href="{{ versionResource('assets/styles/support/filepond-preview.css') }}" type="text/css"
         as="style" />
-    <link rel="stylesheet" href="{{ versionResource('assets/styles/landing/web/app-eyebrow.css') }}" type="text/css"
-        as="style">
+    <link rel="stylesheet" href="{{ versionResource('assets/styles/landing/web/form.built.css') }}" type="text/css"
+        as="style" />
 @endpush
 @section('content')
     <div class="row">
@@ -24,15 +24,14 @@
                         <form id="update-form">
                             @csrf
                             <input type="hidden" name="register_id" value="{{ $register->id }}">
-                            <div class="form-element">
+                            <div class="form-textbox">
                                 <input type="text" name="register_object_group"
-                                    class="form-textbox {{ $register->register_object_group ? 'form-textbox-entered' : '' }}"
+                                    class="form-textbox-input {{ $register->register_object_group ? 'form-textbox-entered' : '' }}"
                                     value="{{ $register->register_object_group }}">
-                                <span class="form-label">@lang('conference.en.object_group')</span>
+                                <span class="form-textbox-label">@lang('conference.en.object_group')</span>
                             </div>
-                            <div class="form-element">
-                                <span class="select-label">@lang('conference.en.degree')</span>
-                                <select class="select-textbox" name="register_degree">
+                            <div class="form-dropdown">
+                                <select class="form-dropdown-select" name="register_degree">
                                     @foreach ($getAllAcademic as $key => $academic)
                                         <option value="{{ $academic->academic_title }}"
                                             {{ $academic->academic_title == $register->register_degree ? 'selected' : '' }}>
@@ -41,43 +40,49 @@
                                     @endforeach
                                     <option value="">Trống</option>
                                 </select>
+                                <span class="form-dropdown-chevron" aria-hidden="true"><i
+                                        class="fa-solid fa-angle-down"></i></span>
+                                <span class="form-dropdown-label">@lang('conference.en.degree')</span>
                             </div>
-                            <div class="form-element">
+                            <div class="form-textbox">
                                 <input name="register_name"
-                                    class="form-textbox {{ $register->register_name ? 'form-textbox-entered' : '' }}"
+                                    class="form-textbox-input {{ $register->register_name ? 'form-textbox-entered' : '' }}"
                                     value="{{ $register->register_name }}">
-                                <div class="alert-error error hidden register_name">
+                                <div class="form-message-wrapper register_name">
                                     <i class="fa fa-exclamation-circle"></i>
-                                    <span class="register_name_message"></span>
+                                    <span class="register_name-form-message"></span>
                                 </div>
-                                <span class="form-label">@lang('conference.en.fullname')</span>
+                                <span class="form-textbox-label">@lang('conference.en.fullname')</span>
                             </div>
-                            <div class="form-element">
-                                <span class="select-label">@lang('conference.en.gender')</span>
-                                <select class="select-textbox" name="register_gender">
+                            <div class="form-dropdown">
+                                <select class="form-dropdown-select" name="register_gender">
                                     <option value="0" {{ $register->register_gender == 0 ? 'selected' : '' }}>
-                                        @lang('conference.en.male')</option>
+                                        @lang('conference.male')</option>
                                     <option value="1" {{ $register->register_gender == 1 ? 'selected' : '' }}>
-                                        @lang('conference.en.female')</option>
+                                        @lang('conference.female')</option>
                                 </select>
+                                <span class="form-dropdown-chevron" aria-hidden="true"><i
+                                        class="fa-solid fa-angle-down"></i></span>
+                                <span class="form-dropdown-label">@lang('conference.en.gender')</span>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <div class="form-element">
-                                        <span class="select-label">@lang('conference.en.date')</span>
-                                        <select class="select-textbox" name="register_date">
+                                    <div class="form-dropdown">
+                                        <select class="form-dropdown-select" name="register_date">
                                             @for ($i = 1; $i <= 31; $i++)
                                                 <option value="{{ $i }}"
                                                     {{ $register->register_date == $i ? 'selected' : '' }}>
                                                     {{ $i }}</option>
                                             @endfor
                                         </select>
+                                        <span class="form-dropdown-chevron" aria-hidden="true"><i
+                                                class="fa-solid fa-angle-down"></i></span>
+                                        <span class="form-dropdown-label">@lang('conference.en.date')</span>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                    <div class="form-element">
-                                        <span class="select-label">@lang('conference.en.month')</span>
-                                        <select class="select-textbox" name="register_month">
+                                    <div class="form-dropdown">
+                                        <select class="form-dropdown-select" name="register_month">
                                             @for ($i = 1; $i <= 12; $i++)
                                                 <option value="{{ $i }}"
                                                     {{ $register->register_month == $i ? 'selected' : '' }}>
@@ -85,12 +90,14 @@
                                                 </option>
                                             @endfor
                                         </select>
+                                        <span class="form-dropdown-chevron" aria-hidden="true"><i
+                                                class="fa-solid fa-angle-down"></i></span>
+                                        <span class="form-dropdown-label">@lang('conference.en.month')</span>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                    <div class="form-element">
-                                        <span class="select-label">@lang('conference.en.year')</span>
-                                        <select class="select-textbox" name="register_year">
+                                    <div class="form-dropdown">
+                                        <select class="form-dropdown-select" name="register_year">
                                             @for ($i = 1940; $i < 2010; $i++)
                                                 <option value="{{ $i }}"
                                                     {{ $register->register_year == $i ? 'selected' : '' }}>
@@ -98,76 +105,81 @@
                                                 </option>
                                             @endfor
                                         </select>
+                                        <span class="form-dropdown-chevron" aria-hidden="true"><i
+                                                class="fa-solid fa-angle-down"></i></span>
+                                        <span class="form-dropdown-label">@lang('conference.en.year')</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-element">
+                            <div class="form-textbox">
                                 <input type="text" name="register_work_unit"
-                                    class="form-textbox {{ $register->register_work_unit ? 'form-textbox-entered' : '' }}"
+                                    class="form-textbox-input {{ $register->register_work_unit ? 'form-textbox-entered' : '' }}"
                                     value="{{ $register->register_work_unit }}">
-                                <div class="alert-error error hidden register_work_unit">
+                                <div class="form-message-wrapper register_work_unit">
                                     <i class="fa fa-exclamation-circle"></i>
-                                    <span class="register_work_unit_message"></span>
+                                    <span class="register_work_unit-form-message"></span>
                                 </div>
-                                <span class="form-label">@lang('conference.en.unit')</span>
+                                <span class="form-textbox-label">@lang('conference.en.unit')</span>
                             </div>
-                            <div class="form-element">
-                                <span class="select-label">@lang('conference.en.place_of_birth')</span>
-                                <select class="select-textbox" name="register_place_of_birth">
+                            <div class="form-dropdown">
+                                <select class="form-dropdown-select" name="register_place_of_birth">
                                     @foreach ($getAllProvince as $key => $province)
                                         <option value="{{ $province->province_name }}"
                                             {{ $province->province_name == $register->register_place_of_birth ? 'selected' : '' }}>
                                             {{ $province->province_name }}</option>
                                     @endforeach
                                 </select>
+                                <span class="form-dropdown-chevron" aria-hidden="true"><i
+                                        class="fa-solid fa-angle-down"></i></span>
+                                <span class="form-dropdown-label">@lang('conference.en.place_of_birth')</span>
                             </div>
-                            <div class="form-element">
+                            <div class="form-textbox">
                                 <input type="text" name="register_nation"
-                                    class="form-textbox {{ $register->register_nation ? 'form-textbox-entered' : '' }}"
+                                    class="form-textbox-input {{ $register->register_nation ? 'form-textbox-entered' : '' }}"
                                     value="{{ $register->register_nation }}">
-                                <div class="alert-error error hidden register_nation">
+                                <div class="form-message-wrapper register_nation">
                                     <i class="fa fa-exclamation-circle"></i>
-                                    <span class="register_nation_message"></span>
+                                    <span class="register_nation-form-message"></span>
                                 </div>
-                                <span class="form-label">@lang('conference.en.nation')</span>
+                                <span class="form-textbox-label">@lang('conference.en.nation')</span>
                             </div>
-                            <div class="form-element">
+                            <div class="form-textbox">
                                 <input type="text" name="register_email"
-                                    class="form-textbox {{ $register->register_email ? 'form-textbox-entered' : '' }}"
+                                    class="form-textbox-input {{ $register->register_email ? 'form-textbox-entered' : '' }}"
                                     value="{{ $register->register_email }}">
-                                <div class="alert-error error hidden register_email">
+                                <div class="form-message-wrapper register_email">
                                     <i class="fa fa-exclamation-circle"></i>
-                                    <span class="register_email_message"></span>
+                                    <span class="register_email-form-message"></span>
                                 </div>
-                                <span class="form-label">@lang('conference.en.email')</span>
+                                <span class="form-textbox-label">@lang('conference.en.email')</span>
                             </div>
-                            <div class="form-element">
+                            <div class="form-textbox">
                                 <input type="text" name="register_phone"
-                                    class="form-textbox {{ $register->register_phone ? 'form-textbox-entered' : '' }}"
+                                    class="form-textbox-input {{ $register->register_phone ? 'form-textbox-entered' : '' }}"
                                     value="{{ $register->register_phone }}">
-                                <div class="alert-error error hidden register_phone">
+                                <div class="form-message-wrapper register_phone">
                                     <i class="fa fa-exclamation-circle"></i>
-                                    <span class="register_phone_message"></span>
+                                    <span class="register_phone-form-message"></span>
                                 </div>
-                                <span class="form-label">@lang('conference.en.phone')</span>
+                                <span class="form-textbox-label">@lang('conference.en.phone')</span>
                             </div>
-                            <div class="form-element">
+                            <div class="form-textbox">
                                 <input type="text" name="register_graduation_year"
-                                    class="form-textbox {{ $register->register_graduation_year ? 'form-textbox-entered' : '' }}"
+                                    class="form-textbox-input {{ $register->register_graduation_year ? 'form-textbox-entered' : '' }}"
                                     value="{{ $register->register_graduation_year }}">
-                                <span class="form-label">@lang('conference.en.graduation_year')</span>
+                                <span class="form-textbox-label">@lang('conference.en.graduation_year')</span>
                             </div>
-                            <div class="form-element">
+                            <div class="form-textbox">
                                 <input type="text" name="register_receiving_address"
-                                    class="form-textbox {{ $register->register_receiving_address ? 'form-textbox-entered' : '' }}"
+                                    class="form-textbox-input {{ $register->register_receiving_address ? 'form-textbox-entered' : '' }}"
                                     value="{{ $register->register_receiving_address }}">
-                                <div class="alert-error error hidden register_receiving_address">
+                                <div class="form-message-wrapper register_receiving_address">
                                     <i class="fa fa-exclamation-circle"></i>
-                                    <span class="register_receiving_address_message"></span>
+                                    <span class="register_receiving_address-form-message"></span>
                                 </div>
-                                <span class="form-label">@lang('conference.en.address')</span>
+                                <span class="form-textbox-label">@lang('conference.en.address')</span>
                             </div>
-                            <div class="form-element">
+                            <div class="form-textbox">
                                 <label>@lang('conference.en.image')</label>
                                 <input type="file" name="register_image"
                                     class="filepond register_image {{ $register->register_image == '' ? '' : 'hidden' }}">
@@ -191,7 +203,7 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="form-element">
+                            <div class="form-textbox">
                                 <label>@lang('conference.en.image_card')</label>
                                 <input type="file" name="register_image_card"
                                     class="filepond register_image_card {{ $register->register_image_card == '' ? '' : 'hidden' }}">
@@ -215,7 +227,7 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="form-element">
+                            <div class="form-textbox">
                                 <label>@lang('conference.en.transfer_image')</label>
                                 <input type="file" name="payment_image"
                                     class="filepond payment_image {{ $register->payment_image == '' ? '' : 'hidden' }}">
@@ -239,9 +251,8 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="form-element">
-                                <label>@lang('conference.en.status.status')</label>
-                                <select class="select-textbox" name="payment_status">
+                            <div class="form-dropdown">
+                                <select class="form-dropdown-select" name="payment_status">
                                     @if ($register->payment_status == 1)
                                         <option value="1" selected>@lang('conference.en.status.step1')</option>
                                         <option value="2">@lang('conference.en.status.step2')</option>
@@ -264,6 +275,9 @@
                                         <option value="4" selected>@lang('conference.en.status.step4')</option>
                                     @endif
                                 </select>
+                                <span class="form-dropdown-chevron" aria-hidden="true"><i
+                                        class="fa-solid fa-angle-down"></i></span>
+                                <span class="form-dropdown-label">@lang('conference.en.status.status')</span>
                             </div>
                             <button type="submit" class="primary-btn-submit button-submit">@lang('vart_define.button.update')</button>
                         </form>

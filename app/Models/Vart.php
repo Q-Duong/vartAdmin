@@ -14,11 +14,8 @@ class Vart extends Model
         'vart_title',
         'vart_title_en',
         'vart_slug',
-        'vart_image'
+        'vart_image',
+        'vart_text',
+        'vart_text_en',
     ];
-
-    public function vart_content()
-    {
-        $this->hasMany(VartContent::class);
-    }
 }

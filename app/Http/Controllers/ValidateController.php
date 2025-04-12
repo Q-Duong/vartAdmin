@@ -7,27 +7,16 @@ use Illuminate\Http\Request;
 class ValidateController extends Controller
 {
     //Conference
-    public function validateConference($action)
+    public function validateConference()
     {
-        if($action == 'create'){
-            $rules = [
-                'conference_code' => 'required',
-                'conference_title' => 'required',
-                'conference_title_en' => 'required',
-                'conference_content' => 'required',
-                'conference_content_en' => 'required',
-                'conference_image' => 'required|image',
-                'conference_image_en' => 'required|image',
-            ];
-        }else{
-            $rules = [
-                'conference_code' => 'required',
-                'conference_title' => 'required',
-                'conference_title_en' => 'required',
-                'conference_content' => 'required',
-                'conference_content_en' => 'required',
-            ];
-        }
+        $rules = [
+            'conference_code' => 'required',
+            'conference_title' => 'required',
+            'conference_title_en' => 'required',
+            'conference_content' => 'required',
+            'conference_content_en' => 'required',
+        ];
+
         return $rules;
     }
 
@@ -94,7 +83,8 @@ class ValidateController extends Controller
         return $rules;
     }
 
-    public function validateFindOldData($locale){
+    public function validateFindOldData($locale)
+    {
         if ($locale == 'en') {
             $rules = [
                 'en_report_email' => 'required|email|unique:users,email',
@@ -167,7 +157,8 @@ class ValidateController extends Controller
         return $rules;
     }
 
-    public function validateRegisterFindOldData($locale){
+    public function validateRegisterFindOldData($locale)
+    {
         if ($locale == 'en') {
             $rules = [
                 'en_register_email' => 'required|email|unique:users,email',
@@ -210,7 +201,7 @@ class ValidateController extends Controller
             'province_id.numeric' => __('validation.register.province_id_required'),
             'district_id.numeric' => __('validation.register.district_id_required'),
             'wards_id.numeric' => __('validation.register.wards_id_required'),
-            
+
 
             'en_register_firstname.required' => __('validation.register.en_register_firstname_required'),
             'en_register_firstname.regex' => __('validation.register.en_register_firstname_regex'),
@@ -221,6 +212,51 @@ class ValidateController extends Controller
             'en_register_phone.required' => __('validation.register.en_register_phone_required'),
             'en_register_phone.numeric' => __('validation.register.en_register_phone_numeric'),
             'en_register_work_unit.required' => __('validation.register.en_register_work_unit_required'),
+        ];
+
+        return $message;
+    }
+
+    //Blog Categories
+    public function validateBlogCategory($action)
+    {
+        $rules = [
+            'blog_category_name' => 'required',
+            'blog_category_name_en' => 'required',
+        ];
+        return $rules;
+    }
+
+    public static function messageBlogCategory()
+    {
+        $message = [
+            'blog_category_name.required' => __('validation.report.report_name_required'),
+            'blog_category_image.required' => __('validation.report.report_image_card_required'),
+            'blog_category_name_en.required' => __('validation.report.en_report_firstname_required'),
+        ];
+
+        return $message;
+    }
+
+    //Blog
+    public function validateBlog($action)
+    {
+        $rules = [
+            'blog_title' => 'required',
+            'blog_title_en' => 'required',
+            'blog_text' => 'required',
+            'blog_text_en' => 'required',
+        ];
+        return $rules;
+    }
+
+    public static function messageBlog()
+    {
+        $message = [
+            'blog_title.required' => __('validation.report.report_name_required'),
+            'blog_text.required' => __('validation.report.report_image_card_required'),
+            'blog_title_en.required' => __('validation.report.report_name_required'),
+            'blog_text_en.required' => __('validation.report.report_image_card_required'),
         ];
 
         return $message;

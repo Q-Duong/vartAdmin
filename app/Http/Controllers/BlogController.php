@@ -5,86 +5,125 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+use App\Models\TempFile;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class BlogController extends Controller
 {
+    private $folder;
+
+    public function __construct()
+    {
+        $this->folder = 'blog';
+    }
     public function index()
     {
-        $getAllBlog = Blog::orderBy('id', 'DESC')->get();
+        $getAllBlog = Blog::join('blog_categories', 'blog_categories.id', '=', 'blogs.blog_category_id')
+            ->select(
+                'blog_categories.blog_category_name_en',
+                'blogs.id',
+                'blog_title',
+                'blog_title_en',
+                'blog_image',
+            )
+            ->orderBy('id', 'DESC')
+            ->paginate(10);
         return view('pages.admin.blog.index', compact('getAllBlog'));
     }
-    public function create()
+
+    public function load(Request $request)
     {
-        $getAllBlogCategory = BlogCategory::orderBy('id', 'ASC')->get();
-        return view('pages.admin.blog.create', compact('getAllBlogCategory'));
+        $getAllBlog = Blog::join('blog_categories', 'blog_categories.id', '=', 'blogs.blog_category_id')
+            ->select(
+                'blog_categories.blog_category_name_en',
+                'blogs.id',
+                'blog_title',
+                'blog_title_en',
+                'blog_image',
+            )
+            ->orderBy('id', 'DESC')
+            ->paginate(10);
+        $html = view('pages.admin.blog.render', compact('getAllBlog'))->render();
+        return response()->json(array('success' => true, 'html' => $html));
     }
 
-    public function store(Request $request)
+    public function getForm(Request $request)
     {
-        $this->checkAddBlog($request);
-        $data = $request->all();
-        $blog = new Blog();
-        $blog->blog_title = $data['blog_title'];
-        $blog->blog_slug = $data['blog_slug'];
-        $blog->blog_content = $data['blog_content'];
-        $blog->blog_category_id = $data['blog_category_id'];
-        $get_image = $request->file('blog_image');
-        if (Blog::where('blog_title', $blog->blog_title)->exists()) {
-            return Redirect()->back()->with('error', 'Bài đã tồn tại, Vui lòng kiểm tra lại.')->withInput();
-        }
-
-        if ($get_image) {
-            $get_name_image = $get_image->getClientOriginalName();
-            $name_image = current(explode('.', $get_name_image));
-            $new_image =  $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
-            $get_image->move(public_path('storeimages/blog/'), $new_image);
-            $blog->blog_image = $new_image;
-            $blog->save();
-            return Redirect()->back()->with('success', 'Thêm bài viết thành công');
+        $getAllBlogCategory = BlogCategory::orderBy('id', 'DESC')->get();
+        if ($request->type == 'create') {
+            $html = view('pages.admin.blog.create', compact('getAllBlogCategory'))->render();
         } else {
-            return Redirect()->back()->with('error', 'Vui lòng thêm hình ảnh');
+            $blog = Blog::findOrFail($request->id);
+            $html = view('pages.admin.blog.edit', compact('getAllBlogCategory', 'blog'))->render();
         }
+        return response()->json(array('success' => true, 'html' => $html));
     }
-    public function edit($id)
-    {
-        $getAllBlogCategory = BlogCategory::orderBy('id', 'ASC')->get();
-        $blog = Blog::find($id);
-        return view('pages.admin.blog.edit', compact('getAllBlogCategory', 'blog'));
-    }
-    public function update(Request $request, $id)
-    {
-        $this->checkUpdateBlog($request);
-        $data = $request->all();
-        $blog = Blog::find($id);
-        $blog->blog_title = $data['blog_title'];
-        $blog->blog_slug = $data['blog_slug'];
-        $blog->blog_content = $data['blog_content'];
-        $blog->blog_category_id = $data['blog_category_id'];
-        $get_image = $request->file('blog_image');
 
-        if ($get_image) {
-            $blog_image_old = $blog->blog_image;
-            $path = public_path('storeimages/blog/');
-            unlink($path . $blog_image_old);
-            $get_name_image = $get_image->getClientOriginalName();
-            $name_image = current(explode('.', $get_name_image));
-            $new_image =  $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
-            $get_image->move($path, $new_image);
-            $blog->blog_image = $new_image;
-        }
-        $blog->save();
-        return Redirect::route('blog.index')->with('success', 'Cập nhật bài viết thành công');
-    }
-    public function destroy($id)
+    public function storeOrUpdate(Request $request)
     {
-        $blog = Blog::find($id);
-        $blog_image = $blog->blog_image;
-        if ($blog_image) {
-            unlink(public_path('storeimages/blog/') . $blog_image);
+        $validator = Validator::make($request->all(), app(ValidateController::class)->validateBlog($request->type), app(ValidateController::class)->messageBlog());
+        if ($validator->fails()) {
+            return response()->json(array('errors' => true, 'validator' => $validator->errors()));
         }
-        $blog->delete();
-        return Redirect()->back()->with('success', 'Xóa bài viết thành công');
+        DB::beginTransaction();
+        try {
+            if ($request->type == 'create') {
+                $blog = new Blog();
+                $blog->blog_title = $request->blog_title;
+                $blog->blog_title_en = $request->blog_title_en;
+                $blog->blog_slug = Str::slug($request->blog_title);
+                $blog->blog_text = $request->blog_text;
+                $blog->blog_text_en = $request->blog_text_en;
+                $blog->blog_category_id = $request->blog_category_id;
+                $file = TempFile::firstWhere('folder', $request->blog_image);
+                if ($file) {
+                    $blog->blog_image = moveFileSource($file->folder, $this->folder, $file->filename);
+                    $file->delete();
+                }
+                $blog->save();
+            } else {
+                $blog = Blog::findOrFail($request->id);
+                $blog->blog_title = $request->blog_title;
+                $blog->blog_title_en = $request->blog_title_en;
+                $blog->blog_slug = Str::slug($request->blog_title);
+                $blog->blog_text = $request->blog_text;
+                $blog->blog_text_en = $request->blog_text_en;
+                $blog->blog_category_id = $request->blog_category_id;
+                $file = TempFile::firstWhere('folder', $request->blog_image);
+                if ($file) {
+                    if ($blog->blog_image) {
+                        removeFileSource(getFolderForDestroyFile($blog->blog_image), true);
+                    }
+                    $blog->blog_image = moveFileSource($file->folder, $this->folder, $file->filename);
+                    $file->delete();
+                }
+                $blog->save();
+            }
+            DB::commit();
+            return response()->json(array('success' => true, 'message' => __('alert.blog.successfulNotification')));
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(array('success' => false, 'route' => '500'));
+        }
+    }
+
+    public function destroy(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $blog = Blog::findOrFail($request->id);
+            if ($blog->blog_image) {
+                removeFileSource(getFolderForDestroyFile($blog->blog_image), true);
+            }
+            $blog->delete();
+            DB::commit();
+            return response()->json(array('message' => __('alert.blog.successfulNotification'), 'success' => true));
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(array('success' => false, 'route' => '500'));
+        }
     }
 
     //Validation

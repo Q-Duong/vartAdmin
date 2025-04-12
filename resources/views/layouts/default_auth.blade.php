@@ -33,9 +33,7 @@
     {{-- <link rel="stylesheet" href="{{ versionResource('backend/css/morris.css') }}" type="text/css" />  --}}
     <!-- calendar -->
     <link rel="stylesheet" href="{{ versionResource('backend/css/monthly.css') }}" as="style" />
-    <!-- //calendar -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" as="style" />
-    <!-- //select2 -->
     <link href="{{ versionResource('backend/css/select2.min.css') }}" rel="stylesheet" as="style" />
     @stack('css')
 </head>
@@ -53,12 +51,12 @@
             @include('layouts.section.footer')
         </section>
         @include('layouts.section.notification')
+        @include('layouts.section.session_notification')
     </section>
 
     <script src="{{ versionResource('backend/js/jquery2.0.3.min.js') }}"></script>
     <script src="{{ versionResource('backend/js/bootstrap.js') }}"></script>
     <!-- Ux Ui -->
-
     <script src="{{ versionResource('backend/js/ux-ui/jquery.dcjqaccordion.2.7.min.js') }}" defer></script>
     <script src="{{ versionResource('backend/js/ux-ui/jquery.slimscroll.min.js') }}" defer></script>
     <script src="{{ versionResource('backend/js/ux-ui/jquery.nicescroll.min.js') }}" defer></script>
@@ -73,9 +71,7 @@
     @stack('js')
 
     <script type="text/javascript">
-        //Handle sales
         var url_upload_image_ck = "{{ route('file.upload_image_ck', ['_token' => csrf_token()]) }}";
-        // Revenue Statistics Url
     </script>
 
     {{-- [if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif] --}}

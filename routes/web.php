@@ -20,6 +20,7 @@ use App\Http\Controllers\HartController;
 use App\Http\Controllers\VartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\HrttaController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\VartContentController;
@@ -45,7 +46,7 @@ Route::get('/', [AdminController::class, 'login']);
 Route::group(['middleware' => 'auth'], function () {
     Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
     //Dashboard
-    Route::get('/dashboard', [AdminController::class, 'show_dashboard'])->name('dashboard.index');
+    Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard.index');
     // HomePage
     Route::prefix('home-page')->group(function () {
         Route::get('/', [HomeController::class, 'index'])->name('homePage.index');
@@ -79,27 +80,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('process', [FileController::class, 'process'])->name('file.process');
         Route::delete('revert', [FileController::class, 'revert'])->name('file.revert');
         Route::delete('delete', [FileController::class, 'destroy'])->name('file.destroy');
+        Route::delete('delete-content', [FileController::class, 'destroyContent'])->name('file.destroy_content');
         Route::post('upload-image-ck', [FileController::class, 'upload_image_ck'])->name('file.upload_image_ck');
     });
 
-    //Blog Category
-    Route::prefix('blog-category')->group(function () {
-        Route::get('/', [BlogCategoryController::class, 'index'])->name('blog_category.index');
-        Route::get('create', [BlogCategoryController::class, 'create'])->name('blog_category.create');
-        Route::post('save', [BlogCategoryController::class, 'store'])->name('blog_category.store');
-        Route::get('edit/{id}', [BlogCategoryController::class, 'edit'])->name('blog_category.edit');
-        Route::patch('update/{id}', [BlogCategoryController::class, 'update'])->name('blog_category.update');
-        Route::delete('delete/{id}', [BlogCategoryController::class, 'destroy'])->name('blog_category.destroy');
-    });
-    //Blog
-    Route::prefix('blog')->group(function () {
-        Route::get('/', [BlogController::class, 'index'])->name('blog.index');
-        Route::get('create', [BlogController::class, 'create'])->name('blog.create');
-        Route::post('save', [BlogController::class, 'store'])->name('blog.store');
-        Route::get('edit/{id}', [BlogController::class, 'edit'])->name('blog.edit');
-        Route::patch('update/{id}', [BlogController::class, 'update'])->name('blog.update');
-        Route::delete('delete/{id}', [BlogController::class, 'destroy'])->name('blog.destroy');
-    });
     //Excel
     Route::post('export-excel', [SupportController::class, 'export'])->name('export.excel');
     Route::get('print', [SupportController::class, 'print'])->name('invitation.print');
@@ -160,12 +144,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::prefix('conference')->group(function () {
         Route::get('/', [ConferenceController::class, 'index'])->name('conference.index');
-        Route::get('create', [ConferenceController::class, 'create'])->name('conference.create');
-        Route::post('save', [ConferenceController::class, 'store'])->name('conference.store');
-        Route::get('edit/{id}', [ConferenceController::class, 'edit'])->name('conference.edit');
-        Route::patch('update/{id}', [ConferenceController::class, 'update'])->name('conference.update');
-        Route::post('create-or-update', [ConferenceController::class, 'store_or_update'])->name('conference.store_or_update');
-        Route::delete('delete/{id}', [ConferenceController::class, 'destroy'])->name('conference.destroy');
+        Route::post('load', [ConferenceController::class, 'load'])->name('conference.load');
+        Route::post('get-form', [ConferenceController::class, 'getForm'])->name('conference.get_form');
+        Route::post('create-or-update', [ConferenceController::class, 'storeOrUpdate'])->name('conference.store_or_update');
+        Route::delete('delete', [ConferenceController::class, 'destroy'])->name('conference.destroy');
         //ConferenceFee
         Route::prefix('fee')->group(function () {
             Route::post('/', [ConferenceFeeController::class, 'index'])->name('conference_fee.index');
@@ -183,31 +165,43 @@ Route::group(['middleware' => 'auth'], function () {
     //Vart
     Route::prefix('vart')->group(function () {
         Route::get('/', [VartController::class, 'index'])->name('vart.index');
-        Route::get('create', [VartController::class, 'create'])->name('vart.create');
-        Route::post('save', [VartController::class, 'store'])->name('vart.store');
-        Route::get('edit/{id}', [VartController::class, 'edit'])->name('vart.edit');
-        Route::patch('update/{id}', [VartController::class, 'update'])->name('vart.update');
-        Route::delete('delete/{id}', [VartController::class, 'destroy'])->name('vart.destroy');
-        Route::prefix('content')->group(function () {
-            Route::post('/', [VartContentController::class, 'index'])->name('vart_content.index');
-            Route::post('create-or-update', [VartContentController::class, 'storeOrUpdate'])->name('vart_content.store_or_update');
-            Route::delete('delete', [VartContentController::class, 'destroy'])->name('vart_content.destroy');
-        });
+        Route::post('load', [VartController::class, 'load'])->name('vart.load');
+        Route::post('get-form', [VartController::class, 'getForm'])->name('vart.get_form');
+        Route::post('create-or-update', [VartController::class, 'storeOrUpdate'])->name('vart.store_or_update');
+        Route::delete('delete', [VartController::class, 'destroy'])->name('vart.destroy');
+    });
+
+    //Hart
+    Route::prefix('hart')->group(function () {
+        Route::get('/', [HartController::class, 'index'])->name('hart.index');
+        Route::post('load', [HartController::class, 'load'])->name('hart.load');
+        Route::post('get-form', [HartController::class, 'getForm'])->name('hart.get_form');
+        Route::post('create-or-update', [HartController::class, 'storeOrUpdate'])->name('hart.store_or_update');
+        Route::delete('delete', [HartController::class, 'destroy'])->name('hart.destroy');
+    });
+
+    //Hrtta
+    Route::prefix('hrtta')->group(function () {
+        Route::get('/', [HrttaController::class, 'index'])->name('hrtta.index');
+        Route::post('load', [HrttaController::class, 'load'])->name('hrtta.load');
+        Route::post('get-form', [HrttaController::class, 'getForm'])->name('hrtta.get_form');
+        Route::post('create-or-update', [HrttaController::class, 'storeOrUpdate'])->name('hrtta.store_or_update');
+        Route::delete('delete', [HrttaController::class, 'destroy'])->name('hrtta.destroy');
     });
 
     //Vart
-    Route::prefix('hart')->group(function () {
-        Route::get('/', [HartController::class, 'index'])->name('hart.index');
-        Route::get('/create', [HartController::class, 'create'])->name('hart.create');
-        Route::get('/edit/{id}', [HartController::class, 'edit'])->name('hart.edit');
-        Route::get('/delete/{id}', [HartController::class, 'destroy'])->name('hart.destroy');
-        Route::post('/save', [HartController::class, 'store'])->name('hart.store');
-        Route::post('/update/{id}', [HartController::class, 'update'])->name('hart.update');
-        Route::post('/load-hart-content', [HartController::class, 'loadHartContent'])->name('loadHartContent');
-        Route::post('/add-hart-content', [HartController::class, 'createHartContent'])->name('createHartContent');
-        Route::post('/update-hart-content', [HartController::class, 'updateHartContent'])->name('updateHartContent');
-        Route::delete('/delete-hart-content/{id}', [HartController::class, 'destroyHartContent'])->name('destroyHartContent');
-    });
+    // Route::prefix('hart')->group(function () {
+    //     Route::get('/', [HartController::class, 'index'])->name('hart.index');
+    //     Route::get('/create', [HartController::class, 'create'])->name('hart.create');
+    //     Route::get('/edit/{id}', [HartController::class, 'edit'])->name('hart.edit');
+    //     Route::get('/delete/{id}', [HartController::class, 'destroy'])->name('hart.destroy');
+    //     Route::post('/save', [HartController::class, 'store'])->name('hart.store');
+    //     Route::post('/update/{id}', [HartController::class, 'update'])->name('hart.update');
+    //     Route::post('/load-hart-content', [HartController::class, 'loadHartContent'])->name('loadHartContent');
+    //     Route::post('/add-hart-content', [HartController::class, 'createHartContent'])->name('createHartContent');
+    //     Route::post('/update-hart-content', [HartController::class, 'updateHartContent'])->name('updateHartContent');
+    //     Route::delete('/delete-hart-content/{id}', [HartController::class, 'destroyHartContent'])->name('destroyHartContent');
+    // });
 
     //Conference Category
     Route::prefix('conference-category')->group(function () {
@@ -230,6 +224,24 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::get('per', [AdminController::class, 'per']);
+
+   //Blog Category
+    Route::prefix('blog-category')->group(function () {
+        Route::get('/', [BlogCategoryController::class, 'index'])->name('blog_category.index');
+        Route::post('load', [BlogCategoryController::class, 'load'])->name('blog_category.load');
+        Route::post('get-form', [BlogCategoryController::class, 'getForm'])->name('blog_category.get_form');
+        Route::post('create-or-update', [BlogCategoryController::class, 'storeOrUpdate'])->name('blog_category.store_or_update');
+        Route::delete('delete', [BlogCategoryController::class, 'destroy'])->name('blog_category.destroy');
+    });
+
+    //Blog
+    Route::prefix('blog')->group(function () {
+        Route::get('/', [BlogController::class, 'index'])->name('blog.index');
+        Route::post('load', [BlogController::class, 'load'])->name('blog.load');
+        Route::post('get-form', [BlogController::class, 'getForm'])->name('blog.get_form');
+        Route::post('create-or-update', [BlogController::class, 'storeOrUpdate'])->name('blog.store_or_update');
+        Route::delete('delete', [BlogController::class, 'destroy'])->name('blog.destroy');
+    });
 });
 
 // Invitation

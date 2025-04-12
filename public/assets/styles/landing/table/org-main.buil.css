@@ -127,11 +127,16 @@ table.table.table-bordered.table-dark tr th {
     vertical-align: middle;
 }
 
+.table-image{
+    width: 150px;
+    border-radius: 10px;
+    border: 1px solid #d1d1d1;
+}
 
 .management {
     display: flex;
     justify-content: space-around;
-    width: 200px;
+    min-width: 200px;
 }
 
 .management-btn {

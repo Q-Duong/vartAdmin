@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\TempFile;
 use Illuminate\Http\Request;
 use App\Models\Vart;
-use App\Models\VartContent;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
@@ -26,9 +25,22 @@ class VartController extends Controller
         return view('pages.admin.vart.index', compact('getAllVart'));
     }
 
-    public function create()
+    public function load(Request $request)
     {
-        return view('pages.admin.vart.create');
+        $getAllVart = Vart::orderBy('id', 'DESC')->get();
+        $html = view('pages.admin.vart.render', compact('getAllVart'))->render();
+        return response()->json(array('success' => true, 'html' => $html));
+    }
+
+    public function getForm(Request $request)
+    {
+        if ($request->type == 'create') {
+            $html = view('pages.admin.vart.create')->render();
+        } else {
+            $vart = Vart::findOrFail($request->id);
+            $html = view('pages.admin.vart.edit', compact('vart'))->render();
+        }
+        return response()->json(array('success' => true, 'html' => $html));
     }
 
     public function store(Request $request)
@@ -52,13 +64,6 @@ class VartController extends Controller
             DB::rollback();
             return Redirect::route('vart.index')->with('error', __('alert.conference.errorMessage_update'));
         }
-    }
-
-    public function edit($id)
-    {
-        $vart = Vart::findOrFail($id);
-        $getAllVartContent = VartContent::where('vart_id', $id)->get();
-        return view('pages.admin.vart.edit', compact('vart', 'getAllVartContent'));
     }
 
     public function update(Request $request, $id)
@@ -87,21 +92,69 @@ class VartController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function storeOrUpdate(Request $request)
+    {
+        // $validator = Validator::make($request->all(), $this->validateVartContent(), $this->messageVartContent());
+        // if ($validator->fails()) {
+        //     return response()->json(array('errors' => true, 'validator' => $validator->errors()));
+        // }
+        DB::beginTransaction();
+        try {
+            if ($request->type == 'create') {
+                $vart = new Vart();
+                $vart->vart_title = $request->vart_title;
+                $vart->vart_title_en = $request->vart_title_en;
+                $vart->vart_slug = Str::slug($request->vart_title);
+                $vart->vart_text = $request->vart_text;
+                $vart->vart_text_en = $request->vart_text_en;
+                $file = TempFile::firstWhere('folder', $request->vart_image);
+                if ($file) {
+                    $vart->vart_image = moveFileSource($file->folder, $this->folder, $file->filename);
+                    $file->delete();
+                }
+                $vart->save();
+            } else {
+                $vart = Vart::findOrFail($request->id);
+                $vart->vart_title = $request->vart_title;
+                $vart->vart_title_en = $request->vart_title_en;
+                $vart->vart_slug = Str::slug($request->vart_title);
+                $vart->vart_text = $request->vart_text;
+                $vart->vart_text_en = $request->vart_text_en;
+                $file = TempFile::firstWhere('folder', $request->vart_image);
+                if ($file) {
+                    if ($vart->vart_image) {
+                        removeFileSource(getFolderForDestroyFile($vart->vart_image), true);
+                    }
+                    $vart->vart_image = moveFileSource($file->folder, $this->folder, $file->filename);
+                    $file->delete();
+                }
+                $vart->save();
+            }
+            DB::commit();
+            return response()->json(array('success' => true, 'message' => __('alert.blog.successfulNotification')));
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(array('success' => false, 'route' => '500'));
+        }
+    }
+
+    public function destroy(Request $request)
     {
         DB::beginTransaction();
         try {
-            $vart = Vart::findOrFail($id);
+            $vart = Vart::findOrFail($request->id);
             if ($vart->vart_image) {
                 removeFileSource(getFolderForDestroyFile($vart->vart_image), true);
             }
             $vart->delete();
             DB::commit();
 
-            return Redirect::route('vart.index')->with('success', 'Successfully deleted');
+            // return Redirect::route('vart.index')->with('success', 'Successfully deleted');
+            return response()->json(array('message' => __('alert.blog.successfulNotification'), 'success' => true));
         } catch (\Exception $e) {
             DB::rollback();
-            return Redirect::route('vart.index')->with('error', __('alert.conference.errorMessage_update'));
+            return response()->json(array('success' => false, 'route' => '500'));
+            // return Redirect::route('vart.index')->with('error', __('alert.conference.errorMessage_update'));
         }
     }
 

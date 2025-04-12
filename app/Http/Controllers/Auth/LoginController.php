@@ -38,7 +38,16 @@ class LoginController extends Controller
      */
     function showLoginForm(){
         if(Auth::check()){
-            return Redirect::route('dashboard.index');
+            $adminRoles = ['admin', 'subAdmin'];
+            if (in_array(Auth::user()->role, $adminRoles)) {
+                return Redirect::route('dashboard.index');
+            }else if(Auth::user()->role == "staffReport"){
+                return Redirect::route('report_management.index');
+            }else if(Auth::user()->role == "staffRegister"){
+                return Redirect::route('register_management.index');
+            }else if(Auth::user()->role == "staffInter"){
+                return Redirect::route('report_management_en.index');
+            }
         }else{
             return view('pages.login.index');
         }
@@ -49,7 +58,17 @@ class LoginController extends Controller
                 'email' => $data['account_username'],
                 'password' => $data['account_password']
             ],true)){
-            return Redirect::route('dashboard.index');
+                // dd(1);
+                $adminRoles = ['admin', 'subAdmin'];
+                if (in_array(Auth::user()->role, $adminRoles)) {
+                    return Redirect::route('dashboard.index');
+                }else if(Auth::user()->role == "staffReport"){
+                    return Redirect::route('report_management.index');
+                }else if(Auth::user()->role == "staffRegister"){
+                    return Redirect::route('register_management.index');
+                }else if(Auth::user()->role == "staffInter"){
+                    return Redirect::route('report_management_en.index');
+                }
         }else{
             return Redirect::route('login')->with('error','Tài khoản hoặc mật khẩu không đúng');
         }

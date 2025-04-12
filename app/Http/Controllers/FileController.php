@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
+use App\Models\BlogCategory;
+use App\Models\Conference;
 use App\Models\EnReport;
+use App\Models\Hart;
+use App\Models\Hrtta;
 use App\Models\Payment;
 use App\Models\Register;
 use App\Models\Report;
 use App\Models\TempFile;
+use App\Models\Vart;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -46,11 +52,13 @@ class FileController extends Controller
         if ($request->hasFile('vart_image')) {
             $folder = saveFileSource($request->file('vart_image'));
         }
-        if ($request->hasFile('vart_content_image')) {
-            $folder = saveFileSource($request->file('vart_content_image'));
+        //HART
+        if ($request->hasFile('hart_image')) {
+            $folder = saveFileSource($request->file('hart_image'));
         }
-        if ($request->hasFile('vart_content_image_en')) {
-            $folder = saveFileSource($request->file('vart_content_image_en'));
+        //HRTTA
+        if ($request->hasFile('hrtta_image')) {
+            $folder = saveFileSource($request->file('hrtta_image'));
         }
         //Conference
         if ($request->hasFile('conference_category_image')) {
@@ -73,6 +81,14 @@ class FileController extends Controller
             return response($folder['folder'], 200)->withHeaders([
                 'Content-Type' => 'application/json',
             ]);
+        }
+        //Blog Categories
+        if ($request->hasFile('blog_category_image')) {
+            $folder = saveFileSource($request->file('blog_category_image'));
+        }
+        //Blog
+        if ($request->hasFile('blog_image')) {
+            $folder = saveFileSource($request->file('blog_image'));
         }
 
         TempFile::create([
@@ -155,5 +171,66 @@ class FileController extends Controller
             }
         }
         return response()->json(array('message' =>  __('alert.conference.successMessage_delete')));
+    }
+
+    public function destroyContent(Request $request)
+    {
+        switch ($request->target) {
+            case ('vart'):
+                $vart = Vart::findOrFail($request->id);
+                removeFileSource(getFolderForDestroyFile($vart->vart_image), true);
+                $vart->vart_image = null;
+                $vart->save();
+                break;
+            case ('hart'):
+                $hart = Hart::findOrFail($request->id);
+                removeFileSource(getFolderForDestroyFile($hart->hart_image), true);
+                $hart->hart_image = null;
+                $hart->save();
+                break;
+            case ('hrtta'):
+                $hrtta = Hrtta::findOrFail($request->id);
+                removeFileSource(getFolderForDestroyFile($hrtta->hrtta_image), true);
+                $hrtta->hrtta_image = null;
+                $hrtta->save();
+                break;
+            case ('blogCategory'):
+                $blogCategory = BlogCategory::findOrFail($request->id);
+                removeFileSource(getFolderForDestroyFile($blogCategory->blog_category_image), true);
+                $blogCategory->blog_category_image = null;
+                $blogCategory->save();
+                break;
+            case ('blog'):
+                $blog = Blog::findOrFail($request->id);
+                removeFileSource(getFolderForDestroyFile($blog->blog_image), true);
+                $blog->blog_image = null;
+                $blog->save();
+                break;
+            case ('conference'):
+                $conference = Conference::findOrFail($request->id);
+                if ($request->locale == 'en') {
+                    removeFileSource(getFolderForDestroyFile($conference->conference_image_en), true);
+                    $conference->conference_image_en = null;
+                } else {
+                    removeFileSource(getFolderForDestroyFile($conference->conference_image), true);
+                    $conference->conference_image = null;
+                }
+                $conference->save();
+                break;
+            case ('about'):
+                $about = About::findOrFail($request->id);
+                removeFileSource(getFolderForDestroyFile($about->about_image), true);
+                $about->about_image = null;
+                $about->save();
+                break;
+            case ('support_content'):
+                $supportContent = SupportContent::findOrFail($request->id);
+                removeFileSource(getFolderForDestroyFile($supportContent->support_content_image), true);
+                $supportContent->support_content_image = null;
+                $supportContent->save();
+                break;
+        }
+
+        return response('Success delete', 200);
     }
 }

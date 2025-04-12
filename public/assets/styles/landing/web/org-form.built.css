@@ -227,15 +227,15 @@
 }
 
 .form-textbox .form-textarea.focused, .form-textbox .form-textarea:focus, .form-textbox .form-textarea:focus-within, .form-textbox .form-textbox-input.focused, .form-textbox .form-textbox-input:focus, .form-textbox .form-textbox-input:focus-within {
-    border-color: #9c07f9;
-    box-shadow: 0 0 0 3px rgb(156, 25, 251, .2);
+    border-color: #0071e3;
+    box-shadow: 0 0 0 3px rgba(48, 115, 249, 0.2);
     /* outline: 2px solid var(--sk-focus-color,#9c07f9);
     outline-offset: 3px */
 }
 
 .form-textbox .form-textarea.focused[data-focus-method=key], .form-textbox .form-textarea:focus-within[data-focus-method=key], .form-textbox .form-textarea:focus[data-focus-method=key], .form-textbox .form-textbox-input.focused[data-focus-method=key], .form-textbox .form-textbox-input:focus-within[data-focus-method=key], .form-textbox .form-textbox-input:focus[data-focus-method=key], html.as-keyboarduser .form-textbox .form-textarea.focused, html.as-keyboarduser .form-textbox .form-textarea:focus, html.as-keyboarduser .form-textbox .form-textarea:focus-within, html.as-keyboarduser .form-textbox .form-textbox-input.focused, html.as-keyboarduser .form-textbox .form-textbox-input:focus, html.as-keyboarduser .form-textbox .form-textbox-input:focus-within, html.form-keyboarduser .form-textbox .form-textarea.focused, html.form-keyboarduser .form-textbox .form-textarea:focus, html.form-keyboarduser .form-textbox .form-textarea:focus-within, html.form-keyboarduser .form-textbox .form-textbox-input.focused, html.form-keyboarduser .form-textbox .form-textbox-input:focus, html.form-keyboarduser .form-textbox .form-textbox-input:focus-within {
-    border-color: #9c07f9;
-    box-shadow: 0 0 0 3px rgb(156, 25, 251, .2);
+    border-color: #0071e3;
+    box-shadow: 0 0 0 3px rgba(48, 115, 249, 0.2);
     /* outline: 2px solid var(--sk-focus-color,#9c07f9);
     outline-offset: 3px */
 }
@@ -654,8 +654,8 @@ a.icon-wrapper:hover .icon-copy {
 }
 
 .form-dropdown .form-dropdown-select.focused, .form-dropdown .form-dropdown-select:focus {
-    border-color: #9c07f9;
-    box-shadow: 0 0 0 3px rgb(156, 25, 251, .2);
+    border-color: #0071e3;
+    box-shadow: 0 0 0 3px rgba(48, 115, 249, 0.2);
 }
 
 .form-dropdown .form-dropdown-select.focused:not(button), .form-dropdown .form-dropdown-select:focus:not(button) {
@@ -663,8 +663,8 @@ a.icon-wrapper:hover .icon-copy {
 }
 
 .form-dropdown .form-dropdown-select.focused:not(button)[data-focus-method=key], .form-dropdown .form-dropdown-select:focus:not(button)[data-focus-method=key], html.as-keyboarduser .form-dropdown .form-dropdown-select.focused:not(button), html.as-keyboarduser .form-dropdown .form-dropdown-select:focus:not(button), html.form-keyboarduser .form-dropdown .form-dropdown-select.focused:not(button), html.form-keyboarduser .form-dropdown .form-dropdown-select:focus:not(button) {
-    border-color: #9c07f9;
-    box-shadow: 0 0 0 3px rgb(156, 25, 251, .2);
+    border-color: #0071e3;
+    box-shadow: 0 0 0 3px rgba(48, 115, 249, 0.2);
     /* outline: 2px solid var(--sk-focus-color,#9c07f9);
     outline-offset: 3px */
 }
@@ -904,8 +904,8 @@ a.icon-wrapper:hover .icon-copy {
 }
 
 .form-radiobutton .focused~.form-label .form-radiobutton-indicator[data-focus-method=key], .form-radiobutton :focus~.form-label .form-radiobutton-indicator[data-focus-method=key], html.as-keyboarduser .form-radiobutton .focused~.form-label .form-radiobutton-indicator, html.as-keyboarduser .form-radiobutton :focus~.form-label .form-radiobutton-indicator, html.form-keyboarduser .form-radiobutton .focused~.form-label .form-radiobutton-indicator, html.form-keyboarduser .form-radiobutton :focus~.form-label .form-radiobutton-indicator {
-    border-color: #9c07f9;
-    box-shadow: 0 0 0 3px rgb(156, 25, 251, .2);
+    border-color: #0071e3;
+    box-shadow: 0 0 0 3px rgba(48, 115, 249, 0.2);
     /* outline: 2px solid var(--sk-focus-color,#9c07f9);
     outline-offset: 3px */
 }
@@ -1514,8 +1514,8 @@ a.icon-wrapper:hover .icon-copy {
 }
 
 .form-button:focus[data-focus-method=key], html.as-keyboarduser .form-button:focus, html.form-keyboarduser .form-button:focus {
-    border-color: #9c07f9;
-    box-shadow: 0 0 0 3px rgb(156, 25, 251, .2);
+    border-color: #0071e3;
+    box-shadow: 0 0 0 3px rgba(48, 115, 249, 0.2);
     /* outline: 2px solid var(--sk-focus-color,#9c07f9);
     outline-offset: 3px */
 }
@@ -1563,8 +1563,8 @@ a.icon-wrapper:hover .icon-copy {
 }
 
 .button-spinner:before:focus[data-focus-method=key], html.as-keyboarduser .button-spinner:before:focus {
-    border-color: #9c07f9;
-    box-shadow: 0 0 0 3px rgb(156, 25, 251, .2);
+    border-color: #0071e3;
+    box-shadow: 0 0 0 3px rgba(48, 115, 249, 0.2);
     /* outline: 2px solid var(--sk-focus-color,#9c07f9);
     outline-offset: 3px */
 }
@@ -1670,8 +1670,8 @@ html[dir=rtl] {
 }
 
 .form-selector .form-selector-input:focus-visible~.form-selector-label[data-focus-method=key], .form-selector .form-selector-input:focus~.form-selector-label[data-focus-method=key], html.as-keyboarduser .form-selector .form-selector-input:focus-visible~.form-selector-label, html.as-keyboarduser .form-selector .form-selector-input:focus~.form-selector-label, html.form-keyboarduser .form-selector .form-selector-input:focus-visible~.form-selector-label, html.form-keyboarduser .form-selector .form-selector-input:focus~.form-selector-label {
-    border-color: #9c07f9;
-    box-shadow: 0 0 0 3px rgb(156, 25, 251, .2);
+    border-color: #0071e3;
+    box-shadow: 0 0 0 3px rgba(48, 115, 249, 0.2);
     /* outline: 2px solid var(--sk-focus-color,#9c07f9);
     outline-offset: 3px */
 }

@@ -24,6 +24,17 @@ class VartContentController extends Controller
         return response()->json(array('success' => true, 'html' => $html));
     }
 
+    public function getForm(Request $request, $vart_id)
+    {
+        if($request->type == 'create'){
+            $html = view('pages.admin.vart.content.create', compact('vart_id'))->render();
+        }else{
+            $content = VartContent::findOrFail($request->id);
+            $html = view('pages.admin.vart.content.edit', compact('content'))->render();
+        }
+        return response()->json(array('success' => true, 'html' => $html));
+    }
+
     public function storeOrUpdate(Request $request)
     {
         $validator = Validator::make($request->all(), $this->validateVartContent(), $this->messageVartContent());
@@ -34,7 +45,7 @@ class VartContentController extends Controller
         try {
             if ($request->type == 'create') {
                 $vartContent = new VartContent();
-                $vartContent->vart_id = $request->vart_id;
+                $vartContent->vart_id = $request->id;
                 $vartContent->vart_content_title = $request->vart_content_title;
                 $vartContent->vart_content_title_en = $request->vart_content_title_en;
                 $vartContent->vart_content_text = $request->vart_content_text;
@@ -45,14 +56,9 @@ class VartContentController extends Controller
                     $vartContent->vart_content_image = moveFileSource($file->folder, $this->folder, $file->filename);
                     $file->delete();
                 }
-                $fileEn = TempFile::where('folder', $request->vart_content_image_en)->first();
-                if ($fileEn) {
-                    $vartContent->vart_content_image_en = moveFileSource($fileEn->folder, $this->folder, $fileEn->filename);
-                    $fileEn->delete();
-                }
                 $vartContent->save();
             } else {
-                $vartContent = VartContent::findOrFail($request->vart_content_id);
+                $vartContent = VartContent::findOrFail($request->content_id);
                 $vartContent->vart_content_title = $request->vart_content_title;
                 $vartContent->vart_content_title_en = $request->vart_content_title_en;
                 $vartContent->vart_content_text = $request->vart_content_text;
@@ -65,14 +71,6 @@ class VartContentController extends Controller
                     }
                     $vartContent->vart_content_image = moveFileSource($file->folder, $this->folder, $file->filename);
                     $file->delete();
-                }
-                $fileEn = TempFile::where('folder', $request->vart_content_image_en)->first();
-                if ($fileEn) {
-                    if ($vartContent->vart_content_image_en) {
-                        removeFileSource(getFolderForDestroyFile($vartContent->vart_content_image_en), true);
-                    }
-                    $vartContent->vart_content_image_en = moveFileSource($fileEn->folder, $this->folder, $fileEn->filename);
-                    $fileEn->delete();
                 }
                 $vartContent->save();
             }
@@ -91,9 +89,6 @@ class VartContentController extends Controller
             $vartContent = VartContent::findOrFail($request->id);
             if ($vartContent->vart_content_image) {
                 removeFileSource(getFolderForDestroyFile($vartContent->vart_content_image), true);
-            }
-            if ($vartContent->vart_content_image_en) {
-                removeFileSource(getFolderForDestroyFile($vartContent->vart_content_image_en), true);
             }
             $vartContent->delete();
             

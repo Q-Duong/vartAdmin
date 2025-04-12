@@ -14,11 +14,8 @@ class Hart extends Model
         'hart_title',
         'hart_title_en',
         'hart_slug',
-        'hart_image'
+        'hart_image',
+        'hart_text',
+        'hart_text_en'
     ];
-
-    public function hartContent()
-    {
-        $this->hasMany(HartContent::class);
-    }
 }

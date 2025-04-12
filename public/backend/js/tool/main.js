@@ -1,9 +1,9 @@
-$(".close-model").on("click", function () {
-    $(".popup-model-review").fadeOut(300);
+$(document).on("click", ".rc-overlay-close", function () {
+    $("#portal").html('');
 });
 
-$(".overlay-model-review").on("click", function () {
-    $(".popup-model-review").fadeOut(300);
+$("[data-core-overlay-content]").on("click", function () {
+    $(".rc-overlay").removeClass('r-fade-transition-enter-done').addClass('r-fade-transition-exit-done');
 });
 
 //Handle Money and Quantity
