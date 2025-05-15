@@ -31,7 +31,10 @@ class ExcelExportVipRegister implements WithHeadings, FromQuery, WithMapping
             'Đơn vị',
             'Email',
             'Số điện thoại',
+            'Gala Dinner',
+            'Khách sạn',
             'Địa chỉ nhận giấy chứng nhận',
+            'Ảnh bằng chuyên môn cao nhất (Mặt chính)',
         ];
     }
 
@@ -56,7 +59,10 @@ class ExcelExportVipRegister implements WithHeadings, FromQuery, WithMapping
             $vip->vip_work_unit,
             $vip->vip_email,
             $vip->vip_phone,
+            $vip->vip_dinner == 1 ? 'Có' : 'Không',
+            $vip->vip_hotel == 1 ? 'Có' : 'Không',
             $vip->vip_receiving_address,
+            $vip->vip_image != null ? 'https://drive.google.com/file/d/' . $vip->vip_image . '/view' : '',
         ];
     }
 }

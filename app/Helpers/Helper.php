@@ -38,7 +38,7 @@ if (!function_exists('saveFileSource')) {
     {
         $fileName = $file->getClientOriginalName();
         $getName = current(explode('.', $fileName));
-        $fileNameConvert = Str::slug($getName). '.' . $file->getClientOriginalExtension();
+        $fileNameConvert = Str::slug($getName) . '.' . $file->getClientOriginalExtension();
         $folder = uniqid();
         Storage::putFileAs('tmp/' . $folder, $file, $fileNameConvert);
         $response = ['folder' => $folder, 'fileName' => $fileNameConvert];
@@ -51,7 +51,7 @@ if (!function_exists('saveImagesCK')) {
     {
         $fileName = $file->getClientOriginalName();
         $getName = current(explode('.', $fileName));
-        $fileNameConvert = Str::slug($getName). '.' . $file->getClientOriginalExtension();
+        $fileNameConvert = Str::slug($getName) . '.' . $file->getClientOriginalExtension();
         Storage::putFileAs('public/content/', $file, $fileNameConvert);
         $url = assetHost('storage/content/' . $fileNameConvert);
         $response = ['url' => $url, 'fileName' => $fileNameConvert];
@@ -62,9 +62,9 @@ if (!function_exists('saveImagesCK')) {
 if (!function_exists('removeFileSource')) {
     function removeFileSource($folder, $target)
     {
-        if($target){
+        if ($target) {
             Storage::deleteDirectory('public/' . $folder);
-        }else{
+        } else {
             Storage::deleteDirectory('tmp/' . $folder);
         }
     }
@@ -73,8 +73,8 @@ if (!function_exists('removeFileSource')) {
 if (!function_exists('moveFileSource')) {
     function moveFileSource($folder, $folderMove, $fileName)
     {
-        Storage::move('tmp/' . $folder, 'public/'. $folderMove . '/' . $folder);
-        return $folderMove .'/' . $folder . '/' . $fileName;
+        Storage::move('tmp/' . $folder, 'public/' . $folderMove . '/' . $folder);
+        return $folderMove . '/' . $folder . '/' . $fileName;
     }
 }
 
@@ -117,5 +117,69 @@ if (!function_exists('parserImgPdf')) {
         $data = file_get_contents($path);
         $image = 'data:image' . $type . ';base64,' . base64_encode($data);
         return $image;
+    }
+}
+
+if (!function_exists('choseLogoByConferenceType')) {
+    function choseLogoByConferenceType($type)
+    {
+        $result = 'defineTemplates/logo/vart.png';
+        switch ($type) {
+            case (1):
+                $result;
+                break;
+            case (2):
+                $result = 'defineTemplates/logo/hart.png';
+                break;
+            case (3):
+                $result = 'defineTemplates/logo/hrtta.png';
+                break;
+            default:
+                $result;
+        }
+        return $result;
+    }
+}
+
+if (!function_exists('choseSignatureByConferenceType')) {
+    function choseSignatureByConferenceType($type)
+    {
+        $result = 'defineTemplates/signature/sign.png';
+        switch ($type) {
+            case (1):
+                $result = 'defineTemplates/signature/vart.png';
+                break;
+            case (2):
+                $result = 'defineTemplates/signature/hart.png';
+                break;
+            case (3):
+                $result = 'defineTemplates/signature/hrtta.png';
+                break;
+            default:
+                $result;
+        }
+
+        return $result;
+    }
+}
+
+if (!function_exists('choseInvoiceByConferenceType')) {
+    function choseInvoiceByConferenceType($type)
+    {
+        $result = 'defineTemplates/invoice/vart.jpg';
+        switch ($type) {
+            case (1):
+                $result;
+                break;
+            case (2):
+                $result = 'defineTemplates/invoice/hart.jpg';
+                break;
+            case (3):
+                $result = 'defineTemplates/invoice/hrtta.jpg';
+                break;
+            default:
+                $result;
+        }
+        return $result;
     }
 }

@@ -15,9 +15,12 @@ use App\Models\Payment;
 use App\Models\Register;
 use App\Mail\ReplyMail;
 use App\Mail\ReportMail;
+use App\Models\Conference;
 use App\Models\EnReport;
+use App\Models\InvitationTemplates;
 use App\Models\Report;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Blade;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Mail;
 
@@ -46,18 +49,67 @@ class SupportController extends Controller
         }
     }
 
-    public function print($id)
+    public function createInvoice($id)
     {
-        $register = Register::findOrFail($id);
-        $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.receipt_hart', [
+        $register = Register::join('payments', 'payments.id', '=', 'registers.payment_id')
+            ->join('conference_fees', 'payments.conference_fee_id', '=', 'conference_fees.id')
+            ->select(
+                'registers.conference_id',
+                'registers.id',
+                'register_code',
+                'register_name',
+                'register_work_unit',
+                'register_phone',
+                'conference_fee_title',
+                'payment_price',
+                'register_receiving_address',
+            )
+            ->firstWhere('registers.id', $id);
+        $conference = Conference::select('id', 'conference_type_id')
+            ->firstWhere('id', $register->conference_id);
+        $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.receipt', [
             'name' => $register->register_name,
             'phone' => $register->register_phone,
             'unit' => $register->register_work_unit,
             'address' => $register->register_receiving_address,
-            'price' => number_format($register->payment->payment_price, 0, ',', '.') . '₫',
-            "imgBackground" => parserImgPdf('receipt-hart.png')
+            'price' => number_format($register->payment_price, 0, ',', '.') . '₫',
+            'conferenceFeeTitle' => $register->conference_fee_title,
+            "imgBackground" => parserImgPdf(choseInvoiceByConferenceType($conference->conference_type_id))
         ])->setPaper('a4', 'landscape');
-        $filePath = storage_path('app/public/receipt/hart/' . $register->register_code . '.pdf');
+        $filePath = storage_path('app/public/invoice/' . $register->register_code . '.pdf');
+        $pdf->save($filePath);
+    }
+
+    public function createInvitation($id)
+    {
+        $register = Register::select(
+            'registers.id',
+            'registers.conference_id',
+            'register_code',
+            'register_name',
+            'register_work_unit',
+            'register_degree',
+        )
+            ->firstWhere('id', $id);
+        $conference = Conference::select('id', 'conference_type_id')
+            ->firstWhere('id', $register->conference_id);
+
+        $invitation_template = InvitationTemplates::where('conference_id', $conference->id)->where('type', 'vn_att')->first();
+        $imgLogo = parserImgPdf(choseLogoByConferenceType($conference->conference_type_id));
+        $imgSign = parserImgPdf(choseSignatureByConferenceType($conference->conference_type_id));
+        $template = Blade::render(
+            $invitation_template->content,
+            [
+                "degree" => $register->register_degree == '' ? 'Sinh Viên' : $register->register_degree,
+                'fullName' => $register->register_name,
+                'unit' => $register->register_work_unit,
+                'imgBackground' => parserImgPdf('defineTemplates/backGround/main.jpg'),
+                'imgLogo' => $imgLogo,
+                'imgSign' => $imgSign
+            ]
+        );
+        $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true])->loadHTML($template);
+        $filePath = storage_path('app/public/invitation/' . $register->register_code . '.pdf');
         $pdf->save($filePath);
     }
 
@@ -65,18 +117,30 @@ class SupportController extends Controller
     {
         switch ($request->type) {
             case ('register'):
-                $this->print($id);
+                $this->createInvoice($id);
+                $this->createInvitation($id);
                 $model = Register::findOrFail($id);
+                
+                $payment = Payment::findOrFail($model->payment_id);
+                $payment->payment_status = 4;
+                $payment->save();
+                $conference = Conference::join('conference_types', 'conference_types.id', 'conferences.conference_type_id')->select(
+                    'conference_type_name',
+                    'conferences.id',
+                    'conference_title',
+                    'conference_title_en',
+                )
+                    ->where('conferences.id', $model->conference_id)
+                    ->first();
+                $mail_conference_type = $conference->conference_type_name;
+                $mail_conference_title = $conference->conference_title;
                 $mail_email = $model->register_email;
                 $mail_name = $model->register_name;
                 $mail_title = $model->register_gender;
                 $mail_code = $model->register_code;
                 $mail_type = $model->payment->conferenceFee->mail_type;
                 $locale = 'vn';
-                $payment = Payment::findOrFail($model->payment_id);
-                $payment->payment_status = 4;
-                $payment->save();
-                Mail::to($mail_email)->send(new RegisterMail($mail_name, $mail_title, $mail_code, $mail_type, $locale));
+                    Mail::to($mail_email)->send(new RegisterMail($mail_conference_type, $mail_conference_title, $mail_name, $mail_title, $mail_code, $mail_type, $locale));
                 break;
             case ('en_register'):
                 $model = EnRegister::findOrFail($id);

@@ -111,5 +111,7 @@ return [
             'engineer' => 'Engineer',
             'other' => 'Other',
         ],
+        'dinner' => 'Dinner',
+        'hotel' => 'Hotel'
     ],
 ];

@@ -24,6 +24,7 @@ use App\Http\Controllers\HrttaController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\VartContentController;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -84,7 +85,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('upload-image-ck', [FileController::class, 'upload_image_ck'])->name('file.upload_image_ck');
     });
 
-    //Excel
+    //Support
     Route::post('export-excel', [SupportController::class, 'export'])->name('export.excel');
     Route::get('print', [SupportController::class, 'print'])->name('invitation.print');
     Route::post('send-mail-reply/{id}', [SupportController::class, 'sendMailReply'])->name('mail.reply');
@@ -135,10 +136,11 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::get('test-mail', function () {
-        return view('mail.report.hart.national')->with([
+        return view('mail.register.vart.confirm.student')->with([
             'title' => 'mr.',
             'name' => 'Dương',
             'code' => 'DVs',
+            'conference_title' => 'Hội nghị Khoa học Kỹ Thuật Hình Ảnh Y Học Toàn Quốc lần thứ 13'
         ]);
     });
 
@@ -178,6 +180,18 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('get-form', [HartController::class, 'getForm'])->name('hart.get_form');
         Route::post('create-or-update', [HartController::class, 'storeOrUpdate'])->name('hart.store_or_update');
         Route::delete('delete', [HartController::class, 'destroy'])->name('hart.destroy');
+        Route::get('test-invoice', function () {
+            $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.receipt', [
+                'name' => 'Huỳnh Quốc Dương',
+                'phone' => '0943705326',
+                'unit' => 'Medicen',
+                'address' => '33,Phường 11,Thành phố Vũng Tàu,Tỉnh Bà Rịa - Vũng Tàu',
+                'price' => '980.000₫',
+                'conferenceFeeTitle' => 'Phí tham gia trực tuyến có cấp giấy chứng nhận CME	',
+                "imgBackground" => parserImgPdf(choseInvoiceByConferenceType(2))
+            ])->setPaper('a4', 'landscape');
+            return $pdf->stream('invitation-letter-attendees.pdf');
+        });
     });
 
     //Hrtta
@@ -243,6 +257,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('delete', [BlogController::class, 'destroy'])->name('blog.destroy');
     });
 });
+
+
 
 // Invitation
 Route::prefix('invitation')->group(function () {

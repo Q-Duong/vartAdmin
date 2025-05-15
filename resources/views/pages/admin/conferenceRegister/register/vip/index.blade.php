@@ -22,7 +22,10 @@
                             <th>@lang('conference.en.unit')</th>
                             <th>@lang('conference.en.email')</th>
                             <th>@lang('conference.en.phone')</th>
+                            <th>@lang('conference.en.dinner')</th>
+                            <th>@lang('conference.en.hotel')</th>
                             <th>@lang('conference.en.address')</th>
+                            <th>@lang('conference.en.image')</th>
                             {{-- <th>@lang('conference.en.management')</th> --}}
                         </tr>
                     </thead>
@@ -41,7 +44,17 @@
                                 <td>{{ $vip->vip_work_unit }}</td>
                                 <td>{{ $vip->vip_email }}</td>
                                 <td>{{ $vip->vip_phone }}</td>
+                                <td>{{ $vip->vip_dinner == 1 ? '<span style="color: #27c24c;">Có</span>' : '<span style="color: #f05050;">Không</span>' }}</td>
+                                <td>{{ $vip->vip_hotel == 1 ? '<span style="color: #27c24c;">Có</span>' : '<span style="color: #f05050;">Không</span>' }}</td>
                                 <td>{{ $vip->vip_receiving_address }}</td>
+                                <td>
+                                    @if ($vip->vip_image)
+                                        <a href="https://drive.google.com/file/d/{{ $vip->vip_image }}/view"
+                                            target="_blank">
+                                            @lang('conference.en.link')
+                                        </a>
+                                    @endif
+                                </td>
                                 {{-- <td class="management">
                                 <a href="{{ Route('conference_vip_register.edit', [$conference->conference_code, $vip->id]) }}"
                                     class="management-btn" title="@lang('vart_define.button.update')">
