@@ -80,36 +80,63 @@ class SupportController extends Controller
         $pdf->save($filePath);
     }
 
-    public function createInvitation($id)
+    public function createInvitation($id, $type)
     {
-        $register = Register::select(
-            'registers.id',
-            'registers.conference_id',
-            'register_code',
-            'register_name',
-            'register_work_unit',
-            'register_degree',
-        )
-            ->firstWhere('id', $id);
-        $conference = Conference::select('id', 'conference_type_id')
-            ->firstWhere('id', $register->conference_id);
-
-        $invitation_template = InvitationTemplates::where('conference_id', $conference->id)->where('type', 'vn_att')->first();
-        $imgLogo = parserImgPdf(choseLogoByConferenceType($conference->conference_type_id));
-        $imgSign = parserImgPdf(choseSignatureByConferenceType($conference->conference_type_id));
-        $template = Blade::render(
-            $invitation_template->content,
-            [
+        if ($type == 'register') {
+            $register = Register::select(
+                'registers.id',
+                'registers.conference_id',
+                'register_code',
+                'register_name',
+                'register_work_unit',
+                'register_degree',
+            )
+                ->firstWhere('id', $id);
+            $conference = Conference::select('id', 'conference_type_id')
+                ->firstWhere('id', $register->conference_id);
+            $invitation_template = InvitationTemplates::where('conference_id', $conference->id)->where('type', 'vn_att')->first();
+            $imgLogo = parserImgPdf(choseLogoByConferenceType($conference->conference_type_id));
+            $imgSign = parserImgPdf(choseSignatureByConferenceType($conference->conference_type_id));
+            $code = $register->register_code;
+            $data = [
                 "degree" => $register->register_degree == '' ? 'Sinh Viên' : $register->register_degree,
                 'fullName' => $register->register_name,
                 'unit' => $register->register_work_unit,
                 'imgBackground' => parserImgPdf('defineTemplates/backGround/main.jpg'),
                 'imgLogo' => $imgLogo,
                 'imgSign' => $imgSign
-            ]
+            ];
+        } else {
+            $report = Report::select(
+                'reports.id',
+                'reports.conference_id',
+                'report_code',
+                'report_name',
+                'report_work_unit',
+                'report_degree',
+            )
+                ->firstWhere('id', $id);
+            $conference = Conference::select('id', 'conference_type_id')
+                ->firstWhere('id', $report->conference_id);
+            $invitation_template = InvitationTemplates::where('conference_id', $conference->id)->where('type', 'vn_vs')->first();
+            $imgLogo = parserImgPdf(choseLogoByConferenceType($conference->conference_type_id));
+            $imgSign = parserImgPdf(choseSignatureByConferenceType($conference->conference_type_id));
+            $code = $report->report_code;
+            $data = [
+                "title" => $report->report_degree == '' ? 'Sinh Viên' : $report->report_degree,
+                'fullName' => $report->report_name,
+                'unit' => $report->report_work_unit,
+                'imgBackground' => parserImgPdf('defineTemplates/backGround/main.jpg'),
+                'imgLogo' => $imgLogo,
+                'imgSign' => $imgSign
+            ];
+        }
+        $template = Blade::render(
+            $invitation_template->content,
+            $data
         );
         $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true])->loadHTML($template);
-        $filePath = storage_path('app/public/invitation/' . $register->register_code . '.pdf');
+        $filePath = storage_path('app/public/invitation/' . $code . '.pdf');
         $pdf->save($filePath);
     }
 
@@ -118,9 +145,9 @@ class SupportController extends Controller
         switch ($request->type) {
             case ('register'):
                 $this->createInvoice($id);
-                $this->createInvitation($id);
+                $this->createInvitation($id, 'register');
                 $model = Register::findOrFail($id);
-                
+
                 $payment = Payment::findOrFail($model->payment_id);
                 $payment->payment_status = 4;
                 $payment->save();
@@ -140,7 +167,7 @@ class SupportController extends Controller
                 $mail_code = $model->register_code;
                 $mail_type = $model->payment->conferenceFee->mail_type;
                 $locale = 'vn';
-                    Mail::to($mail_email)->send(new RegisterMail($mail_conference_type, $mail_conference_title, $mail_name, $mail_title, $mail_code, $mail_type, $locale));
+                Mail::to($mail_email)->send(new RegisterMail($mail_conference_type, $mail_conference_title, $mail_name, $mail_title, $mail_code, $mail_type, $locale));
                 break;
             case ('en_register'):
                 $model = EnRegister::findOrFail($id);
@@ -156,15 +183,27 @@ class SupportController extends Controller
                 Mail::to($mail_email)->send(new RegisterMail($mail_name, $mail_title, $mail_code, $mail_type, $locale));
                 break;
             case ('report'):
+                $this->createInvitation($id, 'report');
                 $model = Report::findOrFail($id);
                 $model->report_status = 3;
                 $model->save();
+                $conference = Conference::join('conference_types', 'conference_types.id', 'conferences.conference_type_id')->select(
+                    'conference_type_name',
+                    'conferences.id',
+                    'conference_title',
+                    'conference_title_en',
+                )
+                    ->where('conferences.id', $model->conference_id)
+                    ->first();
+                $mail_conference_type = $conference->conference_type_name;
+                $mail_conference_title = $conference->conference_title;
                 $mail_email = $model->report_email;
                 $mail_name = $model->report_name;
                 $mail_title = $model->report_gender;
                 $mail_code = $model->report_code;
+                $status = $model->report_status;
                 $locale = 'vn';
-                Mail::to($mail_email)->send(new ReportMail($mail_name, $mail_title, $mail_code, $locale));
+                Mail::to($mail_email)->send(new ReportMail($mail_conference_type, $mail_conference_title, $mail_name, $mail_title, $mail_code, null, null, $status, $locale));
                 break;
             case ('en_report'):
                 $model = EnReport::findOrFail($id);

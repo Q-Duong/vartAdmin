@@ -32,6 +32,8 @@ class Report extends Model
         'report_policy',
         'report_file_background',
         'report_share',
+        'report_suggested_addition',
+        'report_reason_rejection',
         'report_status',
     ];
 

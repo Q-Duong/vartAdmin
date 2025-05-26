@@ -93,8 +93,10 @@
                                         <span style="color: #27c24c;">@lang('conference.en.status.step1')</span>
                                     @elseif ($report->report_status == 2)
                                         <span style="color: #FCB322;">@lang('conference.en.status.step3')</span>
-                                    @else
+                                    @elseif ($report->report_status == 3)
                                         <span style="color: #0071e3;">@lang('conference.en.status.step4')</span>
+                                    @else
+                                        <span style="color: #e53637;">@lang('conference.en.status.step5')</span>
                                     @endif
                                 </td>
                                 <td class="management">
@@ -102,21 +104,26 @@
                                         class="management-btn" title="@lang('vart_define.button.update')"><i
                                             class="fa fa-pencil-square-o text-success text-active"></i>
                                     </a>
-                                    <form action="{{ Route('conference_report.destroy', $report->id) }}" method="POST"
-                                        id="delete-form">
-                                        @method('delete')
-                                        @csrf
-                                        <button type="submit" class="management-btn button-delete"
-                                            title="@lang('vart_define.button.delete')"><i class="fa fa-times text-danger text"></i></button>
-                                    </form>
-                                    <form action="{{ Route('mail.reply', $report->id) }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="type" value="report">
-                                        <button type="submit" class="management-btn button-submit"
-                                            title="@lang('vart_define.button.mail')">
-                                            <i class="far fa-envelope btn-mail"></i>
-                                        </button>
-                                    </form>
+                                    @can('isAdmin')
+                                        <form action="{{ Route('conference_report.destroy', $report->id) }}" method="POST"
+                                            id="delete-form">
+                                            @method('delete')
+                                            @csrf
+                                            <button type="submit" class="management-btn button-delete"
+                                                title="@lang('vart_define.button.delete')"><i class="fa fa-times text-danger text"></i></button>
+                                        </form>
+                                    @endcan
+                                    @if ($report->report_status != 4)
+                                        <form action="{{ Route('mail.reply', $report->id) }}" method="POST"
+                                            id="mail-form-{{ $report->id }}">
+                                            @csrf
+                                            <input type="hidden" name="type" value="report">
+                                            <button type="submit" class="management-btn button-submit button-mail"
+                                                title="@lang('vart_define.button.mail')">
+                                                <i class="far fa-envelope btn-mail"></i>
+                                            </button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

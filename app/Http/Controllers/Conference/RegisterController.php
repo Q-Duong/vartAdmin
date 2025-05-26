@@ -159,12 +159,12 @@ class RegisterController extends Controller
     {
         $register = Register::findOrFail($id);
         $payment = Payment::findOrFail($register->payment_id);
-        if ($register->register_image) {
-            deleteImageFileDrive($register->register_image);
-        }
-        if ($register->register_image_card) {
-            deleteImageFileDrive($register->register_image_card);
-        }
+        // if ($register->register_image) {
+        //     deleteImageFileDrive($register->register_image);
+        // }
+        // if ($register->register_image_card) {
+        //     deleteImageFileDrive($register->register_image_card);
+        // }
         if ($payment->payment_image) {
             deleteImageFileDrive($payment->payment_image);
         }

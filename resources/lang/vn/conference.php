@@ -96,6 +96,7 @@ return [
             'step2' => 'Paid and waiting for check',
             'step3' => 'Waiting for addition',
             'step4' => 'Processed and sent mail',
+            'step5' => 'Rejected',
         ],
         'title' => [
             'title' => 'Title',
@@ -112,6 +113,8 @@ return [
             'other' => 'Other',
         ],
         'dinner' => 'Dinner',
-        'hotel' => 'Hotel'
+        'hotel' => 'Hotel',
+        'reason_rejection' => 'Reason Rejection',
+        'suggested_addition' => 'Suggested Addition'
     ],
 ];

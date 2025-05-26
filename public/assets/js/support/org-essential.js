@@ -66,3 +66,9 @@ $(".button-delete").click(function (e) {
         $("#loading").delay(200).fadeOut("slow");
     }
 });
+
+$(".button-mail").on("click", function (e) {
+    $(".button-mail").attr("disabled", true);
+    $(".loading-container").show();
+    $("#" + $(this).parent().attr("id")).submit();
+});

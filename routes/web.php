@@ -136,11 +136,12 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::get('test-mail', function () {
-        return view('mail.register.vart.confirm.student')->with([
-            'title' => 'mr.',
+        return view('mail.report.vart.accept')->with([
+            'title' => 0,
             'name' => 'Dương',
             'code' => 'DVs',
-            'conference_title' => 'Hội nghị Khoa học Kỹ Thuật Hình Ảnh Y Học Toàn Quốc lần thứ 13'
+            'conference_title' => 'Hội nghị Khoa học Kỹ Thuật Hình Ảnh Y Học Toàn Quốc lần thứ 13',
+            'suggestedAddition' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         ]);
     });
 

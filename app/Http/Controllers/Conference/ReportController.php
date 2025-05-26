@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Conference;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\SupportController;
 use App\Models\EnReport;
 use App\Models\Province;
 use App\Models\Report;
@@ -12,16 +13,16 @@ use App\Models\Academic;
 use App\Models\Conference;
 use App\Models\TempFile;
 use App\Models\Topic;
+use App\Mail\ReportMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 
 class ReportController extends Controller
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function index()
     {
@@ -95,6 +96,8 @@ class ReportController extends Controller
             $report->report_phone = $request->report_phone;
             $report->report_graduation_year = $request->report_graduation_year;
             $report->report_file_title = $request->report_file_title;
+            $report->report_suggested_addition = $request->report_suggested_addition;
+            $report->report_reason_rejection = $request->report_reason_rejection;
             $report->report_status = $request->report_status;
             if (!empty($request->report_file)) {
                 $report->report_file = $request->report_file;
@@ -116,8 +119,23 @@ class ReportController extends Controller
                 $tempFile = TempFile::firstWhere('folder', $request->report_file_background);
                 $tempFile->delete();
             }
+
             $report->save();
+            $conference = Conference::join('conference_types', 'conference_types.id', 'conferences.conference_type_id')->select(
+                'conference_type_name',
+                'conferences.id',
+                'conference_title',
+                'conference_title_en',
+            )
+                ->where('conferences.id', $report->conference_id)
+                ->first();
             DB::commit();
+            if ($request->report_status == 3 || $request->report_status == 4) {
+                if ($request->report_status == 3) {
+                    app(SupportController::class)->createInvitation($report->id, 'report');
+                }
+                Mail::to($report->report_email)->send(new ReportMail($conference->conference_type_name, $conference->conference_title, $report->report_name, $report->report_gender, $report->report_code, $report->report_suggested_addition, $report->report_reason_rejection, $report->report_status, 'vn'));
+            }
             return response()->json(array('success' => true, 'message' => __('alert.conference.successMessage_update'), 'route' => route('conference_report.index', $code)));
         } catch (\Exception $e) {
             DB::rollback();
@@ -128,18 +146,18 @@ class ReportController extends Controller
     public function destroy($id)
     {
         $report = Report::findOrFail($id);
-        if ($report->report_image) {
-            deleteImageFileDrive($report->report_image);
-        }
-        if ($report->report_image_card) {
-            deleteImageFileDrive($report->report_image_card);
-        }
-        if ($report->report_file) {
-            deleteImageFileDrive($report->report_file);
-        }
-        if ($report->report_file_background) {
-            deleteImageFileDrive($report->report_file_background);
-        }
+        // if ($report->report_image) {
+        //     deleteImageFileDrive($report->report_image);
+        // }
+        // if ($report->report_image_card) {
+        //     deleteImageFileDrive($report->report_image_card);
+        // }
+        // if ($report->report_file) {
+        //     deleteImageFileDrive($report->report_file);
+        // }
+        // if ($report->report_file_background) {
+        //     deleteImageFileDrive($report->report_file_background);
+        // }
         $report->delete();
         return Redirect()->back()->with('success',  __('alert.conference.successMessage_delete'));
     }
@@ -230,9 +248,9 @@ class ReportController extends Controller
     public function destroyInternational($id)
     {
         $en_report = EnReport::findOrFail($id);
-        if ($en_report->en_report_file) {
-            deleteImageFileDrive($en_report->en_report_file);
-        }
+        // if ($en_report->en_report_file) {
+        //     deleteImageFileDrive($en_report->en_report_file);
+        // }
         $en_report->delete();
         return Redirect()->back()->with('success',  __('alert.conference.successMessage_update'));
     }

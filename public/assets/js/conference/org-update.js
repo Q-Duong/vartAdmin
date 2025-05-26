@@ -1,3 +1,24 @@
+$(document).on("change", ".report-status", function () {
+    var value = $(this).val();
+    if (value == 3) {
+        $(".report-suggested-addition").removeClass("hidden");
+        $(".report-suggested-addition-input").attr("disabled", false);
+        $(".report-reason-rejection").addClass("hidden");
+        $(".report-reason-rejection-input").attr("disabled", true);
+    }
+    if (value == 4) {
+        $(".report-reason-rejection").removeClass("hidden");
+        $(".report-reason-rejection-input").attr("disabled", false);
+        $(".report-suggested-addition").addClass("hidden");
+        $(".report-suggested-addition-input").attr("disabled", true);
+    } else if(value == 1 || value == 2) {
+        $(".report-suggested-addition").addClass("hidden");
+        $(".report-suggested-addition-input").attr("disabled", true);
+        $(".report-reason-rejection").addClass("hidden");
+        $(".report-reason-rejection-input").attr("disabled", true);
+    }
+});
+
 $(".button-submit").on("click", function () {
     var formData = new FormData($("#update-form")[0]);
     $(".form-element").removeClass("is-error");

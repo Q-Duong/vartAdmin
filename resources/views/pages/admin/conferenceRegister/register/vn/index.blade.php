@@ -228,19 +228,22 @@
                                             <i class="fa-regular fa-copy btn-copy"></i>
                                         </button>
                                     </form>
-                                    <form action="{{ Route('conference_register.destroy', $register->id) }}" method="POST"
-                                        id="delete-form">
-                                        @method('delete')
-                                        @csrf
-                                        <button type="submit" class="management-btn button-delete"
-                                            title="@lang('vart_define.button.delete')">
-                                            <i class="fa fa-times text-danger text"></i>
-                                        </button>
-                                    </form>
-                                    <form action="{{ Route('mail.reply', $register->id) }}" method="POST">
+                                    @can('isAdmin')
+                                        <form action="{{ Route('conference_register.destroy', $register->id) }}" method="POST"
+                                            id="delete-form">
+                                            @method('delete')
+                                            @csrf
+                                            <button type="submit" class="management-btn button-delete"
+                                                title="@lang('vart_define.button.delete')">
+                                                <i class="fa fa-times text-danger text"></i>
+                                            </button>
+                                        </form>
+                                    @endcan
+                                    <form action="{{ Route('mail.reply', $register->id) }}" method="POST"
+                                        id="mail-form-{{ $register->id }}">
                                         @csrf
                                         <input type="hidden" name="type" value="register">
-                                        <button type="submit" class="management-btn button-submit"
+                                        <button type="submit" class="management-btn button-submit button-mail"
                                             title="@lang('vart_define.button.mail')">
                                             <i class="far fa-envelope btn-mail"></i>
                                         </button>

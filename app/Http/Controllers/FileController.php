@@ -123,7 +123,6 @@ class FileController extends Controller
 
     public function destroy(Request $request)
     {
-        deleteImageFileDrive($request->path);
         $reportTypes = ['report_image', 'report_image_card', 'report_file', 'report_file_background'];
         if (in_array($request->type, $reportTypes)) {
             $report = Report::findOrFail($request->id);
@@ -137,10 +136,12 @@ class FileController extends Controller
                     $report->save();
                     break;
                 case ('report_file'):
+                    deleteImageFileDrive($request->path);
                     $report->report_file = null;
                     $report->save();
                     break;
                 case ('report_file_background'):
+                    deleteImageFileDrive($request->path);
                     $report->report_file_background = null;
                     $report->save();
                     break;
@@ -164,6 +165,7 @@ class FileController extends Controller
                     $register->save();
                     break;
                 case ('payment_image'):
+                    deleteImageFileDrive($request->path);
                     $payment = Payment::findOrFail($register->payment_id);
                     $payment->payment_image = null;
                     $payment->save();
@@ -217,18 +219,18 @@ class FileController extends Controller
                 }
                 $conference->save();
                 break;
-            case ('about'):
-                $about = About::findOrFail($request->id);
-                removeFileSource(getFolderForDestroyFile($about->about_image), true);
-                $about->about_image = null;
-                $about->save();
-                break;
-            case ('support_content'):
-                $supportContent = SupportContent::findOrFail($request->id);
-                removeFileSource(getFolderForDestroyFile($supportContent->support_content_image), true);
-                $supportContent->support_content_image = null;
-                $supportContent->save();
-                break;
+            // case ('about'):
+            //     $about = About::findOrFail($request->id);
+            //     removeFileSource(getFolderForDestroyFile($about->about_image), true);
+            //     $about->about_image = null;
+            //     $about->save();
+            //     break;
+            // case ('support_content'):
+            //     $supportContent = SupportContent::findOrFail($request->id);
+            //     removeFileSource(getFolderForDestroyFile($supportContent->support_content_image), true);
+            //     $supportContent->support_content_image = null;
+            //     $supportContent->save();
+            //     break;
         }
 
         return response('Success delete', 200);

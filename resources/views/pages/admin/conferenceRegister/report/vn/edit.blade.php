@@ -36,7 +36,7 @@
                                     @endforeach
                                 </select>
                                 <span class="form-dropdown-chevron" aria-hidden="true"><i
-                                    class="fa-solid fa-angle-down"></i></span>
+                                        class="fa-solid fa-angle-down"></i></span>
                                 <span class="form-dropdown-label">@lang('conference.en.degree')</span>
                             </div>
                             <div class="form-textbox">
@@ -60,7 +60,7 @@
                                             @endfor
                                         </select>
                                         <span class="form-dropdown-chevron" aria-hidden="true"><i
-                                            class="fa-solid fa-angle-down"></i></span>
+                                                class="fa-solid fa-angle-down"></i></span>
                                         <span class="form-dropdown-label">@lang('conference.en.date')</span>
                                     </div>
                                 </div>
@@ -74,7 +74,7 @@
                                             @endfor
                                         </select>
                                         <span class="form-dropdown-chevron" aria-hidden="true"><i
-                                            class="fa-solid fa-angle-down"></i></span>
+                                                class="fa-solid fa-angle-down"></i></span>
                                         <span class="form-dropdown-label">@lang('conference.en.month')</span>
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@
                                             @endfor
                                         </select>
                                         <span class="form-dropdown-chevron" aria-hidden="true"><i
-                                            class="fa-solid fa-angle-down"></i></span>
+                                                class="fa-solid fa-angle-down"></i></span>
                                         <span class="form-dropdown-label">@lang('conference.en.year')</span>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
                                         @lang('conference.en.female')</option>
                                 </select>
                                 <span class="form-dropdown-chevron" aria-hidden="true"><i
-                                    class="fa-solid fa-angle-down"></i></span>
+                                        class="fa-solid fa-angle-down"></i></span>
                                 <span class="form-dropdown-label">@lang('conference.en.gender')</span>
                             </div>
                             <div class="form-textbox">
@@ -123,7 +123,7 @@
                                     @endforeach
                                 </select>
                                 <span class="form-dropdown-chevron" aria-hidden="true"><i
-                                    class="fa-solid fa-angle-down"></i></span>
+                                        class="fa-solid fa-angle-down"></i></span>
                                 <span class="form-dropdown-label">@lang('conference.en.place_of_birth')</span>
                             </div>
                             <div class="form-textbox">
@@ -237,14 +237,14 @@
                                     @endforeach
                                 </select>
                                 <span class="form-dropdown-chevron" aria-hidden="true"><i
-                                    class="fa-solid fa-angle-down"></i></span>
+                                        class="fa-solid fa-angle-down"></i></span>
                                 <span class="form-dropdown-label">@lang('conference.en.topics')</span>
                             </div>
                             <div class="form-textbox">
                                 <input type="text" name="report_file_title"
                                     class="form-textbox-input {{ $report->report_file_title ? 'form-textbox-entered' : '' }}"
                                     value="{{ $report->report_file_title }}">
-                                    <div class="form-message-wrapper report_file_title">
+                                <div class="form-message-wrapper report_file_title">
                                     <i class="fa fa-exclamation-circle"></i>
                                     <span class="report_file_title-form-message"></span>
                                 </div>
@@ -275,25 +275,51 @@
                                 @endif
                             </div>
                             <div class="form-dropdown">
-                                <select name="report_status" class="form-dropdown-select">
+                                <select name="report_status" class="form-dropdown-select report-status">
                                     @if ($report->report_status == 1)
                                         <option value="1" selected>@lang('conference.en.status.step1')</option>
                                         <option value="2">@lang('conference.en.status.step3')</option>
                                         <option value="3">@lang('conference.en.status.step4')</option>
+                                        <option value="4">@lang('conference.en.status.step5')</option>
                                     @elseif($report->report_status == 2)
                                         <option disabled>@lang('conference.en.status.step1')</option>
                                         <option value="2" selected>@lang('conference.en.status.step3')</option>
                                         <option value="3">@lang('conference.en.status.step4')</option>
+                                        <option value="4">@lang('conference.en.status.step5')</option>
                                     @elseif($report->report_status == 3)
                                         <option disabled>@lang('conference.en.status.step1')</option>
                                         <option disabled>@lang('conference.en.status.step3')</option>
                                         <option value="3" selected>@lang('conference.en.status.step4')</option>
+                                        <option disabled>@lang('conference.en.status.step5')</option>
+                                    @elseif($report->report_status == 4)
+                                        <option disabled>@lang('conference.en.status.step1')</option>
+                                        <option disabled>@lang('conference.en.status.step3')</option>
+                                        <option disabled>@lang('conference.en.status.step4')</option>
+                                        <option value="4" selected>@lang('conference.en.status.step5')</option>
                                     @endif
                                 </select>
                                 <span class="form-dropdown-chevron" aria-hidden="true"><i
-                                    class="fa-solid fa-angle-down"></i></span>
+                                        class="fa-solid fa-angle-down"></i></span>
                                 <span class="form-dropdown-label">@lang('conference.en.status.status')</span>
                             </div>
+                            <div class="form-textbox report-suggested-addition {{ $report->report_status == 3 ? '' : 'hidden' }}">
+                                <label>@lang('conference.en.suggested_addition')</label>
+                                <textarea name="report_suggested_addition" rows=6 class="form-textarea report-suggested-addition-input" {{$report->report_status == 3 ? '' : 'disabled' }}>{{ $report->report_suggested_addition }}</textarea>
+                                <div class="form-message-wrapper report_suggested_addition">
+                                    <i class="fa fa-exclamation-circle"></i>
+                                    <span class="report_suggested_addition-form-message"></span>
+                                </div>
+                            </div>
+                            <div class="form-textbox report-reason-rejection {{ $report->report_status == 4 ? '' : 'hidden' }}">
+                                <label>@lang('conference.en.reason_rejection')</label>
+                                <textarea name="report_reason_rejection" rows=6 class="form-textarea report-reason-rejection-input" {{$report->report_status == 4 ? '' : 'disabled' }}>{{ $report->report_reason_rejection }}</textarea>
+                                <div class="form-message-wrapper report_reason_rejection">
+                                    <i class="fa fa-exclamation-circle"></i>
+                                    <span class="report_reason_rejection-form-message"></span>
+                                </div>
+                            </div>
+
+                            
                             <button type="button" class="primary-btn-submit button-submit">@lang('vart_define.button.update')</button>
                         </form>
                     </div>
