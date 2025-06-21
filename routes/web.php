@@ -88,8 +88,8 @@ Route::group(['middleware' => 'auth'], function () {
     //Support
     Route::post('export-excel', [SupportController::class, 'export'])->name('export.excel');
     Route::get('print', [SupportController::class, 'print'])->name('invitation.print');
-    Route::post('send-mail-reply/{id}', [SupportController::class, 'sendMailReply'])->name('mail.reply');
-
+    Route::post('mail/reply/{id}', [SupportController::class, 'sendMailReply'])->name('mail.reply');
+    Route::post('mail/certificate', [SupportController::class, 'sendCertificate'])->name('mail.certificate');
     //Report Management
     Route::prefix('report-management')->group(function () {
         Route::prefix('report')->group(function () {
@@ -135,16 +135,6 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
-    Route::get('test-mail', function () {
-        return view('mail.report.vart.accept')->with([
-            'title' => 0,
-            'name' => 'Dương',
-            'code' => 'DVs',
-            'conference_title' => 'Hội nghị Khoa học Kỹ Thuật Hình Ảnh Y Học Toàn Quốc lần thứ 13',
-            'suggestedAddition' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        ]);
-    });
-
     Route::prefix('conference')->group(function () {
         Route::get('/', [ConferenceController::class, 'index'])->name('conference.index');
         Route::post('load', [ConferenceController::class, 'load'])->name('conference.load');
@@ -181,7 +171,18 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('get-form', [HartController::class, 'getForm'])->name('hart.get_form');
         Route::post('create-or-update', [HartController::class, 'storeOrUpdate'])->name('hart.store_or_update');
         Route::delete('delete', [HartController::class, 'destroy'])->name('hart.destroy');
-        Route::get('test-invoice', function () {
+    });
+
+    //Hrtta
+    Route::prefix('hrtta')->group(function () {
+        Route::get('/', [HrttaController::class, 'index'])->name('hrtta.index');
+        Route::post('load', [HrttaController::class, 'load'])->name('hrtta.load');
+        Route::post('get-form', [HrttaController::class, 'getForm'])->name('hrtta.get_form');
+        Route::post('create-or-update', [HrttaController::class, 'storeOrUpdate'])->name('hrtta.store_or_update');
+        Route::delete('delete', [HrttaController::class, 'destroy'])->name('hrtta.destroy');
+    });
+    Route::prefix('test')->group(function () {
+        Route::get('invoice', function () {
             $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.receipt', [
                 'name' => 'Huỳnh Quốc Dương',
                 'phone' => '0943705326',
@@ -193,15 +194,25 @@ Route::group(['middleware' => 'auth'], function () {
             ])->setPaper('a4', 'landscape');
             return $pdf->stream('invitation-letter-attendees.pdf');
         });
-    });
 
-    //Hrtta
-    Route::prefix('hrtta')->group(function () {
-        Route::get('/', [HrttaController::class, 'index'])->name('hrtta.index');
-        Route::post('load', [HrttaController::class, 'load'])->name('hrtta.load');
-        Route::post('get-form', [HrttaController::class, 'getForm'])->name('hrtta.get_form');
-        Route::post('create-or-update', [HrttaController::class, 'storeOrUpdate'])->name('hrtta.store_or_update');
-        Route::delete('delete', [HrttaController::class, 'destroy'])->name('hrtta.destroy');
+        Route::get('certificate', function () {
+            $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.certificate', [
+                'name' => 'LÊ HỮU LỄ',
+                'birthday' => '26/05/1994',
+                'unit' => 'Bệnh viện Nguyễn Trãi',
+                "imgBackground" => parserImgPdf('defineTemplates/backGround/certificate.jpg')
+            ]);
+            return $pdf->stream('certificate.pdf');
+        });
+
+        Route::get('mail', function () {
+            return view('mail.certificate.vart.national')->with([
+                'title' => 0,
+                'name' => 'Dương',
+                'code' => 'DVs',
+                'conference_title' => 'Hội nghị Khoa học Kỹ Thuật Hình Ảnh Y Học Toàn Quốc lần thứ 13',
+            ]);
+        });
     });
 
     //Vart
@@ -240,7 +251,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('per', [AdminController::class, 'per']);
 
-   //Blog Category
+    //Blog Category
     Route::prefix('blog-category')->group(function () {
         Route::get('/', [BlogCategoryController::class, 'index'])->name('blog_category.index');
         Route::post('load', [BlogCategoryController::class, 'load'])->name('blog_category.load');

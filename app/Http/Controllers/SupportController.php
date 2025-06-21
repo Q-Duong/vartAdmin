@@ -9,11 +9,11 @@ use App\Exports\ExcelExportENReport;
 use App\Exports\ExcelExportVnRegister;
 use App\Exports\ExcelExportEnRegister;
 use App\Exports\ExcelExportVipRegister;
+use App\Mail\CertificateMail;
 use App\Mail\RegisterMail;
 use App\Models\EnRegister;
 use App\Models\Payment;
 use App\Models\Register;
-use App\Mail\ReplyMail;
 use App\Mail\ReportMail;
 use App\Models\Conference;
 use App\Models\EnReport;
@@ -140,6 +140,18 @@ class SupportController extends Controller
         $pdf->save($filePath);
     }
 
+    public function createCertificate($data)
+    {
+        $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.certificate', [
+            'name' => $data->register_name,
+            'birthday' => $data->register_date . '/' . $data->register_month . '/' . $data->register_year,
+            'unit' => $data->register_work_unit,
+            "imgBackground" => parserImgPdf('defineTemplates/backGround/certificate.jpg')
+        ]);
+        $filePath = storage_path('app/public/certificate/' . $data->register_code . '.pdf');
+        $pdf->save($filePath);
+    }
+
     public function sendMailReply(Request $request, $id)
     {
         switch ($request->type) {
@@ -218,5 +230,43 @@ class SupportController extends Controller
                 break;
         }
         return Redirect()->back()->with('success', __('alert.mail.successMessage'));
+    }
+
+    public function sendCertificate(Request $request)
+    {
+        $conference = Conference::join('conference_types', 'conference_types.id', 'conferences.conference_type_id')->select(
+            'conference_type_name',
+            'conferences.id',
+            'conference_title',
+            'conference_title_en',
+        )
+            ->where('conferences.id', $request->conference_id)
+            ->first();
+        $mail_conference_type = $conference->conference_type_name;
+        $mail_conference_title = $conference->conference_title;
+        $getAllConferenceRegister = Register::join('payments', 'payments.id', '=', 'registers.payment_id')
+            ->join('conference_fees', 'payments.conference_fee_id', '=', 'conference_fees.id')
+            ->select(
+                'registers.conference_id',
+                'payment_id',
+                'registers.id',
+                'register_code',
+                'register_name',
+                'register_gender',
+                'register_date',
+                'register_month',
+                'register_year',
+                'register_email',
+                'register_work_unit',
+                'registers.created_at',
+                'payment_status'
+            )
+            ->where('registers.conference_id', $request->conference_id)
+            ->orderBy('registers.id', 'DESC')
+            ->paginate(10, ['*'], 'page', $request->current_page)->items();
+        foreach ($getAllConferenceRegister as $register) {
+            Mail::to($register->register_email)->send(new CertificateMail($mail_conference_type, $mail_conference_title, $register->register_name, $register->register_gender, $register->register_code,'vn'));
+            // $this->createCertificate($register);
+        }
     }
 }

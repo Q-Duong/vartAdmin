@@ -260,26 +260,25 @@
         ])
         {{ $getAllConferenceRegister->links('pagination::custom') }}
         <div class="export-excel">
-            <form action="{{ route('export.excel') }}" method="POST">
-                @csrf
-                <input type="hidden" name="conference_id" value="{{ $conference->id }}">
-                <input type="hidden" name="export_type" value="vnrt">
-                <div class="col-md-3">
+            <div class="col-md-2">
+                <form action="{{ route('export.excel') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="conference_id" value="{{ $conference->id }}">
+                    <input type="hidden" name="export_type" value="vnrt">
                     <button type="submit" class="primary-btn-filter">@lang('conference.en.export_excel')</button>
-                </div>
-            </form>
 
-            {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importModal">
-                Import Excel
-            </button>
-            <form action="{{ route('import-excel') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="form-group">
-                    <label for="file">Chọn file Excel</label>
-                    <input type="file" name="file" class="form-control" required>
+                </form>
+            </div>
+            @can('isAdmin')
+                <div class="col-md-2">
+                    <form action="{{ route('mail.certificate') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="conference_id" value="{{ $conference->id }}">
+                        <input type="hidden" name="current_page" value="{{ $getAllConferenceRegister->currentPage() }}">
+                        <button type="submit" class="primary-btn-filter">Sent Certificate</button>
+                    </form>
                 </div>
-                <button type="submit" class="primary-btn-filter">Import</button>
-            </form> --}}
+            @endcan
         </div>
     </div>
 @endsection
