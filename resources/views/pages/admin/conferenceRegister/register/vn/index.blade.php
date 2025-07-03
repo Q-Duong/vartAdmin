@@ -1,5 +1,8 @@
 @extends('layouts.default_auth')
 @section('title', __('conference.en.register_title') . ' - ')
+@push('css')
+    <link href="{{ versionResource('assets/styles/landing/table/support/select2.css') }}" rel="stylesheet" as="style" />
+@endpush
 @section('content')
     <div class="table-agile-info">
         <div class="panel-heading">
@@ -138,15 +141,11 @@
                             <th>@lang('conference.en.date')</th>
                             <th>@lang('conference.en.month')</th>
                             <th>@lang('conference.en.year')</th>
-                            <th>@lang('conference.en.unit')</th>
-                            <th>@lang('conference.en.place_of_birth')</th>
-                            <th>@lang('conference.en.nation')</th>
                             <th>@lang('conference.en.email')</th>
                             <th>@lang('conference.en.phone')</th>
-                            <th>@lang('conference.en.object_group')</th>
+                            <th>@lang('conference.en.unit')</th>
                             <th>@lang('conference.en.type_register')</th>
                             <th>@lang('conference.en.cost')</th>
-                            <th>@lang('conference.en.address')</th>
                             <th>@lang('conference.en.graduation_year')</th>
                             <th>@lang('conference.en.image')</th>
                             <th>@lang('conference.en.image_card')</th>
@@ -154,10 +153,96 @@
                             <th>@lang('conference.en.status.status')</th>
                             <th>@lang('conference.en.management')</th>
                         </tr>
+                        <tr class="section-filter">
+                            <th></th>
+                            <th>
+                                <select class="id select-2" multiple="multiple">
+                                    @foreach ($idFilter as $id)
+                                        <option value="{{ $id }}">
+                                            {{ $id }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </th>
+                            <th>
+                                <select class="register-code select-2" multiple="multiple">
+                                    @foreach ($codeFilter as $code)
+                                        <option value="{{ $code }}">
+                                            {{ $code }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </th>
+                            <th></th>
+                            <th>
+                                <select class="register-name select-2" multiple="multiple">
+                                    @foreach ($nameFilter as $name)
+                                        <option value="{{ $name }}">
+                                            {{ $name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>
+                                <select class="register-email select-2" multiple="multiple">
+                                    @foreach ($emailFilter as $email)
+                                        <option value="{{ $email }}">
+                                            {{ $email }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </th>
+                            <th>
+                                <select class="register-phone select-2" multiple="multiple">
+                                    @foreach ($phoneFilter as $phone)
+                                        <option value="{{ $phone }}">
+                                            {{ $phone }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </th>
+                            <th></th>
+                            <th>
+                                <select class="conference-fee-title select-2" multiple="multiple">
+                                    @foreach ($conferenceFeeTitleFilter as $title)
+                                        <option value="{{ $title }}">
+                                            {{ $title }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>
+                                <select class="payment-status select-2" multiple="multiple">
+                                    @foreach ($paymentStatusFilter as $status)
+                                        <option value="{{ $status }}">
+                                            @if ($status == 1)
+                                                @lang('conference.en.status.step1')</span>
+                                            @elseif ($status == 2)
+                                                @lang('conference.en.status.step2')</span>
+                                            @elseif ($status == 3)
+                                                @lang('conference.en.status.step3')</span>
+                                            @elseif ($status == 4)
+                                                @lang('conference.en.status.step4')</span>
+                                            @endif
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </th>
+                            <th></th>
+                        </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="tbody-content">
                         @foreach ($getAllConferenceRegister as $key => $register)
-                            <tr>
+                            <tr class="section-item">
                                 <td>{{ \Carbon\Carbon::parse($register->created_at)->format('H:i:s d/m/Y') }}</td>
                                 <td>{{ $register->id }}</td>
                                 <td>{{ $register->register_code }}</td>
@@ -167,16 +252,12 @@
                                 <td>{{ $register->register_date }}</td>
                                 <td>{{ $register->register_month }}</td>
                                 <td>{{ $register->register_year }}</td>
-                                <td>{{ $register->register_work_unit }}</td>
-                                <td>{{ $register->register_place_of_birth }}</td>
-                                <td>{{ $register->register_nation }}</td>
                                 <td>{{ $register->register_email }}</td>
                                 <td>{{ $register->register_phone }}</td>
-                                <td>{{ $register->register_object_group }}</td>
+                                <td>{{ $register->register_work_unit }}</td>
                                 <td>{{ $register->conference_fee_title }}</td>
                                 <td>{{ $register->payment_price < 1000 ? '$' . number_format($register->payment_price, 2) : number_format($register->payment_price, 0, ',', '.') . '₫' }}
                                 </td>
-                                <td>{{ $register->register_receiving_address }}</td>
                                 <td>{{ $register->register_graduation_year }}</td>
                                 <td>
                                     @if ($register->register_image)
@@ -204,13 +285,13 @@
                                 </td>
                                 <td>
                                     @if ($register->payment_status == 1)
-                                        <span style="color: #27c24c;">@lang('conference.en.status.step1')</span>
-                                    @elseif ($register->payment_status == 2)
-                                        <span style="color: #FCB322;">@lang('conference.en.status.step2')</span>
-                                    @elseif ($register->payment_status == 3)
-                                        <span style="color: #c037df;">@lang('conference.en.status.step3')</span>
-                                    @elseif ($register->payment_status == 4)
-                                        <span style="color: #0071e3;">@lang('conference.en.status.step4')</span>
+                                        <span style="color: #27c24c;">@lang('conference.en.status.step1')
+                                        @elseif ($register->payment_status == 2)
+                                            <span style="color: #FCB322;">@lang('conference.en.status.step2')
+                                            @elseif ($register->payment_status == 3)
+                                                <span style="color: #c037df;">@lang('conference.en.status.step3')
+                                                @elseif ($register->payment_status == 4)
+                                                    <span style="color: #0071e3;">@lang('conference.en.status.step4')
                                     @endif
                                 </td>
                                 <td class="management">
@@ -229,8 +310,8 @@
                                         </button>
                                     </form>
                                     @can('isAdmin')
-                                        <form action="{{ Route('conference_register.destroy', $register->id) }}" method="POST"
-                                            id="delete-form">
+                                        <form action="{{ Route('conference_register.destroy', $register->id) }}"
+                                            method="POST" id="delete-form">
                                             @method('delete')
                                             @csrf
                                             <button type="submit" class="management-btn button-delete"
@@ -255,12 +336,15 @@
                 </table>
             </div>
         </div>
-        @include('layouts.section.pagination_showing_current', [
-            'items' => $getAllConferenceRegister,
-        ])
-        {{ $getAllConferenceRegister->links('pagination::custom') }}
+        <div class="table-pagination">
+            @include('layouts.section.pagination_showing_current', [
+                'items' => $getAllConferenceRegister,
+            ])
+            {{ $getAllConferenceRegister->links('pagination::custom') }}
+        </div>
         <div class="export-excel">
             <div class="col-md-2">
+                <input type="hidden" name="current_page" value="{{ $getAllConferenceRegister->currentPage() }}">
                 <form action="{{ route('export.excel') }}" method="POST">
                     @csrf
                     <input type="hidden" name="conference_id" value="{{ $conference->id }}">
@@ -282,3 +366,10 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <script type="text/javascript">
+        var url_filter_register = "{{ route('conference_register.filter') }}";
+    </script>
+    <script src="{{ versionResource('assets/js/support/select.js') }}" defer></script>
+    <script src="{{ versionResource('assets/js/conference/register.js') }}" defer></script>
+@endpush

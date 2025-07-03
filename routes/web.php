@@ -117,6 +117,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('{code}/edit/{id}', [RegisterController::class, 'edit'])->name('conference_register.edit');
             Route::post('{code}/update', [RegisterController::class, 'update'])->name('conference_register.update');
             Route::delete('delete/{id}', [RegisterController::class, 'destroy'])->name('conference_register.destroy');
+            Route::post('filter', [RegisterController::class, 'filter'])->name('conference_register.filter');
             Route::post('/import-excel', [ExcelController::class, 'import'])->name('import-excel');
         });
         Route::prefix('en-register')->group(function () {
@@ -197,9 +198,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('certificate', function () {
             $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.certificate', [
-                'name' => 'LÊ HỮU LỄ',
-                'birthday' => '26/05/1994',
-                'unit' => 'Bệnh viện Nguyễn Trãi',
+                'name' => 'HỒ HOÀNG THẠCH',
+                'birthday' => '3/10/1985',
+                'unit' => 'CTY TNHH ĐẦU TƯ TTB Y TẾ NAM KHÁNH LINH',
                 "imgBackground" => parserImgPdf('defineTemplates/backGround/certificate.jpg')
             ]);
             return $pdf->stream('certificate.pdf');

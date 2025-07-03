@@ -36,7 +36,17 @@ class RegisterController extends Controller
         $totalPractice = Register::getAllRegisterByParamCode($conference->id, 'TH');
         $totalCME = Register::getAllRegisterByParamCode($conference->id, 'CE');
         $totalStatus = Register::getAllRegisterAmountStatus($conference->id);
-        return view('pages.admin.conferenceRegister.register.vn.index', compact('getAllConferenceRegister', 'conference', 'totalAmount', 'totalTheory', 'totalPractice', 'totalCME', 'totalStatus'));
+        //Filter
+        $getAllRegister = Register::getAllRegister($conference->id);
+        $idFilter = $getAllRegister->pluck('id')->unique()->sort();
+        $codeFilter = $getAllRegister->pluck('register_code')->unique()->sort();
+        $nameFilter = $getAllRegister->pluck('register_name')->unique()->sort();
+        $emailFilter = $getAllRegister->pluck('register_email')->unique()->sort();
+        $phoneFilter = $getAllRegister->pluck('register_phone')->unique()->sort();
+        $conferenceFeeTitleFilter = $getAllRegister->pluck('conference_fee_title')->unique()->sort();
+        $paymentStatusFilter = $getAllRegister->pluck('payment_status')->unique()->sort();
+
+        return view('pages.admin.conferenceRegister.register.vn.index', compact('getAllConferenceRegister', 'conference', 'totalAmount', 'totalTheory', 'totalPractice', 'totalCME', 'totalStatus', 'idFilter', 'codeFilter', 'nameFilter', 'emailFilter', 'phoneFilter', 'conferenceFeeTitleFilter', 'paymentStatusFilter'));
     }
 
     function str_replace_last($search, $replace, $subject)
@@ -170,6 +180,23 @@ class RegisterController extends Controller
         }
         $payment->delete();
         return Redirect()->back()->with('success',  __('alert.conference.successMessage_delete'));
+    }
+
+    public function filter(Request $request)
+    {
+        $searchData = array_slice($request->all(), 2);
+        $conference = Conference::select('id', 'conference_title', 'conference_code')->firstWhere('id', $request->conference_id);
+
+		if (array_filter($searchData)) {
+            $getAllRegisterFilter = Register::getRegisterQueryBuilderBySearchData($searchData, $request->conference_id);
+            $flagEmpty = false;
+		}else{
+            $getAllRegisterFilter = Register::getAllRegisterWithCurrentPage($request->conference_id, $request->current_page);
+            $flagEmpty = true;
+        }
+
+		$html = view('pages.admin.conferenceRegister.register.vn.filter.index')->with(compact('getAllRegisterFilter', 'conference'))->render();
+		return response()->json(array('html' => $html, 'flagEmpty' => $flagEmpty));
     }
     //EN
     public function indexEn()
