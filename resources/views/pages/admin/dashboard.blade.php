@@ -19,7 +19,7 @@
                                     •&nbsp;Total Participants :
                                 </div>
                                 <div class="filter-content-details">
-                                    {{ isset($getAllConferenceRegister) ? $getAllConferenceRegister : 0 }}</div>
+                                    {{ $totalTheory['counter'] + $totalPractice['counter'] + $totalCME['counter'] }}</div>
                             </li>
                             <li class="filter-content-block">
                                 <div class="filter-content-title">
@@ -58,7 +58,7 @@
                                     •&nbsp;Total Amount :
                                 </div>
                                 <div class="filter-content-details">
-                                    {{ isset($totalAmoun) ? number_format($totalAmount['prices'], 0, ',', '.') . '₫' : 0 }}
+                                    {{ isset($totalAmount) ? number_format($totalAmount['prices'], 0, ',', '.') . '₫' : 0 }}
                                 </div>
                             </li>
                             <li class="filter-content-block">
@@ -116,6 +116,30 @@
                             <div class="filter-title">
                                 <p class="filter-title-text">
                                     THƯ MỜI TÀI TRỢ
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="filter-tiles">
+                        <a href="https://docs.google.com/spreadsheets/d/1Nn2wxi0DV4cDCQs8MN8LL2wT608AKybhAa3Dve1-eUQ/edit?gid=1458539916#gid=1458539916"
+                            target="_blank">
+                            <div class="filter-title">
+                                <p class="filter-title-text">
+                                    BẢNG PHÂN CÔNG HỘI NGHỊ
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="filter-tiles">
+                        <a href="https://docs.google.com/spreadsheets/d/1iiQIz6xAwnK1haH7lvEMGeXs03t4cHF4od1--2dyX_g/edit?gid=974923128#gid=974923128"
+                            target="_blank">
+                            <div class="filter-title">
+                                <p class="filter-title-text">
+                                    BẢNG PHÂN CÔNG HỘI NGHỊ QUỐC TẾ
                                 </p>
                             </div>
                         </a>

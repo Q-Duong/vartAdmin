@@ -32,6 +32,7 @@ class Register extends Model
         'register_image_card',
         'register_receiving_address',
         'register_policy',
+        'register_cme_type',
         'conference_id',
         'payment_id',
     ];

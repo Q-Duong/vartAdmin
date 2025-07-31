@@ -122,10 +122,32 @@ final class RegisterBuilder extends Builder
         return $registers;
     }
 
-    public function getAllRegisterByParamCode($conference_id, $code)
+    public function getAllRegisterByParamCode($conference, $code, $multi)
     {
         $counter = 0;
         $prices = 0;
+        if ($multi) {
+            $registers = Register::join('payments', 'payments.id', '=', 'registers.payment_id')
+                ->join('conference_fees', 'payments.conference_fee_id', '=', 'conference_fees.id')
+                ->select(
+                    'registers.conference_id',
+                    'payment_id',
+                    'registers.id',
+                    'register_code',
+                    'payment_price',
+                )
+                ->whereIn('registers.conference_id', explode(',', $conference))
+                ->get();
+            foreach ($registers as $key => $register) {
+                if (mb_substr($register->register_code, 0, 2) == $code) {
+                    $counter++;
+                    $prices += $register->payment_price;
+                }
+            }
+            $response = ['counter' => $counter, 'prices' => $prices];
+            return $response;
+        }
+
         $registers = Register::join('payments', 'payments.id', '=', 'registers.payment_id')
             ->join('conference_fees', 'payments.conference_fee_id', '=', 'conference_fees.id')
             ->select(
@@ -135,8 +157,7 @@ final class RegisterBuilder extends Builder
                 'register_code',
                 'payment_price',
             )
-            ->where('registers.conference_id', $conference_id)
-            ->orderBy('registers.id', 'DESC')
+            ->where('registers.conference_id', $conference)
             ->get();
         foreach ($registers as $key => $register) {
             if (mb_substr($register->register_code, 0, 2) == $code) {
@@ -148,10 +169,30 @@ final class RegisterBuilder extends Builder
         return $response;
     }
 
-    public function getAllRegisterAmount($conference_id)
+    public function getAllRegisterAmount($conference, $multi)
     {
         $counter = 0;
         $prices = 0;
+        if ($multi) {
+            $registers = Register::join('payments', 'payments.id', '=', 'registers.payment_id')
+                ->join('conference_fees', 'payments.conference_fee_id', '=', 'conference_fees.id')
+                ->select(
+                    'registers.conference_id',
+                    'payment_id',
+                    'registers.id',
+                    'register_code',
+                    'payment_price',
+                )
+                ->whereIn('registers.conference_id', explode(',', $conference))
+                ->get();
+            foreach ($registers as $key => $register) {
+                $counter++;
+                $prices += $register->payment_price;
+            }
+            $response = ['counter' => $counter, 'prices' => $prices];
+            return $response;
+        }
+
         $registers = Register::join('payments', 'payments.id', '=', 'registers.payment_id')
             ->join('conference_fees', 'payments.conference_fee_id', '=', 'conference_fees.id')
             ->select(
@@ -161,8 +202,7 @@ final class RegisterBuilder extends Builder
                 'register_code',
                 'payment_price',
             )
-            ->where('registers.conference_id', $conference_id)
-            ->orderBy('registers.id', 'DESC')
+            ->where('registers.conference_id', $conference)
             ->get();
         foreach ($registers as $key => $register) {
             $counter++;

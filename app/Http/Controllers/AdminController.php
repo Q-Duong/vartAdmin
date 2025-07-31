@@ -17,14 +17,28 @@ class AdminController extends Controller
 {
     public function index(Request $request)
     {
-        $conference = Conference::select('id', 'conference_title', 'conference_code')->where('status', 1)->where('prioritize', 1)->firstWhere('display', 1);
+        $conference = Conference::select(
+            'id',
+            'conference_title',
+            'conference_code',
+            'multi_conferences',
+            'child_conference_list',
+        )->where('status', 1)->where('prioritize', 1)->firstWhere('display', 1);
         if (isset($conference)) {
-            $getAllConferenceRegister = Register::getAllRegisterWithPaginate($conference->id)->total();
-            $totalAmount = Register::getAllRegisterAmount($conference->id);
-            $totalTheory = Register::getAllRegisterByParamCode($conference->id, 'LT');
-            $totalPractice = Register::getAllRegisterByParamCode($conference->id, 'TH');
-            $totalCME = Register::getAllRegisterByParamCode($conference->id, 'CE');
-            return view('pages.admin.dashboard', compact('getAllConferenceRegister', 'conference', 'totalAmount', 'totalTheory', 'totalPractice', 'totalCME'));
+            if ($conference->multi_conferences) {
+                $conferenceParam = $conference->child_conference_list;
+                $multiParam = true;
+            } else {
+                $conferenceParam = $conference->id;
+                $multiParam = false;
+            }
+
+            $totalAmount = Register::getAllRegisterAmount($conferenceParam, $multiParam);
+            $totalTheory = Register::getAllRegisterByParamCode($conferenceParam, 'LT', $multiParam);
+            $totalPractice = Register::getAllRegisterByParamCode($conferenceParam, 'TH', $multiParam);
+            $totalCME = Register::getAllRegisterByParamCode($conferenceParam, 'CE', $multiParam);
+
+            return view('pages.admin.dashboard', compact('conference', 'totalAmount', 'totalTheory', 'totalPractice', 'totalCME'));
         }
 
         return view('pages.admin.dashboard');

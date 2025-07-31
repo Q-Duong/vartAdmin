@@ -31,10 +31,10 @@ class RegisterController extends Controller
     {
         $conference = Conference::select('id', 'conference_title', 'conference_code')->firstWhere('conference_code', $code);
         $getAllConferenceRegister = Register::getAllRegisterWithPaginate($conference->id);
-        $totalAmount = Register::getAllRegisterAmount($conference->id);
-        $totalTheory = Register::getAllRegisterByParamCode($conference->id, 'LT');
-        $totalPractice = Register::getAllRegisterByParamCode($conference->id, 'TH');
-        $totalCME = Register::getAllRegisterByParamCode($conference->id, 'CE');
+        $totalAmount = Register::getAllRegisterAmount($conference->id, false);
+        $totalTheory = Register::getAllRegisterByParamCode($conference->id, 'LT', false);
+        $totalPractice = Register::getAllRegisterByParamCode($conference->id, 'TH', false);
+        $totalCME = Register::getAllRegisterByParamCode($conference->id, 'CE', false);
         $totalStatus = Register::getAllRegisterAmountStatus($conference->id);
         //Filter
         $getAllRegister = Register::getAllRegister($conference->id);

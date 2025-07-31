@@ -198,12 +198,12 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('certificate', function () {
             $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.certificate', [
-                'name' => 'HỒ HOÀNG THẠCH',
-                'birthday' => '3/10/1985',
-                'unit' => 'CTY TNHH ĐẦU TƯ TTB Y TẾ NAM KHÁNH LINH',
+                'name' => 'VÕ NHẬT ANH',
+                'birthday' => '28/02/1997',
+                'unit' => 'BỆNH VIỆN ĐA KHOA QUỐC TẾ NAM SÀI GÒN',
                 "imgBackground" => parserImgPdf('defineTemplates/backGround/certificate.jpg')
             ]);
-            return $pdf->stream('certificate.pdf');
+            return $pdf->stream('VÕ NHẬT ANH.pdf');
         });
 
         Route::get('mail', function () {

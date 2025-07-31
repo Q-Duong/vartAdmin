@@ -23,6 +23,10 @@ class Conference extends Model
         'status',
         'prioritize',
         'display',
+        'accept_report',
+        'multi_conferences',
+        'child_conference_list',
+        'child_conference',
         'conference_category_id',
         'conference_type_id',
     ];
