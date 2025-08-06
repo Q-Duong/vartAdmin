@@ -142,14 +142,14 @@ table.table.table-bordered.table-dark tr th {
     vertical-align: middle;
 }
 
-.section-item {
+.section-item, .sticky-col {
     -webkit-transition: all, 0.3s;
     -o-transition: all, 0.3s;
     transition: all, 0.3s;
 }
 
 @media (min-width: 768px) {
-    .section-item:hover {
+    .section-item:hover, .section-item:hover .sticky-col {
         background: #f8f8f8;
         -webkit-transition: all, 0.3s;
         -o-transition: all, 0.3s;

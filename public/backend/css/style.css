@@ -1996,11 +1996,11 @@ ul.bs-glyphicons-list {
 }
 
 
-.btn-copy{
+.btn-copy {
     color: #0071e3;
 }
 
-.btn-mail{
+.btn-mail {
     color: #FCB322;
 }
 
@@ -4108,25 +4108,26 @@ a.active.styling-edit {
     justify-content: center;
 }
 
-.delete-file:hover, .dowload-file:hover{
+.delete-file:hover, .dowload-file:hover {
     border: 2px solid #fff;
 }
 
-.delete-file ,.dowload-file i {
+.delete-file, .dowload-file i {
     color: #ffffff;
     font-size: 12px;
 }
 
-.sticky-col {
-    position: -webkit-sticky;
-    position: sticky;
-    background-color: white;
+@media (min-width: 768px) {
+    .sticky-col {
+        position: -webkit-sticky;
+        position: sticky;
+        background-color: white;
+        border-right-width: 1px !important;
+        z-index: 2;
+    }
 }
 
 .first-col {
-    width: 50px;
-    min-width: 50px;
-    max-width: 50px;
     left: 0px;
 }
 

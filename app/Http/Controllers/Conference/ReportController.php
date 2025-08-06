@@ -26,7 +26,7 @@ class ReportController extends Controller
 
     public function index()
     {
-        $conferences = Conference::select('id', 'conference_title', 'conference_code')->orderBy('id', 'DESC')->get();
+        $conferences = Conference::select('id', 'conference_title', 'conference_code')->where('multi_conferences', 0)->orderBy('id', 'DESC')->get();
         return view('pages.admin.conferenceRegister.report.vn.list', compact('conferences'));
     }
 

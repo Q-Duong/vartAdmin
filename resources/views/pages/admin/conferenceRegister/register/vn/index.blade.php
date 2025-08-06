@@ -136,7 +136,7 @@
                             <th>@lang('conference.en.id')</th>
                             <th>@lang('conference.en.code')</th>
                             <th>@lang('conference.en.degree')</th>
-                            <th>@lang('conference.en.fullname')</th>
+                            <th class="sticky-col first-col">@lang('conference.en.fullname')</th>
                             <th>@lang('conference.en.gender')</th>
                             <th>@lang('conference.en.date')</th>
                             <th>@lang('conference.en.month')</th>
@@ -174,7 +174,7 @@
                                 </select>
                             </th>
                             <th></th>
-                            <th>
+                            <th class="sticky-col first-col">
                                 <select class="register-name select-2" multiple="multiple">
                                     @foreach ($nameFilter as $name)
                                         <option value="{{ $name }}">
@@ -247,7 +247,7 @@
                                 <td>{{ $register->id }}</td>
                                 <td>{{ $register->register_code }}</td>
                                 <td>{{ $register->register_degree }}</td>
-                                <td>{{ $register->register_name }}</td>
+                                <td class="sticky-col first-col">{{ $register->register_name }}</td>
                                 <td>{{ $register->register_gender == 0 ? 'Nam' : 'Nữ' }}</td>
                                 <td>{{ $register->register_date }}</td>
                                 <td>{{ $register->register_month }}</td>

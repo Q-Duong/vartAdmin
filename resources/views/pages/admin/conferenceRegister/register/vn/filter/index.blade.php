@@ -4,7 +4,7 @@
         <td>{{ $register->id }}</td>
         <td>{{ $register->register_code }}</td>
         <td>{{ $register->register_degree }}</td>
-        <td>{{ $register->register_name }}</td>
+        <td class="sticky-col first-col">{{ $register->register_name }}</td>
         <td>{{ $register->register_gender == 0 ? 'Nam' : 'Nữ' }}</td>
         <td>{{ $register->register_date }}</td>
         <td>{{ $register->register_month }}</td>
