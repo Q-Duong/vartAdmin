@@ -132,7 +132,7 @@ if (!function_exists('choseLogoByConferenceType')) {
                 $result = 'defineTemplates/logo/hart.png';
                 break;
             case (3):
-                $result = 'defineTemplates/logo/hrtta.png';
+                $result = 'defineTemplates/logo/hart.png';
                 break;
             default:
                 $result;
@@ -153,7 +153,7 @@ if (!function_exists('choseSignatureByConferenceType')) {
                 $result = 'defineTemplates/signature/hart.png';
                 break;
             case (3):
-                $result = 'defineTemplates/signature/hrtta.png';
+                $result = 'defineTemplates/signature/hart.png';
                 break;
             default:
                 $result;
@@ -175,7 +175,7 @@ if (!function_exists('choseInvoiceByConferenceType')) {
                 $result = 'defineTemplates/invoice/hart.jpg';
                 break;
             case (3):
-                $result = 'defineTemplates/invoice/hrtta.jpg';
+                $result = 'defineTemplates/invoice/hart.jpg';
                 break;
             default:
                 $result;

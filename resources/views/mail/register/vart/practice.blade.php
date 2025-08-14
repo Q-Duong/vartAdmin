@@ -15,68 +15,61 @@
     <div style="margin: 0 auto; width: 600px; padding: 40px 0">
         <a href="https://vart.vn/"
             style="display: flex; margin: 0 auto; width: 96px; text-decoration: none; color: #601e89;">
-            <img src="https://images.vart.vn/gmail/hart-logo.png" style="height: 50px; width: 50px;">
+            <img src="https://images.vart.vn/gmail/vart-logo.png" style="height: 50px; width: 50px;">
             <h4 style="text-align: left; text-transform: uppercase; font-size: 14px; margin-left: 10px;">
-                HART
+                VART
             </h4>
         </a>
     </div>
     <div
         style="background: #ffffff;border-radius: 20px;padding: 20px;  width: 700px; margin: 0 auto; position: relative;">
         <div style="display: flex; align-items: center;">
-            <img src="https://images.vart.vn/gmail/hart-logo.png" style="height: 50px; width: 50px; float: left;">
+            <img src="https://images.vart.vn/gmail/vart-logo.png" style="height: 50px; width: 50px; float: left;">
             <h4 style="text-align: left; text-transform: uppercase; font-size: 14px; margin-left: 10px;">
-                LIÊN CHI HỘI KỸ THUẬT HÌNH ẢNH Y HỌC THÀNH PHỐ HỒ CHÍ MINH
+                CHI HỘI KỸ THUẬT ĐIỆN QUANG VÀ Y HỌC HẠT NHÂN VIỆT NAM
             </h4>
-        </div>
-        <div style="text-align: right; font-style: italic; margin: 40px 50px; font-size: 15px;">
-            <strong>TP. Hồ Chí Minh, ngày {{ \Carbon\Carbon::now()->day }} tháng {{ \Carbon\Carbon::now()->month }} năm
-                {{ \Carbon\Carbon::now()->year }}</strong>
         </div>
         <div>
             <h3 style="text-align: center; color: #601e89;">
-                THƯ MỜI THAM GIA HỘI NGHỊ THƯỜNG NIÊN HART 2024
+                THƯ MỜI THAM GIA HỘI NGHỊ
             </h3>
         </div>
         <div style="width: 86%; margin: 50px auto;">
             <div style="margin: 0 0 20px 30px;">
-                Kính gửi<strong> Sinh viên <span
+                Kính gửi<strong> {{ $title == 0 ? 'Ông' : 'Bà' }} <span
                         style=" text-transform: uppercase">{{ $name }}</span></strong>,
             </div>
             <div>
-                <div style="margin-bottom: 25px; text-align: justify;">
-                    <span style="margin-left: 30px;">Thay mặt Ban tổ chức, Chúng tôi trân trọng kính mời: <strong>Sinh
-                            viên <span style=" text-transform: uppercase">{{ $name }}</span></strong></span>
-                    <br>Đến tham dự:<strong> SINH HOẠT KHOA HỌC (SINH VIÊN)</strong> Ngày <strong>21/09/2024 từ
-                        8:30-17:30.</strong>
-                        <b>Hội nghị kỹ thuật hình ảnh Y học Quốc Tế Liên hội:
-                            HART, SART, BRTA, NTPART</b> được tổ chức vào ngày
-                        <b>20-21/09/2024</b> tại <b>Trường Đại học Y Khoa Phạm Ngọc Thạch</b>, Thành Phố Hồ Chí Minh, Việt
-                        Nam.
+                <div style="margin-bottom: 25px; text-align: justify; line-height: 1.38em;">
+                    <span style="margin-left: 30px;">Thay mặt Ban tổ chức, Chúng tôi trân trọng kính mời
+                        <strong>{{ $title == 0 ? 'Ông' : 'Bà' }} <span
+                                style="text-transform: uppercase">{{ $name }}</span></strong> đến tham dự</span>
+                    <div style="text-align: center;">
+                        <br><b>"{{ $conference_title }}"</b>
+                    </div>
+                    <div style="margin-top: 25px;"><b>Hình thức tham dự:</b></div>
+                    <div style="margin-top: 15px; text-align: center; color: #27c24c;"><b>PHIÊN THỰC HÀNH (HANDS-ON)</b></div>
+                    <div style="margin-top: 25px;"><b>Thời gian:</b> Thứ Bảy, ngày 25/10/2025</div>
+                    <div style="margin-top: 15px;"><b>Địa điểm:</b> Hội Trường Bệnh viện Đại học Y Dược Shingmark</div>
+                    <div style="margin-top: 15px;"><b>Địa chỉ:</b> 1054 Quốc lộ 51, Phường Long Hưng, Tỉnh Đồng Nai</div>
                 </div>
                 <div style="margin-bottom: 25px; text-align: justify;">
                     Quý đại biểu có thể bấm vào đường <a href="https://vart.vn/invitation"
                         target="_blank"><strong>Link</strong></a> và điền <strong>Mã code: {{ $code }}</strong>
                     để lấy thư mời.
                 </div>
-                <div style="margin-bottom: 25px; text-align: justify;">
-                    Ngoài ra, Ban tổ chức cũng chuẩn bị thêm một chương trình tham quan Thành phố. Thông tin tham quan
-                    thành phố Đăng ký và lệ phí vui lòng truy cập <a target="_blank"
-                        href="https://drive.google.com/drive/folders/1OyonKd9F26vqaAuLzE3ZgauwSflmaVwy?usp=drive_link">Link</a>.
-
-                </div>
-                <div style="margin-bottom: 25px; text-align: justify;">
-                    Mọi thắc mắc xin vui lòng liên hệ CN. Trần Thị Minh Ngọc 079.5686.172 (phần danh
-                    sách, thư mời, giấy chứng nhận).
+                <div style="margin-bottom: 25px; text-align: justify; line-height: 1.38em;">
+                    <b>Lưu ý:</b> Tiệc Gala dinner được tổ chức vào lúc <b>19:00</b> ngày <b>21/06/2025</b> tại <b>Khách sạn Royal Lotus Đà Nẵng - 120 Nguyễn
+                        Văn Thoại, Mỹ An, Ngũ Hành Sơn, Đà Nẵng, Việt Nam.</b>
                 </div>
                 <div style="margin-bottom: 25px; text-align: justify;">
                     Chúng tôi rất trân trọng sự quan tâm, tham gia và đóng góp quý báu của đại biểu cho hội nghị.
                 </div>
                 <div style="margin-left: 50%;">
-                    <div style="text-align: center;"><strong>TM.BAN THƯỜNG VỤ LIÊN CHI HỘI</strong></div>
+                    <div style="text-align: center;"><strong>TM. BAN THƯỜNG VỤ LIÊN CHI HỘI</strong></div>
                     <div style="text-align: center;"><strong>CHỦ TỊCH</strong></div>
-                    <img src="https://images.vart.vn/gmail/sign-hart.png"
-                        style="height: 70px; width: 120px; margin-left: 90px">
+                    <img src="https://images.vart.vn/gmail/sign-vart.png"
+                        style="height: 70px; width: 150px; margin-left: 70px">
                     <div style="text-align: center;"><strong>Ths.Thái Văn Lộc</strong></div>
                 </div>
             </div>

@@ -29,30 +29,48 @@
                 CHI HỘI KỸ THUẬT ĐIỆN QUANG VÀ Y HỌC HẠT NHÂN VIỆT NAM
             </h4>
         </div>
-        <div style="text-align: right; font-style: italic; margin: 40px 50px; font-size: 15px;">
-            <strong>Huế, ngày {{ \Carbon\Carbon::now()->day }} tháng {{ \Carbon\Carbon::now()->month }} năm
-                {{ \Carbon\Carbon::now()->year }}</strong>
-        </div>
         <div>
             <h3 style="text-align: center; color: #601e89;">
-                XÁC NHẬN NỘP BÀI BÁO CÁO
+                THƯ MỜI THAM GIA HỘI NGHỊ
             </h3>
         </div>
         <div style="width: 86%; margin: 50px auto;">
             <div style="margin: 0 0 20px 30px;">
-                Kính gửi<strong> {{ $gender == 0 ? 'Ông' : 'Bà' }} <span
+                Kính gửi<strong> {{ $title == 0 ? 'Ông' : 'Bà' }} <span
                         style=" text-transform: uppercase">{{ $name }}</span></strong>,
             </div>
             <div>
-                <div style="margin-bottom: 25px; text-align: justify;">
-                    <span style="margin-left: 30px;">Cảm ơn <strong>{{ $gender == 0 ? 'Ông' : 'Bà' }} <span
-                                style="text-transform: uppercase">{{ $name }}</span></strong></span> đã đăng ký tham gia và nộp bài thành công.
-                    <br><strong>"Hội nghị Kỹ Thuật Hình Ảnh Y Học Toàn Quốc lần thứ 12"</strong> 
-                    <br>Phiên báo cáo toàn thể ngày 22 tháng 06 năm 2024 lúc 8:30-17:00. Thông báo bình duyệt bài thành công sẽ được gửi đến email đăng ký từ 20-30/05/2024.
+                <div style="margin-bottom: 25px; text-align: justify; line-height: 1.38em;">
+                    <span style="margin-left: 30px;">Thay mặt Ban tổ chức, Chúng tôi trân trọng kính mời
+                        <strong>{{ $title == 0 ? 'Ông' : 'Bà' }} <span
+                                style="text-transform: uppercase">{{ $name }}</span></strong> đến tham dự</span>
+                    <div style="text-align: center;">
+                        <br><b>"{{ $conference_title }}"</b>
+                    </div>
+                    <div style="margin-top: 25px;"><b>Hình thức tham dự:</b></div>
+                    <div style="margin-top: 15px; text-align: center; color: #27c24c;"><b>PHIÊN BÁO CÁO TOÀN THỂ</b></div>
+                    <div style="margin-top: 25px;"><b>Thời gian:</b> Thứ Bảy, ngày 25/10/2025</div>
+                    <div style="margin-top: 15px;"><b>Địa điểm:</b> Hội Trường Bệnh viện Đại học Y Dược Shingmark</div>
+                    <div style="margin-top: 15px;"><b>Địa chỉ:</b> 1054 Quốc lộ 51, Phường Long Hưng, Tỉnh Đồng Nai</div>
                 </div>
-                
                 <div style="margin-bottom: 25px; text-align: justify;">
-                    Trân trọng,
+                    Quý đại biểu có thể bấm vào đường <a href="https://vart.vn/invitation"
+                        target="_blank"><strong>Link</strong></a> và điền <strong>Mã code: {{ $code }}</strong>
+                    để lấy thư mời.
+                </div>
+                <div style="margin-bottom: 25px; text-align: justify; line-height: 1.38em;">
+                    <b>Lưu ý:</b> Tiệc Gala dinner được tổ chức vào lúc <b>19:00</b> ngày <b>21/06/2025</b> tại <b>Khách sạn Royal Lotus Đà Nẵng - 120 Nguyễn
+                        Văn Thoại, Mỹ An, Ngũ Hành Sơn, Đà Nẵng, Việt Nam.</b>
+                </div>
+                <div style="margin-bottom: 25px; text-align: justify;">
+                    Chúng tôi rất trân trọng sự quan tâm, tham gia và đóng góp quý báu của đại biểu cho hội nghị.
+                </div>
+                <div style="margin-left: 50%;">
+                    <div style="text-align: center;"><strong>TM. BAN THƯỜNG VỤ LIÊN CHI HỘI</strong></div>
+                    <div style="text-align: center;"><strong>CHỦ TỊCH</strong></div>
+                    <img src="https://images.vart.vn/gmail/sign-vart.png"
+                        style="height: 70px; width: 150px; margin-left: 70px">
+                    <div style="text-align: center;"><strong>Ths.Thái Văn Lộc</strong></div>
                 </div>
             </div>
         </div>

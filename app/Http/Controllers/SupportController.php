@@ -168,11 +168,13 @@ class SupportController extends Controller
                     'conferences.id',
                     'conference_title',
                     'conference_title_en',
+                    'child_conference',
+                    'parent_title',
                 )
-                    ->where('conferences.id', $model->conference_id)
-                    ->first();
+                    ->firstWhere('conferences.id', $model->conference_id);
+
                 $mail_conference_type = $conference->conference_type_name;
-                $mail_conference_title = $conference->conference_title;
+                $mail_conference_title = $conference->child_conference ? $conference->parent_title : $conference->conference_title;
                 $mail_email = $model->register_email;
                 $mail_name = $model->register_name;
                 $mail_title = $model->register_gender;
@@ -204,11 +206,12 @@ class SupportController extends Controller
                     'conferences.id',
                     'conference_title',
                     'conference_title_en',
+                    'child_conference',
+                    'parent_title', 
                 )
-                    ->where('conferences.id', $model->conference_id)
-                    ->first();
+                    ->firstWhere('conferences.id', $model->conference_id);
                 $mail_conference_type = $conference->conference_type_name;
-                $mail_conference_title = $conference->conference_title;
+                $mail_conference_title = $conference->child_conference ? $conference->parent_title : $conference->conference_title;
                 $mail_email = $model->report_email;
                 $mail_name = $model->report_name;
                 $mail_title = $model->report_gender;
@@ -265,7 +268,7 @@ class SupportController extends Controller
             ->orderBy('registers.id', 'DESC')
             ->paginate(10, ['*'], 'page', $request->current_page)->items();
         foreach ($getAllConferenceRegister as $register) {
-            Mail::to($register->register_email)->send(new CertificateMail($mail_conference_type, $mail_conference_title, $register->register_name, $register->register_gender, $register->register_code,'vn'));
+            Mail::to($register->register_email)->send(new CertificateMail($mail_conference_type, $mail_conference_title, $register->register_name, $register->register_gender, $register->register_code, 'vn'));
             // $this->createCertificate($register);
         }
     }

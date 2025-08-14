@@ -29,13 +29,10 @@
                 LIÊN CHI HỘI KỸ THUẬT HÌNH ẢNH Y HỌC THÀNH PHỐ HỒ CHÍ MINH
             </h4>
         </div>
-        <div style="text-align: right; font-style: italic; margin: 40px 50px; font-size: 15px;">
-            <strong>TP. Hồ Chí Minh, ngày {{ \Carbon\Carbon::now()->day }} tháng {{ \Carbon\Carbon::now()->month }} năm
-                {{ \Carbon\Carbon::now()->year }}</strong>
-        </div>
+
         <div>
             <h3 style="text-align: center; color: #601e89;">
-                THƯ MỜI THAM GIA HỘI NGHỊ THƯỜNG NIÊN HART 2024
+                THƯ MỜI THAM GIA HỘI NGHỊ
             </h3>
         </div>
         <div style="width: 86%; margin: 50px auto;">
@@ -44,17 +41,18 @@
                         style=" text-transform: uppercase">{{ $name }}</span></strong>,
             </div>
             <div>
-                <div style="margin-bottom: 25px; text-align: justify;">
-                    <span style="margin-left: 30px;">Thay mặt Ban tổ chức, Chúng tôi trân trọng kính mời:
+                <div style="margin-bottom: 25px; text-align: justify; line-height: 1.38em;">
+                    <span style="margin-left: 30px;">Thay mặt Ban tổ chức, Chúng tôi trân trọng kính mời
                         <strong>{{ $title == 0 ? 'Ông' : 'Bà' }} <span
-                                style="text-transform: uppercase">{{ $name }}</span></strong></span>
-                    <br>Đến tham dự:<strong> PHIÊN THỰC HÀNH (HANDS-ON)</strong> Ngày 20/09/2024 (thứ 6) từ 13:30-17:30
-                    tai hội trường A, Trường Đại học Y khoa Phạm Ngọc Thạch.</strong>
-                    </strong>
-                    <b>Hội nghị kỹ thuật hình ảnh Y học Quốc Tế Liên hội:
-                        HART, SART, BRTA, NTPART</b> được tổ chức vào ngày
-                    <b>20-21/09/2024</b> tại <b>Trường Đại học Y Khoa Phạm Ngọc Thạch</b>, Thành Phố Hồ Chí Minh, Việt
-                    Nam.
+                                style="text-transform: uppercase">{{ $name }}</span></strong> đến tham dự</span>
+                    <div style="text-align: center;">
+                        <br><b>"{{ $conference_title }}"</b>
+                    </div>
+                    <div style="margin-top: 25px;"><b>Hình thức tham dự:</b></div>
+                    <div style="margin-top: 15px; text-align: center; color: #27c24c;"><b>TRỰC TUYẾN</b></div>
+                    <div style="margin-top: 25px;"><b>Thời gian:</b> Thứ Bảy, ngày 25/10/2025</div>
+                    <div style="margin-top: 15px;"><b>Địa điểm:</b> Hội Trường Bệnh viện Đại học Y Dược Shingmark</div>
+                    <div style="margin-top: 15px;"><b>Địa chỉ:</b> 1054 Quốc lộ 51, Phường Long Hưng, Tỉnh Đồng Nai</div>
                 </div>
                 <div style="margin-bottom: 25px; text-align: justify;">
                     Quý đại biểu có thể bấm vào đường <a href="https://vart.vn/invitation"
@@ -62,23 +60,17 @@
                     để lấy thư mời.
                 </div>
                 <div style="margin-bottom: 25px; text-align: justify;">
-                    Ngoài ra, Ban tổ chức cũng chuẩn bị thêm một chương trình tham quan Thành phố. Thông tin tham quan
-                    thành phố Đăng ký và lệ phí vui lòng truy cập <a target="_blank"
-                        href="https://drive.google.com/drive/folders/1OyonKd9F26vqaAuLzE3ZgauwSflmaVwy?usp=drive_link">Link</a>.
-
-                </div>
-                <div style="margin-bottom: 25px; text-align: justify;">
-                    Mọi thắc mắc xin vui lòng liên hệ CN. Trần Thị Minh Ngọc 079.5686.172 (phần danh
-                    sách, thư mời, giấy chứng nhận).
+                    Link trực tuyến sẽ gửi qua email đăng ký trước ngày diễn ra hội nghị 1 - 3 ngày. Vui lòng kiểm tra
+                    Mail.
                 </div>
                 <div style="margin-bottom: 25px; text-align: justify;">
                     Chúng tôi rất trân trọng sự quan tâm, tham gia và đóng góp quý báu của đại biểu cho hội nghị.
                 </div>
                 <div style="margin-left: 50%;">
-                    <div style="text-align: center;"><strong>TM.BAN THƯỜNG VỤ LIÊN CHI HỘI</strong></div>
+                    <div style="text-align: center;"><strong>TM. BAN THƯỜNG VỤ LIÊN CHI HỘI</strong></div>
                     <div style="text-align: center;"><strong>CHỦ TỊCH</strong></div>
-                    <img src="https://images.vart.vn/gmail/sign-hart.png"
-                        style="height: 70px; width: 120px; margin-left: 90px">
+                    <img src="https://images.vart.vn/gmail/sign-vart.png"
+                        style="height: 70px; width: 150px; margin-left: 70px">
                     <div style="text-align: center;"><strong>Ths.Thái Văn Lộc</strong></div>
                 </div>
             </div>
@@ -92,11 +84,10 @@
             <a href="https://vart.vn/forum" style="color: #601e89;">Forum</a>&nbsp;•&nbsp;
             <a href="https://vart.vn/blog" style="color: #601e89;">Blog</a>
         </div>
-        <div style="text-align: center; margin-top: 25px ; font-size: 13px">Bản quyền © Vart.
+        <div style="text-align: center; margin-top: 25px ; font-size: 13px">Bản quyền © Hart.
             {{ \Carbon\Carbon::now()->year }} Bảo lưu mọi quyền.</div>
-        <div style="text-align: center; margin-top: 5px ; font-size: 13px">Bệnh viện Bạch Mai Hà Nội, 78 Đường Giải
-            Phóng,
-            Phường Phương Mai, Quận Đống Đa, Hà Nội.</div>
+        <div style="text-align: center; margin-top: 5px ; font-size: 13px">Bệnh viện Đại học Y Dược Tp.HCM-CS2, 201
+            Nguyễn Chí Thanh, Phường 12, Quận 5, TP.HCM.</div>
     </div>
 </body>
 

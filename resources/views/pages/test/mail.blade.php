@@ -29,10 +29,6 @@
                 CHI HỘI KỸ THUẬT ĐIỆN QUANG VÀ Y HỌC HẠT NHÂN VIỆT NAM
             </h4>
         </div>
-        <div style="text-align: right; font-style: italic; margin: 40px 50px; font-size: 15px;">
-            <strong>Đà Nẵng, ngày {{ \Carbon\Carbon::now()->day }} tháng {{ \Carbon\Carbon::now()->month }} năm
-                {{ \Carbon\Carbon::now()->year }}</strong>
-        </div>
         <div>
             <h3 style="text-align: center; color: #601e89;">
                 THƯ MỜI THAM GIA HỘI NGHỊ
@@ -40,31 +36,37 @@
         </div>
         <div style="width: 86%; margin: 50px auto;">
             <div style="margin: 0 0 20px 30px;">
-                Kính gửi<strong> Sinh viên <span
+                Kính gửi<strong> {{ $title == 0 ? 'Ông' : 'Bà' }} <span
                         style=" text-transform: uppercase">{{ $name }}</span></strong>,
             </div>
             <div>
                 <div style="margin-bottom: 25px; text-align: justify; line-height: 1.38em;">
-                    <span style="margin-left: 30px;">Thay mặt Ban tổ chức, Chúng tôi trân trọng kính mời: <strong>Sinh
-                            viên <span style=" text-transform: uppercase">{{ $name }}</span></strong></span>
-                    <br>Đến tham dự:<strong> SINH HOẠT KHOA HỌC (SINH VIÊN)</strong>. <b>{{ $conference_title }}</b> được tổ
-                    chức vào lúc <b>8:00 - 18:00</b> ngày
-                    <b>21/06/2025</b> tại <b>Khách sạn Royal Lotus Đà Nẵng - 120 Nguyễn
-                        Văn Thoại, Mỹ An, Ngũ Hành Sơn, Đà Nẵng, Việt Nam.</b>
+                    <span style="margin-left: 30px;">Thay mặt Ban tổ chức, Chúng tôi trân trọng kính mời
+                        <strong>{{ $title == 0 ? 'Ông' : 'Bà' }} <span
+                                style="text-transform: uppercase">{{ $name }}</span></strong> đến tham dự</span>
+                    <div style="text-align: center;">
+                        <br><b>"{{ $conference_title }}"</b>
+                    </div>
+                    <div style="margin-top: 25px;"><b>Hình thức tham dự:</b></div>
+                    <div style="margin-top: 15px; text-align: center; color: #27c24c;"><b>PHIÊN BÁO CÁO TOÀN THỂ</b></div>
+                    <div style="margin-top: 25px;"><b>Thời gian:</b> Thứ Bảy, ngày 25/10/2025</div>
+                    <div style="margin-top: 15px;"><b>Địa điểm:</b> Hội Trường Bệnh viện Đại học Y Dược Shingmark</div>
+                    <div style="margin-top: 15px;"><b>Địa chỉ:</b> 1054 Quốc lộ 51, Phường Long Hưng, Tỉnh Đồng Nai.</div>
                 </div>
                 <div style="margin-bottom: 25px; text-align: justify;">
-                    Quý đại biểu có thể bấm vào đường <a href="https://vart.vn/invitation-letter"
+                    Quý đại biểu có thể bấm vào đường <a href="https://vart.vn/invitation"
                         target="_blank"><strong>Link</strong></a> và điền <strong>Mã code: {{ $code }}</strong>
-                    để lấy thư mời tự động.
+                    để lấy thư mời.
                 </div>
-                <div style="margin-bottom: 25px; text-align: justify;">
-                    Link trực tuyến sẽ gửi qua email đăng ký trước ngày diễn ra hội nghị 1 - 3 ngày. Vui lòng kiểm tra Mail.
+                <div style="margin-bottom: 25px; text-align: justify; line-height: 1.38em;">
+                    <b>Lưu ý:</b> Tiệc Gala dinner được tổ chức vào lúc <b>19:00</b> ngày <b>21/06/2025</b> tại <b>Khách sạn Royal Lotus Đà Nẵng - 120 Nguyễn
+                        Văn Thoại, Mỹ An, Ngũ Hành Sơn, Đà Nẵng, Việt Nam.</b>
                 </div>
                 <div style="margin-bottom: 25px; text-align: justify;">
                     Chúng tôi rất trân trọng sự quan tâm, tham gia và đóng góp quý báu của đại biểu cho hội nghị.
                 </div>
                 <div style="margin-left: 50%;">
-                    <div style="text-align: center;"><strong>TM.BAN THƯỜNG VỤ LIÊN CHI HỘI</strong></div>
+                    <div style="text-align: center;"><strong>TM. BAN THƯỜNG VỤ LIÊN CHI HỘI</strong></div>
                     <div style="text-align: center;"><strong>CHỦ TỊCH</strong></div>
                     <img src="https://images.vart.vn/gmail/sign-vart.png"
                         style="height: 70px; width: 150px; margin-left: 70px">

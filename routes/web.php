@@ -207,12 +207,25 @@ Route::group(['middleware' => 'auth'], function () {
         });
 
         Route::get('mail', function () {
-            return view('mail.certificate.vart.national')->with([
+            return view('pages.test.mail')->with([
                 'title' => 0,
-                'name' => 'Dương',
-                'code' => 'DVs',
-                'conference_title' => 'Hội nghị Khoa học Kỹ Thuật Hình Ảnh Y Học Toàn Quốc lần thứ 13',
+                'name' => 'Huỳnh Quốc Dương',
+                'code' => 'LTCB0943705326',
+                'conference_title' => 'Hội Thảo Khoa học ISRRT RT-RTT
+                    Kỹ Thuật Hình Ảnh Y Học và Kỹ Thuật Xạ Trị',
             ]);
+        });
+
+        Route::get('invitation', function () {
+            $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pages.test.invitation', [
+                "degree" => 'Kỹ sư',
+                'fullName' => 'Huỳnh Quốc Dương',
+                'unit' => 'Medicen',
+                'imgBackground' => parserImgPdf('defineTemplates/backGround/main.jpg'),
+                "imgLogo" => parserImgPdf(choseLogoByConferenceType(2)),
+                "imgSign" => parserImgPdf(choseSignatureByConferenceType(2)),
+            ]);
+            return $pdf->stream('invitation-letter-attendees.pdf');
         });
     });
 

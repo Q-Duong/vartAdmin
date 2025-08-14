@@ -53,12 +53,15 @@ class RegisterMail extends Mailable
                 switch ($this->conference_type) {
                     case ('VART'):
                         $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', 'VART');
+                        $folder = 'vart';
                         break;
                     case ('HART'):
                         $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', 'HART');
+                        $folder = 'hart';
                         break;
                     case ('HRTTA'):
-                        $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', 'HRTTA');
+                        $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', 'HART');
+                        $folder = 'hart';
                         break;
                 }
                 $invoicePath = storage_path('app/public/invoice/' . $this->code . '.pdf');
@@ -67,7 +70,7 @@ class RegisterMail extends Mailable
                     switch ($this->mail_type) {
                         case (1):
                             $mail = $mailFrom->with($modelContent)
-                            ->view('mail.register.vart.confirm.theory')
+                            ->view('mail.register.' . $folder . '.theory')
                             ->attach($invoicePath, [
                                 'as' => 'Biên lai thu phí.pdf',
                                 'mime' => 'application/pdf',
@@ -81,7 +84,7 @@ class RegisterMail extends Mailable
                             break;
                         case (2):
                             $mail = $mailFrom->with($modelContent)
-                            ->view('mail.register.vart.confirm.practice')
+                            ->view('mail.register.' . $folder . '.practice')
                             ->attach($invoicePath, [
                                 'as' => 'Biên lai thu phí.pdf',
                                 'mime' => 'application/pdf',
@@ -95,7 +98,7 @@ class RegisterMail extends Mailable
                             break;
                         case (3):
                             $mail = $mailFrom->with($modelContent)
-                            ->view('mail.register.vart.confirm.online')
+                            ->view('mail.register.' . $folder . '.online')
                             ->attach($invoicePath, [
                                 'as' => 'Biên lai thu phí.pdf',
                                 'mime' => 'application/pdf',
@@ -110,7 +113,7 @@ class RegisterMail extends Mailable
                     }
                 } else {
                     $mail = $mailFrom->with($modelContent)
-                    ->view('mail.register.vart.confirm.student')
+                    ->view('mail.register.' . $folder . '.student')
                     ->attach($invoicePath, [
                         'as' => 'Biên lai thu phí.pdf',
                         'mime' => 'application/pdf',

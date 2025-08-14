@@ -27,6 +27,7 @@ class Conference extends Model
         'multi_conferences',
         'child_conference_list',
         'child_conference',
+        'parent_title',
         'conference_category_id',
         'conference_type_id',
     ];
