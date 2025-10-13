@@ -26,7 +26,7 @@
         <div style="display: flex; align-items: center;">
             <img src="https://images.vart.vn/gmail/vart-logo.png" style="height: 50px; width: 50px; float: left;">
             <h4 style="text-align: left; text-transform: uppercase; font-size: 14px; margin-left: 10px;">
-                CHI HỘI KỸ THUẬT ĐIỆN QUANG VÀ Y HỌC HẠT NHÂN VIỆT NAM
+                HỘI KỸ THUẬT HÌNH ẢNH Y HỌC THÀNH PHỐ HỒ CHÍ MINH
             </h4>
         </div>
         <div>

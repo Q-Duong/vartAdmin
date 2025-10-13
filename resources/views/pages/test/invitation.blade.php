@@ -162,7 +162,7 @@
         <div class="content">
             <div class="block-title">
                 <img src="{{ $imgLogo }}" class="title-logo">
-                <h4 class="title-name">CHI HỘI KỸ THUẬT ĐIỆN QUANG VÀ Y HỌC HẠT NHÂN VIỆT NAM</h4>
+                <h4 class="title-name">HỘI KỸ THUẬT HÌNH ẢNH Y HỌC THÀNH PHỐ HỒ CHÍ MINH</h4>
             </div>
             <div>
                 <h2 class="title">THƯ MỜI </h2>
@@ -230,3 +230,4 @@
 </body>
 
 </html>
+

@@ -26,7 +26,7 @@
         <div style="display: flex; align-items: center;">
             <img src="https://images.vart.vn/gmail/hart-logo.png" style="height: 50px; width: 50px; float: left;">
             <h4 style="text-align: left; text-transform: uppercase; font-size: 14px; margin-left: 10px;">
-                LIÊN CHI HỘI KỸ THUẬT HÌNH ẢNH Y HỌC THÀNH PHỐ HỒ CHÍ MINH
+                HỘI KỸ THUẬT HÌNH ẢNH Y HỌC THÀNH PHỐ HỒ CHÍ MINH
             </h4>
         </div>
 
@@ -67,7 +67,7 @@
                     Chúng tôi rất trân trọng sự quan tâm, tham gia và đóng góp quý báu của đại biểu cho hội nghị.
                 </div>
                 <div style="margin-left: 50%;">
-                    <div style="text-align: center;"><strong>TM. BAN THƯỜNG VỤ LIÊN CHI HỘI</strong></div>
+                    <div style="text-align: center;"><strong>TM. BAN THƯỜNG VỤ HỘI</strong></div>
                     <div style="text-align: center;"><strong>CHỦ TỊCH</strong></div>
                     <img src="https://images.vart.vn/gmail/sign-hart.png"
                         style="height: 70px; width: 150px; margin-left: 70px">
