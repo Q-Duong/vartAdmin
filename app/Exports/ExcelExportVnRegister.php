@@ -96,7 +96,7 @@ class ExcelExportVnRegister implements WithHeadings, FromQuery, WithMapping
             $register->register_phone,
             $register->register_object_group,
             $register->conference_fee_title,
-            number_format($register->payment_price, 0, ',', '.') . '₫',
+            $register->payment_price,
             $register->register_receiving_address,
             $register->register_graduation_year,
             $register->register_image != null ? 'https://drive.google.com/file/d/' . $register->register_image . '/view' : '',

@@ -23,6 +23,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\HrttaController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\SupportController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\VartContentController;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\App;
@@ -184,48 +185,58 @@ Route::group(['middleware' => 'auth'], function () {
     });
     Route::prefix('test')->group(function () {
         Route::get('invoice', function () {
-            $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.receipt', [
-                'name' => 'Huỳnh Quốc Dương',
+            $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.invoice.vart', [
+                'name' => 'Huỳnh Quốc Dương', 
                 'phone' => '0943705326',
                 'unit' => 'Medicen',
                 'address' => '33,Phường 11,Thành phố Vũng Tàu,Tỉnh Bà Rịa - Vũng Tàu',
                 'price' => '980.000₫',
-                'conferenceFeeTitle' => 'Phí tham gia trực tuyến có cấp giấy chứng nhận CME	',
-                "imgBackground" => parserImgPdf(choseInvoiceByConferenceType(2))
+                'conferenceTitle' => 'Hội nghị Khoa học Quốc tế kỹ thuật Điện quang, Y học hạt nhân và Xạ trị khu vực phía Bắc, lần thứ VIII',
+                'conferenceFeeTitle' => 'Phí tham gia trực tuyến có cấp giấy chứng nhận CME',
+                "imgSignature" => parserImgPdf(choseSignatureByConferenceType(1)),
+                'imgLogo' => parserImgPdf('defineTemplates/logo/vart.png'), 
+                // 'imgLogo' => [
+                //     'hartLogo' => parserImgPdf('defineTemplates/logo/hart.png'), 
+                //     'hrttaLogo' => parserImgPdf('defineTemplates/logo/hrtta.png'), 
+                // ],
             ])->setPaper('a4', 'landscape');
             return $pdf->stream('invitation-letter-attendees.pdf');
         });
 
         Route::get('certificate', function () {
             $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.certificate', [
-                'name' => 'VÕ NHẬT ANH',
-                'birthday' => '28/02/1997',
-                'unit' => 'BỆNH VIỆN ĐA KHOA QUỐC TẾ NAM SÀI GÒN',
-                "imgBackground" => parserImgPdf('defineTemplates/backGround/certificate.jpg')
-            ]);
+                'name' => 'DON SENANAYAKAGE LESTER KELUM PEIRIS',
+                'title' => 'Mr.',
+                // 'birthday' => '28/02/1997',
+                // 'unit' => 'BỆNH VIỆN ĐA KHOA QUỐC TẾ NAM SÀI GÒN',
+                "imgBackground" => parserImgPdf('defineTemplates/backGround/certificate-hart-inter-2025.jpg')
+            ])->setPaper('a4', 'landscape');
             return $pdf->stream('VÕ NHẬT ANH.pdf');
         });
 
         Route::get('mail', function () {
-            return view('pages.test.mail')->with([
+            return view('mail.register.nvart.student')->with([
+                // 'title' => 'Mr.',
+                // 'name' => 'Huỳnh Quốc Dương',
+                // 'code' => 'LTCB0943705326',
+                // 'conference_title' => 'Hội Thảo Khoa học ISRRT RT-RTT
+                //     Kỹ Thuật Hình Ảnh Y Học và Kỹ Thuật Xạ Trị',
+
                 'title' => 0,
                 'name' => 'Huỳnh Quốc Dương',
                 'code' => 'LTCB0943705326',
-                'conference_title' => 'Hội Thảo Khoa học ISRRT RT-RTT
-                    Kỹ Thuật Hình Ảnh Y Học và Kỹ Thuật Xạ Trị',
+                'conference_title' => 'Hội nghị Khoa học Quốc tế kỹ thuật Điện quang, Y học hạt nhân và Xạ trị lần thứ VIII - khu vực phía Bắc',
             ]);
         });
 
-        Route::get('invitation', function () {
-            $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pages.test.invitation', [
-                "degree" => 'Kỹ sư',
-                'fullName' => 'Huỳnh Quốc Dương',
-                'unit' => 'Medicen',
-                'imgBackground' => parserImgPdf('defineTemplates/backGround/main.jpg'),
-                "imgLogo" => parserImgPdf(choseLogoByConferenceType(2)),
-                "imgSign" => parserImgPdf(choseSignatureByConferenceType(2)),
-            ]);
-            return $pdf->stream('invitation-letter-attendees.pdf');
+        Route::get('invoice-html', function () {
+            return view('pdf.invoice');
+        });
+
+        Route::prefix('invitation')->group(function () {
+            Route::get('vip', [TestController::class, 'vipInvitation'])->name('test.invitation.vip');
+            Route::get('register', [TestController::class, 'registerInvitation'])->name('test.invitation.register');
+            Route::get('agency', [TestController::class, 'agencyInvitation'])->name('test.invitation.agency');
         });
     });
 

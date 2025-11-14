@@ -74,7 +74,7 @@ class ExcelExportEnRegister implements WithHeadings, FromQuery, WithMapping
             $en_register->en_register_email,
             $en_register->en_register_phone,
             $en_register->conference_fee_title,
-            '$' . number_format($en_register->payment_price, 2),
+            number_format($en_register->payment_price, 2),
             $en_register->payment_status == 1 ? 'Wait checking' : 'Processed'
         ];
     }

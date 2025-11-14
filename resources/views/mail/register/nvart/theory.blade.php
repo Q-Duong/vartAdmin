@@ -14,19 +14,19 @@
     style="font-family: SF Pro Display, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif; width: 100%; height: 100%; background: #f5f5f7;margin: 0;">
     <div style="margin: 0 auto; width: 600px; padding: 40px 0">
         <a href="https://vart.vn/"
-            style="display: flex; margin: 0 auto; width: 96px; text-decoration: none; color: #601e89;">
-            <img src="https://images.vart.vn/gmail/hart-logo.png" style="height: 50px; width: 50px;">
+            style="display: flex; margin: 0 auto; width: 112px; text-decoration: none; color: #601e89;">
+            <img src="https://images.vart.vn/gmail/nvart-logo.png" style="height: 50px; width: 56px;">
             <h4 style="text-align: left; text-transform: uppercase; font-size: 14px; margin-left: 10px;">
-                HART
+                NVART
             </h4>
         </a>
     </div>
     <div
         style="background: #ffffff;border-radius: 20px;padding: 20px;  width: 700px; margin: 0 auto; position: relative;">
         <div style="display: flex; align-items: center;">
-            <img src="https://images.vart.vn/gmail/hart-logo.png" style="height: 50px; width: 50px; float: left;">
+            <img src="https://images.vart.vn/gmail/nvart-logo.png" style="height: 50px; width: 56px;">
             <h4 style="text-align: left; text-transform: uppercase; font-size: 14px; margin-left: 10px;">
-                HỘI KỸ THUẬT HÌNH ẢNH Y HỌC THÀNH PHỐ HỒ CHÍ MINH
+                CHI HỘI KỸ THUẬT ĐIỆN QUANG VÀ Y HỌC HẠT NHÂN KHU VỰC PHÍA BẮC
             </h4>
         </div>
 
@@ -50,9 +50,9 @@
                     </div>
                     <div style="margin-top: 25px;"><b>Hình thức tham dự:</b></div>
                     <div style="margin-top: 15px; text-align: center; color: #27c24c;"><b>PHIÊN BÁO CÁO TOÀN THỂ</b></div>
-                    <div style="margin-top: 25px;"><b>Thời gian:</b> Thứ Bảy, ngày 25/10/2025</div>
-                    <div style="margin-top: 15px;"><b>Địa điểm:</b> Hội Trường Bệnh viện Đại học Y Dược Shingmark</div>
-                    <div style="margin-top: 15px;"><b>Địa chỉ:</b> 1054 Quốc lộ 51, Phường Long Hưng, Tỉnh Đồng Nai</div>
+                    <div style="margin-top: 25px;"><b>Thời gian:</b> Ngày 05,06/12/2025 (Thứ Sáu và Thứ Bảy)</div>
+                    <div style="margin-top: 15px;"><b>Địa điểm:</b> Celina Peninsula</div>
+                    <div style="margin-top: 15px;"><b>Địa chỉ:</b> Đường Võ Nguyên Giáp, phường Đồng Hới, tỉnh Quảng Trị (Quảng Bình cũ)</div>
                 </div>
                 <div style="margin-bottom: 25px; text-align: justify;">
                     Quý đại biểu có thể bấm vào đường <a href="https://vart.vn/invitation"
@@ -67,11 +67,11 @@
                     Chúng tôi rất trân trọng sự quan tâm, tham gia và đóng góp quý báu của đại biểu cho hội nghị.
                 </div>
                 <div style="margin-left: 50%;">
-                    <div style="text-align: center;"><strong>TM. BAN THƯỜNG VỤ HỘI</strong></div>
+                    <div style="text-align: center;"><strong>TM. BAN THƯỜNG VỤ CHI HỘI</strong></div>
                     <div style="text-align: center;"><strong>CHỦ TỊCH</strong></div>
-                    <img src="https://images.vart.vn/gmail/sign-hart.png"
+                    <img src="https://images.vart.vn/gmail/sign-nvart.png"
                         style="height: 70px; width: 150px; margin-left: 70px">
-                    <div style="text-align: center;"><strong>Ths.Thái Văn Lộc</strong></div>
+                    <div style="text-align: center;"><strong>Ths. Phạm Nhật Yên</strong></div>
                 </div>
             </div>
         </div>

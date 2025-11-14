@@ -29,9 +29,12 @@
                 Ho Chi Minh City Association of Radiological Technologists
             </h4>
         </div>
+        <div style="text-align: right; font-style: italic; margin: 40px 50px; font-size: 15px;">
+            <strong>Ho Chi Minh, {{ \Carbon\Carbon::now()->isoFormat('MMMM D, Y') }}</strong>
+        </div>
         <div>
             <h3 style="text-align: center; color: #601e89; text-transform: uppercase;">
-                CME CERTIFICATE FOR THE 2025 CONFERENCE
+                Invitation to the HART Conference
             </h3>
         </div>
         <div style="width: 86%; margin: 50px auto;">
@@ -41,15 +44,26 @@
             <div>
                 <div style="margin-bottom: 25px; text-align: justify;">
                     <span style="margin-left: 30px;">Thank you very much for your interest and successful registration
-                        to attend the 2025 HART Conference.</span>
-                    <div style="text-align: center;">
-                        <br><b>"{{ $conference_title }}"</b>
-                    </div>
-                    <div style="margin-top: 25px;">• Please open the attached file: HART 2025 Conference Certificate.
-                    </div>
+                        in this activity of the HART,</span>
+                    <br>Please see detailed information below:
+                </div>
+                <div
+                    style="margin-bottom: 25px; text-align: justify; background: #f5f5f7; border-radius: 20px;padding: 20px 25px;">
+                    <strong>“Trends in Medical Image Technology - Research to Practice”</strong>
+                    <div>Date: September 20th-21st, 2024</div>
+                    <div>Venue: Pham Ngoc Thach University of Medicine, Ho Chi Minh City, Vietnam.</div>
                 </div>
                 <div style="margin-bottom: 25px; text-align: justify;">
-                    We sincerely appreciate your interest, participation, and valuable contributions to the conference.
+                    Please click this <a href="https://vart.vn/en/invitation" target="_blank"><strong>Link</strong></a>
+                    and fill in your Code: <span style="color:#0000EE; font-weight:600;">{{ $code }}</span> to receive invitation.
+                </div>
+                <div style="margin-bottom: 25px; text-align: justify;">
+                    If the lady or gentleman requires any further information, feel free to contact:
+                    <div style="margin: 10px 0 0 30px;">Mr. Phan Hoai Phuong (Paul) - International Director</div>
+                    <div style="margin-left: 30px;">Email: phuongmatlab@gmail.com Zalo/Line: +84915767101</div>
+                </div>
+                <div style="margin-bottom: 25px; text-align: justify;">
+                    We look forward to your presence at this conference, see you soon.
                 </div>
                 <div style="margin-left: 60%;">
                     <div style="text-align: center;"><strong>Sincerely, </strong></div>
@@ -71,8 +85,7 @@
         </div>
         <div style="text-align: center; margin-top: 25px ; font-size: 13px">Copyright ©
             {{ \Carbon\Carbon::now()->year }} Hart. All rights reserved.</div>
-        <div style="text-align: center; margin-top: 5px ; font-size: 13px">HCMC University of Medicine and Pharmacy
-            Hospital - Campus 2, 201 Nguyen Chi Thanh, Ward 12, District 5, Ho Chi Minh City.</div>
+        <div style="text-align: center; margin-top: 5px ; font-size: 13px">HCMC University of Medicine and Pharmacy Hospital - Campus 2, 201 Nguyen Chi Thanh, Ward 12, District 5, Ho Chi Minh City.</div>
     </div>
 </body>
 

@@ -60,7 +60,7 @@
             text-align: left;
             text-transform: uppercase;
             color: #ffffff;
-            font-size: 16px;
+            font-size: 15px;
             margin-top: 5px;
         }
 
@@ -105,7 +105,7 @@
 
         .conference-title {
             text-transform: uppercase;
-            font-size: 20px;
+            font-size: 18px;
             text-align: center;
             color: #f01c1c;
             margin-bottom: 20px;
@@ -151,6 +151,11 @@
             width: 180px;
             margin-left: 60px
         }
+        .invitation-type{
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
     </style>
 </head>
 
@@ -162,40 +167,36 @@
         <div class="content">
             <div class="block-title">
                 <img src="{{ $imgLogo }}" class="title-logo">
-                <h4 class="title-name">HỘI KỸ THUẬT HÌNH ẢNH Y HỌC THÀNH PHỐ HỒ CHÍ MINH</h4>
+                <h4 class="title-name">CHI HỘI KỸ THUẬT ĐIỆN QUANG VÀ Y HỌC HẠT NHÂN KHU VỰC PHÍA BẮC</h4>
             </div>
             <div>
-                <h2 class="title">THƯ MỜI </h2>
+                <h2 class="title">THƯ MỜI</h2>
             </div>
             <div class="dear">
                 <b>Kính mời:</b>
             </div>
-            <div class="name"><b> {{ $degree }}. {{ $fullName }}</b></div>
+            <div class="name"><b> {{ $title }}. {{ $fullName }}</b></div>
             <div class="unit"><b> {{ $unit }}</b></div>
 
             <div class="content-text">
                 Chúng tôi rất vui được mời Quý đại biểu tham dự:
             </div>
             <div class="conference-title">
-                <b>Hội Thảo Khoa học ISRRT RT-RTT
-                    Kỹ Thuật Hình Ảnh Y Học và Kỹ Thuật Xạ Trị
-                </b>
+                <b>Hội nghị Khoa học Quốc tế kỹ thuật Điện quang, Y học hạt nhân và Xạ trị lần thứ VIII - khu vực phía Bắc (mở rộng)</b>
             </div>
             <div class="topic"><b>Chủ đề:</b></div>
-            <div class="conference-topic"><b>"Chuẩn hóa theo thế giới về Kỹ thuật Hình ảnh Y học và Xạ trị và hiểu sâu
-                    trí tuệ nhân tạo chuyên nghành"</br></div>
+            <div class="conference-topic"><b>"Kết Nối - Chuyển Đổi - Phát Triển Bền Vững"</div>
             <div class="line"></div>
             <div class="section-location">
                 <div class="content-text-sub">
-                    <span class="content-strong">Thời gian:</span> Thứ Bảy, ngày 25/10/2025
+                    <span class="content-strong">Thời gian:</span> Ngày 05,06/12/2024 (Thứ Sáu và Thứ Bảy)
                 </div>
                 <div class="content-text-sub">
-                    <span class="content-strong">Địa điểm tổ chức:</span> Hội Trường Bệnh viện Đại học Y Dược Shingmark,
-                    Đồng Nai.<br>
-                    1054 Quốc lộ 51, Phường Long Hưng, Tỉnh Đồng Nai.
+                    <span class="content-strong">Địa điểm tổ chức:</span> Celina Peninsula, Đường Võ Nguyên Giáp, phường Đồng Hới, tỉnh Quảng Trị (Quảng Bình cũ).
                 </div>
-
                 <div class="content-text-sub">
+                    Để biết thêm thông tin và đăng ký, vui lòng truy cập website tại <a
+                        href="https://vart.vn/conference/hoi-nghi-trong-nuoc/hoi-nghi-khoa-hoc-quoc-te-ky-thuat-dien-quang-y-hoc-hat-nhan-va-xa-tri-lan-thu-viii-khu-vuc-phia-bac">https://vart.vn</a>.
                     Sự
                     có mặt của Quý vị là niềm cổ vũ, động viên to lớn, góp phần quan trọng để tổ chức hội nghị thành
                     công.
@@ -208,26 +209,24 @@
                         <b>Quý đại biểu cần thêm thông tin vui lòng liên hệ:</b>
                     </div>
                     <div class="content-text-sub">
-                        <span class="content-strong">CN. Huỳnh Quốc Dương</span> - 0943.705.326 - Đăng ký tham dự.
+                        <span class="content-strong">CN. Nguyễn Cao Cường</span> - 0942.921.444 - Hỗ trợ thông tin CME.
                     </div>
                     <div class="content-text-sub">
-                        <span class="content-strong">CN. Võ Nguyễn Thúy An</span> - 0988.608.146 - Chuyển khoản.
-                    </div>
-                    <div class="content-text-sub">
-                        <span class="content-strong">CN. Lục Thanh Vũ</span> - 0913.636.541 - Thư mời, giấy chứng nhận.
+                        <span class="content-strong">CN. Nguyễn Quang Trung</span> - 0986.024.192 - Hỗ trợ thông tin HN.
                     </div>
                 </div>
             </div>
             <div class="line"></div>
             <div style="margin-left: 50%; margin-top: 0px;">
-                <div style="text-align: center;"><b>TM. Ban Thường Vụ Liên chi Hội </b></div>
+                <div style="text-align: center;"><b>TM. Ban Thường Vụ chi Hội </b></div>
                 <div style="text-align: center;"><b>CHỦ TỊCH</b></div>
                 <img src="{{ $imgSign }}" class="img-signature">
-                <div style="text-align: center;"><b>Ths.Thái Văn Lộc</b></div>
+                <div style="text-align: center;"><b>Ths.Phạm Nhật Yên</b></div>
+            </div>
+            <div class="invitation-type"><b>TM. Ban Thường Vụ chi Hội </b>
             </div>
         </div>
     </div>
 </body>
 
 </html>
-

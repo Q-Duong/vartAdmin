@@ -77,9 +77,18 @@ class CertificateMail extends Mailable
                     'title' => $this->title,
                     'name' => $this->name,
                     'code' => $this->code,
+                    'conference_title' => $this->conference_title,
                 ];
-                $subject = 'Confirmation of report submission';
-                $mail = $mailFrom->with($modelContent)->view('mail.report.hart.international')->subject($subject);
+                // $subject = 'CME Certificate for the 2025 Conference';
+                // $mail = $mailFrom->with($modelContent)->view('mail.report.hart.international')->subject($subject);
+
+                $mail = $mailFrom->with($modelContent)
+                    ->view('mail.certificate.' . $objType . '.international')
+                    ->attach($certificatePath, [
+                        'as' => 'Certificate.pdf',
+                        'mime' => 'application/pdf',
+                    ])
+                    ->subject('CME Certificate for the 2025 Conference');
                 return $mail;
                 break;
         }

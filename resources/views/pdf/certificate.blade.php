@@ -23,7 +23,7 @@
 
         .main {
             position: relative;
-            margin: -45px
+            /* margin: -45px */
         }
 
         .main img {
@@ -40,9 +40,13 @@
 
         .name {
             position: absolute;
-            top: 352px;
-            left: 263px;
-            font-size: 17px;
+            width: 100%;
+            text-align: center;
+            top: 298px;
+            left: 0;
+            right: 0;
+            font-size: 25px;
+            font-weight: bold;
         }
         .birthday {
             position: absolute;
@@ -66,9 +70,9 @@
 <body>
     <div class="main">
         <div class="section-content">
-            <div class="name">{{ $name }}</div>
-            <div class="birthday">{{ $birthday }}</div>
-            <div class="unit">{{ $unit }}</div>
+            <div class="name">{{ $title }} {{ $name }}</div>
+            {{-- <div class="birthday">{{ $birthday }}</div>
+            <div class="unit">{{ $unit }}</div> --}}
         </div>
         <img src="{{ $imgBackground }}">
     </div>

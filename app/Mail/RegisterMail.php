@@ -60,8 +60,12 @@ class RegisterMail extends Mailable
                         $folder = 'hart';
                         break;
                     case ('HRTTA'):
-                        $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', 'HART');
-                        $folder = 'hart';
+                        $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', 'HRTTA');
+                        $folder = 'hrtta';
+                        break;
+                    case ('NVART'):
+                        $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', 'NVART');
+                        $folder = 'nvart';
                         break;
                 }
                 $invoicePath = storage_path('app/public/invoice/' . $this->code . '.pdf');
@@ -70,59 +74,59 @@ class RegisterMail extends Mailable
                     switch ($this->mail_type) {
                         case (1):
                             $mail = $mailFrom->with($modelContent)
-                            ->view('mail.register.' . $folder . '.theory')
-                            ->attach($invoicePath, [
-                                'as' => 'Biên lai thu phí.pdf',
-                                'mime' => 'application/pdf',
-                            ])
-                            ->attach($invitationPath, [
-                                'as' => 'Thư mời.pdf',
-                                'mime' => 'application/pdf',
-                            ])
-                            ->subject($subject);
+                                ->view('mail.register.' . $folder . '.theory')
+                                ->attach($invoicePath, [
+                                    'as' => 'Biên lai thu phí.pdf',
+                                    'mime' => 'application/pdf',
+                                ])
+                                ->attach($invitationPath, [
+                                    'as' => 'Thư mời.pdf',
+                                    'mime' => 'application/pdf',
+                                ])
+                                ->subject($subject);
                             return $mail;
                             break;
                         case (2):
                             $mail = $mailFrom->with($modelContent)
-                            ->view('mail.register.' . $folder . '.practice')
-                            ->attach($invoicePath, [
-                                'as' => 'Biên lai thu phí.pdf',
-                                'mime' => 'application/pdf',
-                            ])
-                            ->attach($invitationPath, [
-                                'as' => 'Thư mời.pdf',
-                                'mime' => 'application/pdf',
-                            ])
-                            ->subject($subject);
+                                ->view('mail.register.' . $folder . '.practice')
+                                ->attach($invoicePath, [
+                                    'as' => 'Biên lai thu phí.pdf',
+                                    'mime' => 'application/pdf',
+                                ])
+                                ->attach($invitationPath, [
+                                    'as' => 'Thư mời.pdf',
+                                    'mime' => 'application/pdf',
+                                ])
+                                ->subject($subject);
                             return $mail;
                             break;
                         case (3):
                             $mail = $mailFrom->with($modelContent)
-                            ->view('mail.register.' . $folder . '.online')
-                            ->attach($invoicePath, [
-                                'as' => 'Biên lai thu phí.pdf',
-                                'mime' => 'application/pdf',
-                            ])
-                            ->attach($invitationPath, [
-                                'as' => 'Thư mời.pdf',
-                                'mime' => 'application/pdf',
-                            ])
-                            ->subject($subject);
+                                ->view('mail.register.' . $folder . '.online')
+                                ->attach($invoicePath, [
+                                    'as' => 'Biên lai thu phí.pdf',
+                                    'mime' => 'application/pdf',
+                                ])
+                                ->attach($invitationPath, [
+                                    'as' => 'Thư mời.pdf',
+                                    'mime' => 'application/pdf',
+                                ])
+                                ->subject($subject);
                             return $mail;
                             break;
                     }
                 } else {
                     $mail = $mailFrom->with($modelContent)
-                    ->view('mail.register.' . $folder . '.student')
-                    ->attach($invoicePath, [
-                        'as' => 'Biên lai thu phí.pdf',
-                        'mime' => 'application/pdf',
-                    ])
-                    ->attach($invitationPath, [
-                        'as' => 'Thư mời.pdf',
-                        'mime' => 'application/pdf',
-                    ])
-                    ->subject($subject);
+                        ->view('mail.register.' . $folder . '.student')
+                        ->attach($invoicePath, [
+                            'as' => 'Biên lai thu phí.pdf',
+                            'mime' => 'application/pdf',
+                        ])
+                        ->attach($invitationPath, [
+                            'as' => 'Thư mời.pdf',
+                            'mime' => 'application/pdf',
+                        ])
+                        ->subject($subject);
                     return $mail;
                 }
                 break;
