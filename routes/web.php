@@ -204,18 +204,18 @@ Route::group(['middleware' => 'auth'], function () {
         });
 
         Route::get('certificate', function () {
-            $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.certificate', [
-                'name' => 'DON SENANAYAKAGE LESTER KELUM PEIRIS',
-                'title' => 'Mr.',
-                // 'birthday' => '28/02/1997',
-                // 'unit' => 'BỆNH VIỆN ĐA KHOA QUỐC TẾ NAM SÀI GÒN',
-                "imgBackground" => parserImgPdf('defineTemplates/backGround/certificate-hart-inter-2025.jpg')
-            ])->setPaper('a4', 'landscape');
-            return $pdf->stream('VÕ NHẬT ANH.pdf');
+            $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.certificate.certificate', [
+                'name' => 'Ông HUỲNH QUỐC DƯƠNG',
+                'no' => '123',
+                'birthday' => '28/02/1997',
+                'unit' => 'BỆNH VIỆN ĐA KHOA QUỐC TẾ NAM SÀI GÒN',
+                "imgBackground" => parserImgPdf('defineTemplates/backGround/certificate-nvart-2025.jpg')
+            ]);
+            return $pdf->stream('invitation-letter-attendees.pdf');
         });
 
         Route::get('mail', function () {
-            return view('mail.register.nvart.student')->with([
+            return view('mail.certificate.nvart.national')->with([
                 // 'title' => 'Mr.',
                 // 'name' => 'Huỳnh Quốc Dương',
                 // 'code' => 'LTCB0943705326',

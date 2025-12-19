@@ -67,18 +67,18 @@ class SupportController extends Controller
             ->firstWhere('registers.id', $id);
         $conference = Conference::select('id', 'conference_type_id', 'conference_title')
             ->firstWhere('id', $register->conference_id);
-        if ($conference->conference_type_id == 2 ) {
+        if ($conference->conference_type_id == 2) {
             $file = 'hart';
             $imgSignature = parserImgPdf(choseSignatureByConferenceType(2));
             $imgLogo = parserImgPdf('defineTemplates/logo/hart.png');
-        }elseif($conference->conference_type_id == 3){
+        } elseif ($conference->conference_type_id == 3) {
             $file = 'hrtta';
             $imgSignature = parserImgPdf(choseSignatureByConferenceType(2));
             $imgLogo = [
                 'hartLogo' => parserImgPdf('defineTemplates/logo/hart.png'),
                 'hrttaLogo' => parserImgPdf('defineTemplates/logo/hrtta.png'),
             ];
-        }else{
+        } else {
             $file = 'vart';
             $imgSignature = parserImgPdf(choseSignatureByConferenceType(1));
             $imgLogo = parserImgPdf('defineTemplates/logo/vart.png');
@@ -160,17 +160,20 @@ class SupportController extends Controller
         $pdf->save($filePath);
     }
 
-    public function createCertificate($data)
+    public function createCertificate($data, $no)
     {
-        $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.certificate', [
-            // 'name' => $data->register_name,
-            // 'birthday' => $data->register_date . '/' . $data->register_month . '/' . $data->register_year,
-            // 'unit' => $data->register_work_unit,
-            'name' => $data->en_register_firstname . ' ' . $data->en_register_lastname,
-            'title' => $data->en_register_title,
-            "imgBackground" => parserImgPdf('defineTemplates/backGround/certificate-hart-inter-2025.jpg')
-        ])->setPaper('a4', 'landscape');
-        $filePath = storage_path('app/public/certificate/' . $data->en_register_code . '.pdf');
+        $title = $data->register_gender == 0 ? 'Ông' : 'Bà';
+
+        $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.certificate.certificate', [
+            'no' => $no + 187,
+            'name' => $title . ' ' . $data->register_name,
+            'birthday' => $data->register_date . '/' . $data->register_month . '/' . $data->register_year,
+            'unit' => $data->register_work_unit,
+            // 'name' => $data->en_register_firstname . ' ' . $data->en_register_lastname,
+            // 'title' => $data->en_register_title,
+            "imgBackground" => parserImgPdf('defineTemplates/backGround/certificate-nvart-2025.jpg')
+        ]);
+        $filePath = storage_path('app/public/certificate/' . $data->register_code . '.pdf');
         $pdf->save($filePath);
     }
 
@@ -269,46 +272,49 @@ class SupportController extends Controller
             ->first();
         $mail_conference_type = $conference->conference_type_name;
         $mail_conference_title = $conference->conference_title_en;
-        // $getAllConferenceRegister = Register::join('payments', 'payments.id', '=', 'registers.payment_id')
-        //     ->join('conference_fees', 'payments.conference_fee_id', '=', 'conference_fees.id')
-        //     ->select(
-        //         'registers.conference_id',
-        //         'payment_id',
-        //         'registers.id',
-        //         'register_code',
-        //         'register_name',
-        //         'register_gender',
-        //         'register_date',
-        //         'register_month',
-        //         'register_year',
-        //         'register_email',
-        //         'register_work_unit',
-        //         'registers.created_at',
-        //         'payment_status'
-        //     )
-        //     ->where('registers.conference_id', $request->conference_id)
-        //     ->orderBy('registers.id', 'DESC')
-        //     ->paginate(10, ['*'], 'page', $request->current_page)->items();
-
-        $getAllConferenceEnRegister = EnRegister::select(
-            'en_registers.conference_id',
-            'en_registers.id',
-            'en_register_code',
-            'en_register_firstname',
-            'en_register_lastname',
-            'en_register_title',
-            'en_register_email',
-            'en_registers.created_at',
-        )
-            ->where('en_registers.conference_id', $request->conference_id)
-            ->orderBy('en_registers.id', 'DESC')
+        $registers = Register::join('payments', 'payments.id', '=', 'registers.payment_id')
+            ->join('conference_fees', 'payments.conference_fee_id', '=', 'conference_fees.id')
+            ->select(
+                'registers.conference_id',
+                'payment_id',
+                'registers.id',
+                'register_code',
+                'register_name',
+                'register_gender',
+                'register_date',
+                'register_month',
+                'register_year',
+                'register_email',
+                'register_work_unit',
+                'register_cme_type',
+                'registers.created_at',
+                'payment_status'
+            )
+            ->where('registers.conference_id', $request->conference_id)
+            ->where('registers.register_cme_type', 'E_CME')
+            ->orderBy('registers.id', 'DESC')
             ->paginate(10, ['*'], 'page', $request->current_page)->items();
 
-        foreach ($getAllConferenceEnRegister as $enRegister) {
-            // Mail::to($register->register_email)->send(new CertificateMail($mail_conference_type, $mail_conference_title, $register->register_name, $register->register_gender, $register->register_code, 'vn'));
+        // Inter
+        // $getAllConferenceEnRegister = EnRegister::select(
+        //     'en_registers.conference_id',
+        //     'en_registers.id',
+        //     'en_register_code',
+        //     'en_register_firstname',
+        //     'en_register_lastname',
+        //     'en_register_title',
+        //     'en_register_email',
+        //     'en_registers.created_at',
+        // )
+        //     ->where('en_registers.conference_id', $request->conference_id)
+        //     ->orderBy('en_registers.id', 'DESC')
+        //     ->paginate(10, ['*'], 'page', $request->current_page)->items();
 
-            Mail::to($enRegister->en_register_email)->send(new CertificateMail($mail_conference_type, $mail_conference_title, $enRegister->en_register_firstname . ' ' . $enRegister->en_register_lastname, $enRegister->en_register_title, $enRegister->en_register_code, 'en'));
-            // $this->createCertificate($enRegister);
+        foreach ($registers as $key => $register) {
+            Mail::to($register->register_email)->send(new CertificateMail($mail_conference_type, $mail_conference_title, $register->register_name, $register->register_gender, $register->register_code, 'vn'));
+
+            // Mail::to($enRegister->en_register_email)->send(new CertificateMail($mail_conference_type, $mail_conference_title, $enRegister->en_register_firstname . ' ' . $enRegister->en_register_lastname, $enRegister->en_register_title, $enRegister->en_register_code, 'en'));
+            // $this->createCertificate($register, $key);
         }
     }
 }

@@ -51,6 +51,10 @@ class CertificateMail extends Mailable
                 $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', 'HRTTA');
                 $objType = 'hrtta';
                 break;
+            case ('NVART'):
+                $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', 'NVART');
+                $objType = 'nvart';
+                break;
         }
         $certificatePath = storage_path('app/public/certificate/' . $this->code . '.pdf');
         switch ($this->locale) {
@@ -67,7 +71,7 @@ class CertificateMail extends Mailable
                         'as' => 'Giấy chứng nhận CME.pdf',
                         'mime' => 'application/pdf',
                     ])
-                    ->subject('GIẤY CHỨNG NHẬN CME HỘI NGHỊ 2025 - ĐÀ NẴNG');
+                    ->subject('GIẤY CHỨNG NHẬN CME HỘI NGHỊ 2025 - QUẢNG TRỊ');
 
                 return $mail;
 

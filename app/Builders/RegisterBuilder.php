@@ -67,6 +67,7 @@ final class RegisterBuilder extends Builder
                 'register_email',
                 'register_phone',
                 'register_object_group',
+                'register_cme_type',
                 'conference_fee_title',
                 'payment_price',
                 'register_receiving_address',
