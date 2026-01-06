@@ -184,25 +184,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('delete', [HrttaController::class, 'destroy'])->name('hrtta.destroy');
     });
     Route::prefix('test')->group(function () {
-        Route::get('invoice', function () {
-            $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.invoice.vart', [
-                'name' => 'Huỳnh Quốc Dương', 
-                'phone' => '0943705326',
-                'unit' => 'Medicen',
-                'address' => '33,Phường 11,Thành phố Vũng Tàu,Tỉnh Bà Rịa - Vũng Tàu',
-                'price' => '980.000₫',
-                'conferenceTitle' => 'Hội nghị Khoa học Quốc tế kỹ thuật Điện quang, Y học hạt nhân và Xạ trị khu vực phía Bắc, lần thứ VIII',
-                'conferenceFeeTitle' => 'Phí tham gia trực tuyến có cấp giấy chứng nhận CME',
-                "imgSignature" => parserImgPdf(choseSignatureByConferenceType(1)),
-                'imgLogo' => parserImgPdf('defineTemplates/logo/vart.png'), 
-                // 'imgLogo' => [
-                //     'hartLogo' => parserImgPdf('defineTemplates/logo/hart.png'), 
-                //     'hrttaLogo' => parserImgPdf('defineTemplates/logo/hrtta.png'), 
-                // ],
-            ])->setPaper('a4', 'landscape');
-            return $pdf->stream('invitation-letter-attendees.pdf');
-        });
-
         Route::get('certificate', function () {
             $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.certificate.certificate', [
                 'name' => 'Ông HUỲNH QUỐC DƯƠNG',
@@ -214,20 +195,7 @@ Route::group(['middleware' => 'auth'], function () {
             return $pdf->stream('invitation-letter-attendees.pdf');
         });
 
-        Route::get('mail', function () {
-            return view('mail.certificate.nvart.national')->with([
-                // 'title' => 'Mr.',
-                // 'name' => 'Huỳnh Quốc Dương',
-                // 'code' => 'LTCB0943705326',
-                // 'conference_title' => 'Hội Thảo Khoa học ISRRT RT-RTT
-                //     Kỹ Thuật Hình Ảnh Y Học và Kỹ Thuật Xạ Trị',
-
-                'title' => 0,
-                'name' => 'Huỳnh Quốc Dương',
-                'code' => 'LTCB0943705326',
-                'conference_title' => 'Hội nghị Khoa học Quốc tế kỹ thuật Điện quang, Y học hạt nhân và Xạ trị lần thứ VIII - khu vực phía Bắc',
-            ]);
-        });
+        
 
         Route::get('invoice-html', function () {
             return view('pdf.invoice');
@@ -235,9 +203,13 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::prefix('invitation')->group(function () {
             Route::get('vip', [TestController::class, 'vipInvitation'])->name('test.invitation.vip');
-            Route::get('register', [TestController::class, 'registerInvitation'])->name('test.invitation.register');
+            Route::get('register/{type}', [TestController::class, 'registerInvitation'])->name('test.invitation.register');
             Route::get('agency', [TestController::class, 'agencyInvitation'])->name('test.invitation.agency');
         });
+
+        Route::get('invoice', [TestController::class, 'invoice'])->name('test.invoice');
+
+        Route::get('mail', [TestController::class, 'mail'])->name('test.mail');
     });
 
     //Vart

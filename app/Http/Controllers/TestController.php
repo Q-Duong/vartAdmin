@@ -40,15 +40,20 @@ class TestController extends Controller
         return $pdf->stream('invitation-letter-attendees.pdf');
     }   
 
-    public function registerInvitation()
+    public function registerInvitation($type)
     {
-        $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pages.test.invitation', [
+        if ($type == 3) {
+            $imgSign = ['hart' => parserImgPdf(choseSignatureByConferenceType(2)), 'hrtta' => parserImgPdf(choseSignatureByConferenceType(3))];
+        } else {
+            $imgSign = parserImgPdf(choseSignatureByConferenceType($type));
+        }
+        $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pages.test.invitation.register', [
             "degree" => 'Kỹ sư',
             'fullName' => 'Huỳnh Quốc Dương',
             'unit' => 'Medicen',
             'imgBackground' => parserImgPdf('defineTemplates/backGround/main.jpg'),
-            "imgLogo" => parserImgPdf(choseLogoByConferenceType(2)),
-            "imgSign" => parserImgPdf(choseSignatureByConferenceType(2)),
+            "imgLogo" => parserImgPdf(choseLogoByConferenceType(3)),
+            "imgSign" => $imgSign,
         ]);
         return $pdf->stream('invitation-letter-attendees.pdf');
     }
@@ -66,64 +71,40 @@ class TestController extends Controller
         return $pdf->stream('invitation-letter-attendees.pdf');
     }
 
-    public function createInvitation($id, $type)
+    public function Mail()
     {
-        if ($type == 'register') {
-            $register = Register::select(
-                'registers.id',
-                'registers.conference_id',
-                'register_code',
-                'register_name',
-                'register_work_unit',
-                'register_degree',
-            )
-                ->firstWhere('id', $id);
-            $conference = Conference::select('id', 'conference_type_id')
-                ->firstWhere('id', $register->conference_id);
-            $invitation_template = InvitationTemplates::where('conference_id', $conference->id)->where('type', 'vn_att')->first();
-            $imgLogo = parserImgPdf(choseLogoByConferenceType($conference->conference_type_id));
-            $imgSign = parserImgPdf(choseSignatureByConferenceType($conference->conference_type_id));
-            $code = $register->register_code;
-            $data = [
-                "degree" => $register->register_degree == '' ? 'Sinh Viên' : $register->register_degree,
-                'fullName' => $register->register_name,
-                'unit' => $register->register_work_unit,
-                'imgBackground' => parserImgPdf('defineTemplates/backGround/main.jpg'),
-                'imgLogo' => $imgLogo,
-                'imgSign' => $imgSign
-            ];
-        } else {
-            $report = Report::select(
-                'reports.id',
-                'reports.conference_id',
-                'report_code',
-                'report_name',
-                'report_work_unit',
-                'report_degree',
-            )
-                ->firstWhere('id', $id);
-            $conference = Conference::select('id', 'conference_type_id')
-                ->firstWhere('id', $report->conference_id);
-            $invitation_template = InvitationTemplates::where('conference_id', $conference->id)->where('type', 'vn_vs')->first();
-            $imgLogo = parserImgPdf(choseLogoByConferenceType($conference->conference_type_id));
-            $imgSign = parserImgPdf(choseSignatureByConferenceType($conference->conference_type_id));
-            $code = $report->report_code;
-            $data = [
-                "title" => $report->report_degree == '' ? 'Sinh Viên' : $report->report_degree,
-                'fullName' => $report->report_name,
-                'unit' => $report->report_work_unit,
-                'imgBackground' => parserImgPdf('defineTemplates/backGround/main.jpg'),
-                'imgLogo' => $imgLogo,
-                'imgSign' => $imgSign
-            ];
-        }
-        $template = Blade::render(
-            $invitation_template->content,
-            $data
-        );
-        $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true])->loadHTML($template);
-        $filePath = storage_path('app/public/invitation/' . $code . '.pdf');
-        $pdf->save($filePath);
+        return view('mail.register.hrtta.student')->with([
+            // 'title' => 'Mr.',
+            // 'name' => 'Huỳnh Quốc Dương',
+            // 'code' => 'LTCB0943705326',
+            // 'conference_title' => 'Hội Thảo Khoa học ISRRT RT-RTT
+            //     Kỹ Thuật Hình Ảnh Y Học và Kỹ Thuật Xạ Trị',
+
+            'title' => 0,
+            'name' => 'Huỳnh Quốc Dương',
+            'code' => 'LTCB0943705326',
+            'conference_title' => 'Hội Nghị Khoa Học Thường Niên Chi Hội Kỹ Thuật Xạ Trị Tp. Hồ Chí Minh Lần 3',
+        ]);
+    }
+
+    public function invoice()
+    {
+        $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.invoice.hrtta', [
+            'name' => 'Huỳnh Quốc Dương', 
+            'phone' => '0943705326',
+            'unit' => 'Medicen',
+            'address' => '33,Phường 11,Thành phố Vũng Tàu,Tỉnh Bà Rịa - Vũng Tàu',
+            'price' => '980.000₫',
+            'conferenceTitle' => 'Hội nghị Khoa học Quốc tế kỹ thuật Điện quang, Y học hạt nhân và Xạ trị khu vực phía Bắc, lần thứ VIII',
+            'conferenceFeeTitle' => 'Phí tham gia trực tuyến có cấp giấy chứng nhận CME',
+            "imgSignature" => parserImgPdf(choseSignatureByConferenceType(2)),
+            // 'imgLogo' => parserImgPdf('defineTemplates/logo/vart.png'), 
+            'imgLogo' => [
+                'hartLogo' => parserImgPdf('defineTemplates/logo/hart.png'), 
+                'hrttaLogo' => parserImgPdf('defineTemplates/logo/hrtta.png'), 
+            ],
+        ])->setPaper('a4', 'landscape');
+        return $pdf->stream('invitation-letter-attendees.pdf');
     }
 
     public function createCertificate($data)

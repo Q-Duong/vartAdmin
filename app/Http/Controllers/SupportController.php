@@ -116,7 +116,11 @@ class SupportController extends Controller
                 ->firstWhere('id', $register->conference_id);
             $invitation_template = InvitationTemplates::where('conference_id', $conference->id)->where('type', 'vn_att')->first();
             $imgLogo = parserImgPdf(choseLogoByConferenceType($conference->conference_type_id));
-            $imgSign = parserImgPdf(choseSignatureByConferenceType($conference->conference_type_id));
+            if ($conference->conference_type_id == 3) {
+                $imgSign = ['hart' => parserImgPdf(choseSignatureByConferenceType(2)), 'hrtta' => parserImgPdf(choseSignatureByConferenceType(3))];
+            } else {
+                $imgSign = parserImgPdf(choseSignatureByConferenceType($conference->conference_type_id));
+            }
             $code = $register->register_code;
             $data = [
                 "degree" => $register->register_degree == '' ? 'Sinh Viên' : $register->register_degree,
