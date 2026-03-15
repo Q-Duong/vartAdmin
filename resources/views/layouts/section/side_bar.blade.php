@@ -96,7 +96,7 @@
                         </a>
                     </li>
                 @endcan
-                @canany(['isAdmin', 'isSubAdmin', 'isStaffRegister', 'isStaffInter'])
+                {{-- @canany(['isAdmin', 'isSubAdmin', 'isStaffRegister', 'isStaffInter'])
                     <li class="sub-menu">
                         <a class="{{ request()->routeIs('conference_vip_register.index') || request()->routeIs('conference_vip_register.edit') || request()->routeIs('register_management_vip.index') ? 'active' : '' }}"
                             href="{{ Route('register_management_vip.index') }}">
@@ -104,7 +104,7 @@
                             <span>@lang('conference.en.vip_register_title')</span>
                         </a>
                     </li>
-                @endcan
+                @endcan --}}
                 @canany(['isAdmin', 'isSubAdmin'])
                     <li class="sub-menu">
                         <a class="{{ request()->routeIs('invitation.index') || request()->routeIs('invitation.index_details') ? 'active' : '' }}"

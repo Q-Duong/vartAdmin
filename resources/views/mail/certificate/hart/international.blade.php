@@ -31,7 +31,7 @@
         </div>
         <div>
             <h3 style="text-align: center; color: #601e89; text-transform: uppercase;">
-                CME CERTIFICATE FOR THE 2025 CONFERENCE
+                CERTIFICATE - CPD ASIA ONLINE 58th
             </h3>
         </div>
         <div style="width: 86%; margin: 50px auto;">
@@ -45,7 +45,7 @@
                     <div style="text-align: center;">
                         <br><b>"{{ $conference_title }}"</b>
                     </div>
-                    <div style="margin-top: 25px;">• Please open the attached file: HART 2025 Conference Certificate.
+                    <div style="margin-top: 25px;">• Please open the attached file: Certificate - CPD ASIA ONLINE 58th.
                     </div>
                 </div>
                 <div style="margin-bottom: 25px; text-align: justify;">

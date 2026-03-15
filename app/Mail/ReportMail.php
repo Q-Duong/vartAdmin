@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -44,55 +45,45 @@ class ReportMail extends Mailable
 
     public function build()
     {
-        switch ($this->conference_type) {
-            case ('VART'):
-                $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', 'VART');
-                $objType = 'vart';
-                break;
-            case ('HART'):
-                $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', 'HART');
-                $objType = 'hart';
-                break;
-            case ('HRTTA'):
-                $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', 'HRTTA');
-                $objType = 'hrtta';
-                break;
-        }
+        $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', $this->conference_type);
+
+        $modelContent = [
+            'title' => $this->title,
+            'name' => Str::title($this->name),
+            'code' => $this->code,
+            'conference_title' => $this->conference_title,
+            'suggestedAddition' => $this->suggestedAddition,
+            'reasonRejection' => $this->reasonRejection,
+        ];
+
         $invitationPath = storage_path('app/public/invitation/' . $this->code . '.pdf');
+
         switch ($this->locale) {
             case ('vn'):
-                $modelContent = [
-                    'title' => $this->title,
-                    'name' => $this->name,
-                    'code' => $this->code,
-                    'conference_title' => $this->conference_title,
-                    'suggestedAddition' => $this->suggestedAddition,
-                    'reasonRejection' => $this->reasonRejection,
-                ];
                 if ($this->status == 3) {
                     $mail = $mailFrom->with($modelContent)
-                    ->view('mail.report.' . $objType . '.accept')
-                    ->attach($invitationPath, [
-                        'as' => 'Thư mời.pdf',
-                        'mime' => 'application/pdf',
-                    ])
-                    ->subject('Thư mời tham gia báo cáo');
+                        ->view('mail.report.' . Str::lower($this->conference_type) . '.accept')
+                        ->attach($invitationPath, [
+                            'as' => 'Thư mời.pdf',
+                            'mime' => 'application/pdf',
+                        ])
+                        ->subject('Thư mời tham gia báo cáo');
                 } elseif ($this->status == 4) {
                     $mail = $mailFrom->with($modelContent)
-                    ->view('mail.report.' . $objType . '.reject')
-                    ->subject('Thông báo bình duyệt bài báo cáo');
+                        ->view('mail.report.' . Str::lower($this->conference_type) . '.reject')
+                        ->subject('Thông báo bình duyệt bài báo cáo');
                 }
                 return $mail;
 
                 break;
             case ('en'):
-                $modelContent = [
-                    'title' => $this->title,
-                    'name' => $this->name,
-                    'code' => $this->code,
-                ];
-                $subject = 'Confirmation of report submission';
-                $mail = $mailFrom->with($modelContent)->view('mail.report.hart.international')->subject($subject);
+                $mail = $mailFrom->with($modelContent)
+                    ->view('mail.report.' . Str::lower($this->conference_type) . '.international')
+                    ->attach($invitationPath, [
+                        'as' => 'INVITATION LETTER.pdf',
+                        'mime' => 'application/pdf',
+                    ])
+                    ->subject('Presentation Invitation Letter');
                 return $mail;
                 break;
         }

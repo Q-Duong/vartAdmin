@@ -29,10 +29,7 @@
                 CHI HỘI KỸ THUẬT ĐIỆN QUANG VÀ Y HỌC HẠT NHÂN VIỆT NAM
             </h4>
         </div>
-        {{-- <div style="text-align: right; font-style: italic; margin: 40px 50px; font-size: 15px;">
-            <b>TP. Hồ Chí Minh, ngày {{ \Carbon\Carbon::now()->day }} tháng {{ \Carbon\Carbon::now()->month }} năm
-                {{ \Carbon\Carbon::now()->year }}</b>
-        </div> --}}
+        
         <div>
             <h3 style="text-align: center; color: #601e89;">
                 THƯ MỜI THAM GIA BÁO CÁO
@@ -40,8 +37,7 @@
         </div>
         <div style="width: 86%; margin: 50px auto;">
             <div style="margin: 0 0 20px 30px;">
-                Kính gửi<b> {{ $title == 0 ? 'Ông' : 'Bà' }} <span
-                        style=" text-transform: uppercase">{{ $name }}</span></b>,
+                Kính gửi<b> {{ $title == 0 ? 'Ông' : 'Bà' }} <span>{{ $name }}</span></b>,
             </div>
             <div>
                 <div style="margin-bottom: 25px; text-align: justify;">
@@ -87,12 +83,12 @@
                         </div>
                     </div>
                 </div>
-                <div style="margin-bottom: 15px; text-align: justify;">
+                {{-- <div style="margin-bottom: 15px; text-align: justify;">
                     Trong trường hợp bị mất thư mời, Quý đại biểu có thể bấm vào đường <a
                         href="https://vart.vn/invitation" target="_blank"><b>Link</b></a> và điền <b>Mã code:
                         {{ $code }}</b>
                     để lấy thư mời.
-                </div>
+                </div> --}}
                 <div style="margin-bottom: 25px;">
                     Trân trọng cảm ơn và mong nhận được bài báo cáo của Báo cáo viên đúng hạn.
                 </div>

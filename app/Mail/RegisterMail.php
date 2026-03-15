@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -12,6 +13,7 @@ class RegisterMail extends Mailable
     use Queueable, SerializesModels;
     protected $conference_type;
     protected $conference_title;
+    protected $conference_fee_title;
     protected $name;
     protected $title;
     protected $code;
@@ -21,10 +23,11 @@ class RegisterMail extends Mailable
      *
      * @return void
      */
-    public function __construct($conference_type, $conference_title, $name, $title, $code, $mail_type,  $locale)
+    public function __construct($conference_type, $conference_title, $conference_fee_title, $name, $title, $code, $mail_type,  $locale)
     {
         $this->conference_type = $conference_type;
         $this->conference_title = $conference_title;
+        $this->conference_fee_title = $conference_fee_title;
         $this->name = $name;
         $this->title = $title;
         $this->code = $code;
@@ -40,95 +43,42 @@ class RegisterMail extends Mailable
 
     public function build()
     {
+        $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', $this->conference_type);
+        $obj = mb_substr($this->code, 2, 2);
+
         $modelContent = [
-            'name' => $this->name,
-            'title' => $this->title,
-            'code' => $this->code,
-            'conference_title' => $this->conference_title
+            'name'                  => Str::title($this->name),
+            'title'                 => $this->title,
+            'code'                  => $this->code,
+            'mail_type'             => $this->mail_type,
+            'obj'                   => $obj,
+            'conference_title'      => $this->conference_title,
+            'conference_fee_title'  => $this->conference_fee_title
         ];
+
         switch ($this->locale) {
             case ('vn'):
-                $obj = mb_substr($this->code, 2, 2);
                 $subject = 'Thư mời tham dự hội nghị';
-                switch ($this->conference_type) {
-                    case ('VART'):
-                        $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', 'VART');
-                        $folder = 'vart';
-                        break;
-                    case ('HART'):
-                        $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', 'HART');
-                        $folder = 'hart';
-                        break;
-                    case ('HRTTA'):
-                        $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', 'HRTTA');
-                        $folder = 'hrtta';
-                        break;
-                    case ('NVART'):
-                        $mailFrom = $this->from('hoikythuathinhanhyhoc@gmail.com', 'NVART');
-                        $folder = 'nvart';
-                        break;
-                }
+
                 $invoicePath = storage_path('app/public/invoice/' . $this->code . '.pdf');
                 $invitationPath = storage_path('app/public/invitation/' . $this->code . '.pdf');
-                if ($obj == 'CB') {
-                    switch ($this->mail_type) {
-                        case (1):
-                            $mail = $mailFrom->with($modelContent)
-                                ->view('mail.register.' . $folder . '.theory')
-                                ->attach($invoicePath, [
-                                    'as' => 'Biên lai thu phí.pdf',
-                                    'mime' => 'application/pdf',
-                                ])
-                                ->attach($invitationPath, [
-                                    'as' => 'Thư mời.pdf',
-                                    'mime' => 'application/pdf',
-                                ])
-                                ->subject($subject);
-                            return $mail;
-                            break;
-                        case (2):
-                            $mail = $mailFrom->with($modelContent)
-                                ->view('mail.register.' . $folder . '.practice')
-                                ->attach($invoicePath, [
-                                    'as' => 'Biên lai thu phí.pdf',
-                                    'mime' => 'application/pdf',
-                                ])
-                                ->attach($invitationPath, [
-                                    'as' => 'Thư mời.pdf',
-                                    'mime' => 'application/pdf',
-                                ])
-                                ->subject($subject);
-                            return $mail;
-                            break;
-                        case (3):
-                            $mail = $mailFrom->with($modelContent)
-                                ->view('mail.register.' . $folder . '.online')
-                                ->attach($invoicePath, [
-                                    'as' => 'Biên lai thu phí.pdf',
-                                    'mime' => 'application/pdf',
-                                ])
-                                ->attach($invitationPath, [
-                                    'as' => 'Thư mời.pdf',
-                                    'mime' => 'application/pdf',
-                                ])
-                                ->subject($subject);
-                            return $mail;
-                            break;
-                    }
-                } else {
-                    $mail = $mailFrom->with($modelContent)
-                        ->view('mail.register.' . $folder . '.student')
-                        ->attach($invoicePath, [
-                            'as' => 'Biên lai thu phí.pdf',
-                            'mime' => 'application/pdf',
-                        ])
-                        ->attach($invitationPath, [
-                            'as' => 'Thư mời.pdf',
-                            'mime' => 'application/pdf',
-                        ])
+
+                $mail = $mailFrom->attach($invoicePath, [
+                    'as' => 'Biên lai thu phí.pdf',
+                    'mime' => 'application/pdf',
+                ]);
+
+                if ($this->mail_type != 'CE' && $obj != 'SV') {
+                    $mail = $mailFrom->attach($invitationPath, [
+                        'as' => 'Thư mời.pdf',
+                        'mime' => 'application/pdf',
+                    ]);
+                }
+
+                $mail = $mailFrom->with($modelContent)
+                        ->view('mail.register.' . Str::lower($this->conference_type) . '.master_template')
                         ->subject($subject);
                     return $mail;
-                }
                 break;
             case ('en'):
                 $mail = $mailFrom->with($modelContent)->view('mail.register.hart.confirm.international')->subject('Invitation to the HART Conference');

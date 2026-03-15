@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Builders\RegisterBuilder;
 use Illuminate\Database\Eloquent\Model;
+use App\Builders\RegisterBuilder;
 
 class Register extends Model
 {
@@ -13,37 +13,32 @@ class Register extends Model
 
     protected $fillable = [
         'register_code',
-        'register_name',
-        'register_title',
-        'register_gender',
-        'register_date',
-        'register_month',
-        'register_year',
-        'register_phone',
-        'register_email',
-        'register_degree',
-        'register_place_of_birth',
-        'register_nation',
-        'register_work_unit',
-        'register_type',
-        'register_object_group',
-        'register_graduation_year',
-        'register_image',
-        'register_image_card',
-        'register_receiving_address',
         'register_policy',
+        'more_options',
         'register_cme_type',
+        'locale',
         'conference_id',
+        'member_id',
         'payment_id',
     ];
 
     public function conference()
     {
-        return $this->belongsTo(Conference::class);
+        return $this->belongsTo(Conference::class, 'conference_id', 'id');
+    }
+    public function member()
+    {
+        return $this->belongsTo(Member::class, 'member_id', 'id');
     }
     public function payment()
     {
-        return $this->belongsTo(Payment::class);
+        return $this->belongsTo(Payment::class, 'payment_id', 'id');
+    }
+    public function fees()
+    {
+        return $this->belongsToMany(ConferenceFee::class, 'register_fees', 'register_id', 'conference_fee_id')
+            ->withPivot('price') // Lấy thêm cột giá trong bảng trung gian
+            ->withTimestamps();
     }
     public function newEloquentBuilder($query): RegisterBuilder
     {

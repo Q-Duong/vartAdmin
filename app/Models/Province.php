@@ -11,8 +11,13 @@ class Province extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'province_name',
-        'province_type',
-        'sort',
+        'name',
+        'type',
+        'sort_order',
     ];
+
+    public function ward()
+    {
+        $this->hasMany(Ward::class);
+    }
 }

@@ -22,25 +22,34 @@
                                 <div class="filter-content-title">
                                     •&nbsp;Total Participants :
                                 </div>
-                                <div class="filter-content-details">{{ $getAllConferenceRegister->total() }}</div>
+                                <div class="filter-content-details">{{ $totalAmount['counter'] }}</div>
                             </li>
                             <li class="filter-content-block">
                                 <div class="filter-content-title">
                                     •&nbsp;Theory :
                                 </div>
-                                <div class="filter-content-details">{{ $totalTheory['counter'] }}</div>
+                                <div class="filter-content-details">{{ isset($totalTheory) ? $totalTheory['counter'] : 0 }}
+                                </div>
                             </li>
                             <li class="filter-content-block">
                                 <div class="filter-content-title">
                                     •&nbsp;Practice :
                                 </div>
-                                <div class="filter-content-details">{{ $totalPractice['counter'] }}</div>
+                                <div class="filter-content-details">
+                                    {{ isset($totalPractice) ? $totalPractice['counter'] : 0 }}</div>
                             </li>
                             <li class="filter-content-block">
                                 <div class="filter-content-title">
                                     •&nbsp;CME :
                                 </div>
-                                <div class="filter-content-details">{{ $totalCME['counter'] }}</div>
+                                <div class="filter-content-details">{{ isset($totalCME) ? $totalCME['counter'] : 0 }}</div>
+                            </li>
+                            <li class="filter-content-block">
+                                <div class="filter-content-title">
+                                    •&nbsp;Multi :
+                                </div>
+                                <div class="filter-content-details">{{ isset($totalMulti) ? $totalMulti['counter'] : 0 }}
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -59,7 +68,7 @@
                                     •&nbsp;Total Amount :
                                 </div>
                                 <div class="filter-content-details">
-                                    {{ number_format($totalAmount['prices'], 0, ',', '.') . '₫' }}
+                                    {{ isset($totalAmount) ? number_format($totalAmount['prices'], 0, ',', '.') . '₫' : 0 }}
                                 </div>
                             </li>
                             <li class="filter-content-block">
@@ -67,7 +76,7 @@
                                     •&nbsp;Theoretical Total :
                                 </div>
                                 <div class="filter-content-details">
-                                    {{ number_format($totalTheory['prices'], 0, ',', '.') . '₫' }}
+                                    {{ isset($totalTheory) ? number_format($totalTheory['prices'], 0, ',', '.') . '₫' : 0 }}
                                 </div>
                             </li>
                             <li class="filter-content-block">
@@ -75,7 +84,7 @@
                                     •&nbsp;Total Practice :
                                 </div>
                                 <div class="filter-content-details">
-                                    {{ number_format($totalPractice['prices'], 0, ',', '.') . '₫' }}
+                                    {{ isset($totalPractice) ? number_format($totalPractice['prices'], 0, ',', '.') . '₫' : 0 }}
                                 </div>
                             </li>
                             <li class="filter-content-block">
@@ -83,7 +92,15 @@
                                     •&nbsp;Total CME :
                                 </div>
                                 <div class="filter-content-details">
-                                    {{ number_format($totalCME['prices'], 0, ',', '.') . '₫' }}
+                                    {{ isset($totalCME) ? number_format($totalCME['prices'], 0, ',', '.') . '₫' : 0 }}
+                                </div>
+                            </li>
+                            <li class="filter-content-block">
+                                <div class="filter-content-title">
+                                    •&nbsp;Total Multi :
+                                </div>
+                                <div class="filter-content-details">
+                                    {{ isset($totalMulti) ? number_format($totalMulti['prices'], 0, ',', '.') . '₫' : 0 }}
                                 </div>
                             </li>
                         </ul>
@@ -135,7 +152,6 @@
                             <th>@lang('conference.en.create')</th>
                             <th>@lang('conference.en.id')</th>
                             <th>@lang('conference.en.code')</th>
-                            <th>@lang('conference.en.degree')</th>
                             <th class="sticky-col first-col">@lang('conference.en.fullname')</th>
                             <th>@lang('conference.en.gender')</th>
                             <th>@lang('conference.en.date')</th>
@@ -144,6 +160,7 @@
                             <th>@lang('conference.en.email')</th>
                             <th>@lang('conference.en.phone')</th>
                             <th>@lang('conference.en.unit')</th>
+                            <th>@lang('conference.en.type_register')</th>
                             <th>@lang('conference.en.type_register')</th>
                             <th>@lang('conference.en.cost')</th>
                             <th>@lang('conference.en.graduation_year')</th>
@@ -173,12 +190,11 @@
                                     @endforeach
                                 </select>
                             </th>
-                            <th></th>
                             <th class="sticky-col first-col">
-                                <select class="register-name select-2" multiple="multiple">
+                                <select class="member-full-name select-2" multiple="multiple">
                                     @foreach ($nameFilter as $name)
                                         <option value="{{ $name }}">
-                                            {{ $name }}
+                                            {{ \Str::title($name) }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -188,7 +204,7 @@
                             <th></th>
                             <th></th>
                             <th>
-                                <select class="register-email select-2" multiple="multiple">
+                                <select class="member-email select-2" multiple="multiple">
                                     @foreach ($emailFilter as $email)
                                         <option value="{{ $email }}">
                                             {{ $email }}
@@ -197,7 +213,7 @@
                                 </select>
                             </th>
                             <th>
-                                <select class="register-phone select-2" multiple="multiple">
+                                <select class="member-phone select-2" multiple="multiple">
                                     @foreach ($phoneFilter as $phone)
                                         <option value="{{ $phone }}">
                                             {{ $phone }}
@@ -206,15 +222,8 @@
                                 </select>
                             </th>
                             <th></th>
-                            <th>
-                                <select class="conference-fee-title select-2" multiple="multiple">
-                                    @foreach ($conferenceFeeTitleFilter as $title)
-                                        <option value="{{ $title }}">
-                                            {{ $title }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </th>
+                            <th></th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -246,51 +255,53 @@
                                 <td>{{ \Carbon\Carbon::parse($register->created_at)->format('H:i:s d/m/Y') }}</td>
                                 <td>{{ $register->id }}</td>
                                 <td>{{ $register->register_code }}</td>
-                                <td>{{ $register->register_degree }}</td>
-                                <td class="sticky-col first-col">{{ $register->register_name }}</td>
-                                <td>{{ $register->register_gender == 0 ? 'Nam' : 'Nữ' }}</td>
-                                <td>{{ $register->register_date }}</td>
-                                <td>{{ $register->register_month }}</td>
-                                <td>{{ $register->register_year }}</td>
-                                <td>{{ $register->register_email }}</td>
-                                <td>{{ $register->register_phone }}</td>
-                                <td>{{ $register->register_work_unit }}</td>
-                                <td>{{ $register->conference_fee_title }}</td>
-                                <td>{{ $register->payment_price < 1000 ? '$' . number_format($register->payment_price, 2) : number_format($register->payment_price, 0, ',', '.') . '₫' }}
-                                </td>
-                                <td>{{ $register->register_graduation_year }}</td>
+                                <td class="sticky-col first-col">{{ \Str::title($register->member->member_full_name) }}</td>
+                                <td>{{ $register->member->member_gender == 0 ? 'Nam' : 'Nữ' }}</td>
+                                <td>{{ $register->member->member_date }}</td>
+                                <td>{{ $register->member->member_month }}</td>
+                                <td>{{ $register->member->member_year }}</td>
+                                <td>{{ $register->member->member_email }}</td>
+                                <td>{{ $register->member->member_phone }}</td>
+                                <td>{{ $register->member->member_work_unit }}</td>
                                 <td>
-                                    @if ($register->register_image)
-                                        <a href="https://drive.google.com/file/d/{{ $register->register_image }}/view"
+                                    {{ $register->fees->implode('conference_fee_title', ', ') }}
+                                </td>
+                                <td>{{ $register->register_cme_type }}</td>
+                                <td>{{ $register->payment->payment_price < 1000 ? '$' . number_format($register->payment->payment_price, 2) : number_format($register->payment->payment_price, 0, ',', '.') . '₫' }}
+                                </td>
+                                <td>{{ $register->member->member_graduation_year }}</td>
+                                <td>
+                                    @if ($register->member->member_image)
+                                        <a href="https://drive.google.com/file/d/{{ $register->member->member_image }}/view"
                                             target="_blank">
                                             @lang('conference.en.link')
                                         </a>
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($register->register_image_card)
-                                        <a href="https://drive.google.com/file/d/{{ $register->register_image_card }}/view"
+                                    @if ($register->member->member_image_card)
+                                        <a href="https://drive.google.com/file/d/{{ $register->member->member_image_card }}/view"
                                             target="_blank">
                                             @lang('conference.en.link')
                                         </a>
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($register->payment_image)
-                                        <a href="https://drive.google.com/file/d/{{ $register->payment_image }}/view"
+                                    @if ($register->payment->payment_image)
+                                        <a href="https://drive.google.com/file/d/{{ $register->payment->payment_image }}/view"
                                             target="_blank">
                                             @lang('conference.en.link')
                                         </a>
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($register->payment_status == 1)
+                                    @if ($register->payment->payment_status == 1)
                                         <span style="color: #27c24c;">@lang('conference.en.status.step1')
-                                        @elseif ($register->payment_status == 2)
+                                        @elseif ($register->payment->payment_status == 2)
                                             <span style="color: #FCB322;">@lang('conference.en.status.step2')
-                                            @elseif ($register->payment_status == 3)
+                                            @elseif ($register->payment->payment_status == 3)
                                                 <span style="color: #c037df;">@lang('conference.en.status.step3')
-                                                @elseif ($register->payment_status == 4)
+                                                @elseif ($register->payment->payment_status == 4)
                                                     <span style="color: #0071e3;">@lang('conference.en.status.step4')
                                     @endif
                                 </td>

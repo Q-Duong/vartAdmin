@@ -185,12 +185,13 @@ Route::group(['middleware' => 'auth'], function () {
     });
     Route::prefix('test')->group(function () {
         Route::get('certificate', function () {
-            $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.certificate.certificate', [
-                'name' => 'Ông HUỲNH QUỐC DƯƠNG',
-                'no' => '123',
-                'birthday' => '28/02/1997',
-                'unit' => 'BỆNH VIỆN ĐA KHOA QUỐC TẾ NAM SÀI GÒN',
-                "imgBackground" => parserImgPdf('defineTemplates/backGround/certificate-nvart-2025.jpg')
+            $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.certificate.cpd', [
+                'title' => 'Mr.',
+                'name' => 'Huynh Quoc Duong',
+                // 'no' => '271',
+                // 'birthday' => '12/9/1988',
+                // 'unit' => 'Bệnh viện Phụ sản - Nhi Quảng Nam',
+                "imgBackground" => parserImgPdf('defineTemplates/backGround/Asia-CPD.jpg')
             ]);
             return $pdf->stream('invitation-letter-attendees.pdf');
         });

@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Wards extends Model
+class RegisterFee extends Model
 {
-    protected $table = 'wards';
+    protected $table = 'register_fees';
 
     public $timestamps = true;
 
     protected $fillable = [
-        'wards_name',
-        'district_id'
+        'register_id',
+        'conference_fee_id',
+        'price',
     ];
 }

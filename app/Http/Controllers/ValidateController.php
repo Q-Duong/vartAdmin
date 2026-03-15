@@ -61,22 +61,20 @@ class ValidateController extends Controller
     {
         if ($locale == 'en') {
             $rules = [
-                'en_report_firstname' => 'required|string|regex:/^([^0-9]*)$/',
-                'en_report_lastname' => 'required|string|regex:/^([^0-9]*)$/',
-                'en_report_email' => 'required|email|unique:users,email',
-                'en_report_organization' => 'required',
-                'en_report_department' => 'required',
-                'en_report_file_title' => 'required',
+                // 'member_first_name' => 'required|string|regex:/^([^0-9]*)$/',
+                // 'member_last_name' => 'required|string|regex:/^([^0-9]*)$/',
+                // 'member_email' => 'required|email|unique:users,email',
+                'member_phone' => 'required|numeric',
+                // 'member_work_unit' => 'required',
+                'report_file_title' => 'required',
             ];
         } else {
             $rules = [
-                'report_name' => 'required|string|regex:/^([^0-9]*)$/',
-                // 'report_issue_date' => 'required|date|after:1940-01-01|before_or_equal:2025-01-01',
-                'report_phone' => 'required|numeric|digits_between:10,10',
-                'report_email' => 'required|email|unique:users,email',
-                'report_work_unit' => 'required|max:255',
+                // 'member_full_name' => 'required|string|regex:/^([^0-9]*)$/',
+                'member_email' => 'required|email|unique:users,email',
+                // 'member_phone' => 'required|numeric|digits_between:10,10',
+                'member_work_unit' => 'required|max:255',
                 'report_file_title' => 'required|max:255',
-                'report_place_of_birth' => 'required',
             ];
         }
 
@@ -139,11 +137,9 @@ class ValidateController extends Controller
     {
         if ($locale == 'vn') {
             $rules = [
-                'register_name' => 'required|string|regex:/^([^0-9]*)$/',
-                'register_email' => 'required|email|unique:users,email',
-                'register_phone' => 'required|numeric|digits_between:10,10',
-                'register_nation' => 'required',
-                'register_receiving_address' => 'required',
+                // 'member_full_name' => 'required|string|regex:/^([^0-9]*)$/',
+                'member_email' => 'required|email|unique:users,email',
+                // 'member_phone' => 'required|numeric|digits_between:10,10',
             ];
         } else {
             $rules = [

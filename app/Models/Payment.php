@@ -15,19 +15,13 @@ class Payment extends Model
     'payment_method',
     'payment_image',
     'payment_status',
-    'conference_fee_id',
+    'transaction_code',
+    'payment_date',
+    'note'
   ];
   
   public function register()
   {
     return $this->hasOne(Register::class);
-  }
-  public function en_register()
-  {
-    return $this->hasOne(EnRegister::class);
-  }
-  public function conferenceFee()
-  {
-    return $this->belongsTo(ConferenceFee::class);
   }
 }

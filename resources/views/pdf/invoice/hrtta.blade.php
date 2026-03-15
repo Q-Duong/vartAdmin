@@ -148,8 +148,8 @@
 
     <div class="container">
         <div class="header">
-            <img src="{{ $imgLogo['hartLogo'] }}" alt="Logo HART">
-            <img src="{{ $imgLogo['hrttaLogo'] }}" alt="Logo HART">
+            <img src="{{ $imgLogo['hart'] }}" alt="Logo HART">
+            <img src="{{ $imgLogo['hrtta'] }}" alt="Logo HART">
             <h3>HỘI KỸ THUẬT HÌNH ẢNH Y HỌC THÀNH PHỐ HỒ CHÍ MINH</h3>
             <h4 class="second-title">Chi Hội Kỹ Thuật Xạ Trị Thành Phố Hồ Chí Minh</h4>
             <h2>BIÊN LAI THU PHÍ HỘI THẢO/HỘI NGHỊ</h2>

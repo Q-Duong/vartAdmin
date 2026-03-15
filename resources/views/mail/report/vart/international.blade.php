@@ -26,49 +26,46 @@
         <div style="display: flex; align-items: center;">
             <img src="https://images.vart.vn/gmail/vart-logo.png" style="height: 50px; width: 50px; float: left;">
             <h4 style="text-align: left; text-transform: uppercase; font-size: 14px; margin-left: 10px;">
-                Vietnam Association of Radiological Technologist
+                Vietnam Association of Radiological Technologists
             </h4>
-        </div>
-        <div style="text-align: right; font-style: italic; margin: 40px 50px; font-size: 15px;">
-            <strong>Hue, {{ \Carbon\Carbon::now()->isoFormat('MMMM D, Y') }}</strong>
         </div>
         <div>
             <h3 style="text-align: center; color: #601e89; text-transform: uppercase;">
-                Confirmation letter of participation in VART12 Conference
+                Presentation Invitation Letter
             </h3>
         </div>
         <div style="width: 86%; margin: 50px auto;">
             <div style="margin: 0 0 20px 30px;">
-                Dear<strong> {{ $en_register_title }} {{ $en_register_firstname }} {{ $en_register_lastname }}</strong>,
+                Dear<strong> {{ $title }} {{ $name }}</strong>,
             </div>
             <div>
-                <div style="margin-bottom: 25px; text-align: justify;">
-                    <span style="margin-left: 30px;">Thank you very much for your interest and successful registration in this activity of the 12th VART in Hue City,</span>
-                    <br>Please see detailed information below:
+                <div style="margin: 10px 0 10px 0; text-align: justify;">
+                    <span style="margin-left: 30px;">On behalf of the Vietnam Association of Radiological Technologists (VART), we would like to sincerely thank you for your interest in our upcoming event.</span>
                 </div>
+                <div style="margin-bottom: 5px; text-align: justify;">
+                    <span style="margin-left: 30px;">We are pleased to inform you that your registration for <b>{{ $conference_title }}</b> has been successfully received. We look forward to welcoming you to the event.</span>
+                </div>
+                <div style="margin: 20px 0 5px 0"><strong>Event Details:</strong></div>
                 <div style="margin-bottom: 25px; text-align: justify; background: #f5f5f7; border-radius: 20px;padding: 20px 25px;">
-                    <strong>“The 12th National Conference of Vietnam Association of Radiological Technologist”</strong>
-                    <div>Date: June 26 (Sat) 8:30-17:00</div>
-                    <div>Opening: Ballroom A</div>
-                    <div>International report: Ballroom B</div>
-                    <div>Venue: Hue University of Medicine and Pharmacy, 06 Ngo Quyen, Hue City.</div>
+                    <div style="margin: 5px 0 0 0">•&nbsp;<strong>Conference:</strong> {{ $conference_title }}</div>
+                    <div style="margin: 5px 0 0 0">•&nbsp;<strong>Date:</strong> 20 June, 2026</div>
+                    <div style="margin: 5px 0 0 0">•&nbsp;<strong>Venue:</strong> Royal Lotus Convention Center - 120A Nguyen Van Thoai, My An, Da Nang,
+                        Vietnam.</div>
+                </div>
+                
+                <div style="margin-bottom: 25px; text-align: justify;">
+                    Should you have any further inquiries or require assistance, please do not hesitate to contact:
+                    <div style="margin: 10px 0 0 30px;"><strong>Mr. Luu Tri Dung (Dung)</strong></div>
+                    <div style="margin: 5px 0 0 30px;"><i>Head of the International Relations subcommittee</i></div>
+                    <div style="margin: 5px 0 0 30px;"><strong>•&nbsp;Email:</strong> tridungbvc@gmail.com</div>
+                    <div style="margin: 5px 0 0 30px;"><strong>•&nbsp;WhatsApp/Zalo:</strong> +84 904 234 310</div>
                 </div>
                 <div style="margin-bottom: 25px; text-align: justify;">
-                    Please click this <a href="https://vart.vn/en/invitation-letter" target="_blank"><strong>Link</strong></a> and fill in your full name to receive an automatic invitation.
-                </div>
-                <div style="margin-bottom: 25px; text-align: justify;">
-                    If the lady or gentleman requires any further information, feel free to contact:
-                    <div style="margin: 10px 0 0 30px;">Mr. Luu Tri Dung (Dung) - Head of the International Relations subcommittee</div>
-                    <div style="margin-left: 30px;">Email: tridungbvc@gmail.com  WhatsApp/Zalo: +84904234310</div>
-                    <div style="margin: 10px 0 0 30px;">Mr. Phan Hoai Phuong (Paul) - International Director</div>
-                    <div style="margin-left: 30px;">Email: phuongmatlab@gmail.com  Zalo/Line: +84915767101</div>
-                </div>
-                <div style="margin-bottom: 25px; text-align: justify;">
-                    We look forward to your presence at this conference, see you soon in Hue.
+                    We appreciate your participation and look forward to seeing you at the event.
                 </div>
                 <div style="margin-left: 60%;">
                     <div style="text-align: center;"><strong>Sincerely, </strong></div>
-                    <img src="https://images.vart.vn/gmail/signature.png"
+                    <img src="https://images.vart.vn/gmail/sign-vart.png"
                         style="height: 70px; width: 150px; margin-left: 30px">
                     <div style="text-align: center;"><strong>Thai Van Loc</strong></div>
                     <div style="text-align: center;"><strong>VART chairman</strong></div>

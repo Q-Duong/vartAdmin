@@ -24,6 +24,7 @@ class AdminController extends Controller
             'multi_conferences',
             'child_conference_list',
         )->where('status', 1)->where('prioritize', 1)->firstWhere('display', 1);
+
         if (isset($conference)) {
             if ($conference->multi_conferences) {
                 $conferenceParam = $conference->child_conference_list;
@@ -33,12 +34,13 @@ class AdminController extends Controller
                 $multiParam = false;
             }
 
-            $totalAmount = Register::getAllRegisterAmount($conferenceParam, $multiParam);
+            $totalAmount = Register::getAllRegisterAmount($conferenceParam, $multiParam, 'vn');
             $totalTheory = Register::getAllRegisterByParamCode($conferenceParam, 'LT', $multiParam);
             $totalPractice = Register::getAllRegisterByParamCode($conferenceParam, 'TH', $multiParam);
             $totalCME = Register::getAllRegisterByParamCode($conferenceParam, 'CE', $multiParam);
+            $totalMulti = Register::getAllRegisterByParamCode($conferenceParam, 'PL', $multiParam);
 
-            return view('pages.admin.dashboard', compact('conference', 'totalAmount', 'totalTheory', 'totalPractice', 'totalCME'));
+            return view('pages.admin.dashboard', compact('conference', 'totalAmount', 'totalTheory', 'totalPractice', 'totalCME', 'totalMulti'));
         }
 
         return view('pages.admin.dashboard');

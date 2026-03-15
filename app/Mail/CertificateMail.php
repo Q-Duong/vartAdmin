@@ -80,8 +80,8 @@ class CertificateMail extends Mailable
                 $modelContent = [
                     'title' => $this->title,
                     'name' => $this->name,
-                    'code' => $this->code,
-                    'conference_title' => $this->conference_title,
+                    // 'code' => $this->code,
+                    // 'conference_title' => $this->conference_title,
                 ];
                 // $subject = 'CME Certificate for the 2025 Conference';
                 // $mail = $mailFrom->with($modelContent)->view('mail.report.hart.international')->subject($subject);
@@ -92,7 +92,7 @@ class CertificateMail extends Mailable
                         'as' => 'Certificate.pdf',
                         'mime' => 'application/pdf',
                     ])
-                    ->subject('CME Certificate for the 2025 Conference');
+                    ->subject('Certificate - CPD ASIA ONLINE 58th');
                 return $mail;
                 break;
         }

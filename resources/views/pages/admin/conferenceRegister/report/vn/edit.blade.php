@@ -26,36 +26,26 @@
                         <form id="update-form">
                             @csrf
                             <input type="hidden" name="report_id" value="{{ $report->id }}">
-                            <div class="form-dropdown">
-                                <select class="form-dropdown-select" name="report_degree">
-                                    @foreach ($getAllAcademic as $key => $academic)
-                                        <option value="{{ $academic->academic_title }}"
-                                            {{ $academic->academic_title == $report->report_degree ? 'selected' : '' }}>
-                                            {{ $academic->academic_title }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <span class="form-dropdown-chevron" aria-hidden="true"><i
-                                        class="fa-solid fa-angle-down"></i></span>
-                                <span class="form-dropdown-label">@lang('conference.en.degree')</span>
-                            </div>
+                            <input type="hidden" name="previous_url" value="{{ $previous_url }}">
+                            
                             <div class="form-textbox">
-                                <input type="text" name="report_name"
-                                    class="form-textbox-input {{ $report->report_name ? 'form-textbox-entered' : '' }}"
-                                    value="{{ $report->report_name }}">
-                                <div class="form-message-wrapper report_name">
+                                <input type="text" name="member_full_name"
+                                    class="form-textbox-input {{ $report->member_full_name ? 'form-textbox-entered' : '' }}"
+                                    value="{{ \Str::title($report->member_full_name) }}" disabled>
+                                <div class="form-message-wrapper member_full_name">
                                     <i class="fa fa-exclamation-circle"></i>
-                                    <span class="report_name-form-message"></span>
+                                    <span class="member_full_name-form-message"></span>
                                 </div>
                                 <span class="form-textbox-label">@lang('conference.en.fullname')</span>
                             </div>
+
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-dropdown">
-                                        <select name="report_date" class="form-dropdown-select">
+                                        <select name="member_date" class="form-dropdown-select" disabled>
                                             @for ($i = 1; $i <= 31; $i++)
                                                 <option value="{{ $i }}"
-                                                    {{ $report->report_date == $i ? 'selected' : '' }}>{{ $i }}
+                                                    {{ $report->member_date == $i ? 'selected' : '' }}>{{ $i }}
                                                 </option>
                                             @endfor
                                         </select>
@@ -66,10 +56,10 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-dropdown">
-                                        <select name="report_month" class="form-dropdown-select">
+                                        <select name="member_month" class="form-dropdown-select" disabled>
                                             @for ($i = 1; $i <= 12; $i++)
                                                 <option value="{{ $i }}"
-                                                    {{ $report->report_month == $i ? 'selected' : '' }}>
+                                                    {{ $report->member_month == $i ? 'selected' : '' }}>
                                                     {{ $i }}</option>
                                             @endfor
                                         </select>
@@ -80,10 +70,10 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-dropdown">
-                                        <select name="report_year" class="form-dropdown-select">
+                                        <select name="member_year" class="form-dropdown-select" disabled>
                                             @for ($i = 1940; $i < 2010; $i++)
                                                 <option value="{{ $i }}"
-                                                    {{ $report->report_year == $i ? 'selected' : '' }}>{{ $i }}
+                                                    {{ $report->member_year == $i ? 'selected' : '' }}>{{ $i }}
                                                 </option>
                                             @endfor
                                         </select>
@@ -93,86 +83,94 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-dropdown">
-                                <select name="report_gender" class="form-dropdown-select">
-                                    <option value="0" {{ $report->report_gender == 0 ? 'selected' : '' }}>
+                                <select name="member_gender" class="form-dropdown-select" disabled>
+                                    <option value="0" {{ $report->member_gender == 0 ? 'selected' : '' }}>
                                         @lang('conference.en.male')</option>
-                                    <option value="1" {{ $report->report_gender == 1 ? 'selected' : '' }}>
+                                    <option value="1" {{ $report->member_gender == 1 ? 'selected' : '' }}>
                                         @lang('conference.en.female')</option>
                                 </select>
                                 <span class="form-dropdown-chevron" aria-hidden="true"><i
                                         class="fa-solid fa-angle-down"></i></span>
                                 <span class="form-dropdown-label">@lang('conference.en.gender')</span>
                             </div>
+
                             <div class="form-textbox">
-                                <input type="text" name="report_work_unit"
-                                    class="form-textbox-input {{ $report->report_work_unit ? 'form-textbox-entered' : '' }}"
-                                    value="{{ $report->report_work_unit }}">
-                                <div class="form-message-wrapper report_work_unit">
+                                <input type="text" name="member_work_unit"
+                                    class="form-textbox-input {{ $report->member_work_unit ? 'form-textbox-entered' : '' }}"
+                                    value="{{ $report->member_work_unit }}">
+                                <div class="form-message-wrapper member_work_unit">
                                     <i class="fa fa-exclamation-circle"></i>
-                                    <span class="report_work_unit-form-message"></span>
+                                    <span class="member_work_unit-form-message"></span>
                                 </div>
                                 <span class="form-textbox-label">@lang('conference.en.unit')</span>
                             </div>
+
                             <div class="form-dropdown">
-                                <select name="report_place_of_birth" class="form-dropdown-select">
+                                <select name="member_place_of_birth" class="form-dropdown-select" disabled>
                                     @foreach ($getAllProvince as $key => $province)
-                                        <option value="{{ $province->province_name }}"
-                                            {{ $province->province_name == $report->report_place_of_birth ? 'selected' : '' }}>
-                                            {{ $province->province_name }}</option>
+                                        <option value="{{ $province->type . ' ' . $province->name }}"
+                                            {{ $report->member_place_of_birth == $province->type . ' ' . $province->name ? 'selected' : '' }}>
+                                            {{ $province->type }} {{ $province->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 <span class="form-dropdown-chevron" aria-hidden="true"><i
                                         class="fa-solid fa-angle-down"></i></span>
                                 <span class="form-dropdown-label">@lang('conference.en.place_of_birth')</span>
                             </div>
+
                             <div class="form-textbox">
-                                <input type="text" name="report_email"
-                                    class="form-textbox-input {{ $report->report_email ? 'form-textbox-entered' : '' }}"
-                                    value="{{ $report->report_email }}">
-                                <div class="form-message-wrapper report_email">
+                                <input type="text" name="member_email"
+                                    class="form-textbox-input {{ $report->member_email ? 'form-textbox-entered' : '' }}"
+                                    value="{{ $report->member_email }}">
+                                <div class="form-message-wrapper member_email">
                                     <i class="fa fa-exclamation-circle"></i>
-                                    <span class="report_email-form-message"></span>
+                                    <span class="member_email-form-message"></span>
                                 </div>
                                 <span class="form-textbox-label">@lang('conference.en.email')</span>
                             </div>
+
                             <div class="form-textbox">
-                                <input type="text" name="report_phone"
-                                    class="form-textbox-input {{ $report->report_phone ? 'form-textbox-entered' : '' }}"
-                                    value="{{ $report->report_phone }}">
-                                <div class="form-message-wrapper report_phone">
+                                <input type="text" name="member_phone"
+                                    class="form-textbox-input {{ $report->member_phone ? 'form-textbox-entered' : '' }}"
+                                    value="{{ $report->member_phone }}" disabled>
+                                <div class="form-message-wrapper member_phone">
                                     <i class="fa fa-exclamation-circle"></i>
-                                    <span class="report_phone-form-message"></span>
+                                    <span class="member_phone-form-message"></span>
                                 </div>
                                 <span class="form-textbox-label">@lang('conference.en.phone')</span>
                             </div>
+
                             <div class="form-textbox">
-                                <input type="text" name="report_graduation_year"
-                                    class="form-textbox-input {{ $report->report_graduation_year ? 'form-textbox-entered' : '' }}"
-                                    value="{{ $report->report_graduation_year }}">
-                                <div class="form-message-wrapper report_graduation_year">
+                                <input type="text" name="member_graduation_year"
+                                    class="form-textbox-input {{ $report->member_graduation_year ? 'form-textbox-entered' : '' }}"
+                                    value="{{ $report->member_graduation_year }}" disabled>
+                                <div class="form-message-wrapper member_graduation_year">
                                     <i class="fa fa-exclamation-circle"></i>
-                                    <span class="report_graduation_year-form-message"></span>
+                                    <span class="member_graduation_year-form-message"></span>
                                 </div>
                                 <span class="form-textbox-label">@lang('conference.en.graduation_year')</span>
                             </div>
+
                             <div class="form-textbox">
                                 <label>@lang('conference.en.image')</label>
-                                <input type="file" name="report_image"
-                                    class="filepond report_image {{ $report->report_image == '' ? '' : 'hidden' }}">
-                                @if ($report->report_image)
-                                    <div class="section-file report_image_section">
+                                <input type="file" name="member_image"
+                                    class="filepond member_image {{ $report->member_image == '' ? '' : 'hidden' }}">
+                                @if ($report->member_image)
+                                    <div class="section-file member_image_section">
                                         <div class="file-content">
                                             <div class="file-name">
                                                 <p>@lang('conference.en.image')</p>
                                             </div>
                                             <div class="file-action">
-                                                <a href="https://drive.google.com/file/d/{{ $report->report_image }}/view"
+                                                <a href="https://drive.google.com/file/d/{{ $report->member_image }}/view"
                                                     target="_blank" class="dowload-file">
                                                     <i class="far fa-eye"></i>
                                                 </a>
                                                 <button class="delete-file " type="button"
-                                                    onclick="deleteFile('report_image','{{ $report->report_image }}', '{{ $report->id }}')">
+                                                    onclick="deleteFile('member_image','{{ $report->member_image }}', '{{ $report->id }}')">
                                                     <i class="fas fa-times"></i>
                                                 </button>
                                             </div>
@@ -180,23 +178,24 @@
                                     </div>
                                 @endif
                             </div>
+
                             <div class="form-textbox">
                                 <label>@lang('conference.en.image_card')</label>
-                                <input type="file" name="report_image_card"
-                                    class="filepond report_image_card {{ $report->report_image_card == '' ? '' : 'hidden' }}">
-                                @if ($report->report_image_card)
-                                    <div class="section-file report_image_card_section">
+                                <input type="file" name="member_image_card"
+                                    class="filepond member_image_card {{ $report->member_image_card == '' ? '' : 'hidden' }}">
+                                @if ($report->member_image_card)
+                                    <div class="section-file member_image_card_section">
                                         <div class="file-content">
                                             <div class="file-name">
                                                 <p>@lang('conference.en.image_card')</p>
                                             </div>
                                             <div class="file-action">
-                                                <a href="https://drive.google.com/file/d/{{ $report->report_image_card }}/view"
+                                                <a href="https://drive.google.com/file/d/{{ $report->member_image_card }}/view"
                                                     target="_blank" class="dowload-file">
                                                     <i class="far fa-eye"></i>
                                                 </a>
                                                 <button class="delete-file" type="button"
-                                                    onclick="deleteFile('report_image_card','{{ $report->report_image_card }}', '{{ $report->id }}')">
+                                                    onclick="deleteFile('member_image_card','{{ $report->member_image_card }}', '{{ $report->id }}')">
                                                     <i class="fas fa-times"></i>
                                                 </button>
                                             </div>
@@ -204,6 +203,7 @@
                                     </div>
                                 @endif
                             </div>
+
                             <div class="form-textbox">
                                 <label>@lang('conference.en.background')</label>
                                 <input type="file" name="report_file_background"
@@ -228,8 +228,9 @@
                                     </div>
                                 @endif
                             </div>
+
                             <div class="form-dropdown">
-                                <select class="form-dropdown-select" name="report_topics">
+                                <select class="form-dropdown-select" name="report_topics" disabled>
                                     @foreach ($topics as $key => $topic)
                                         <option value="{{ $topic->id }}"
                                             {{ $topic->id == $report->report_topics ? 'selected' : '' }}>
@@ -240,6 +241,7 @@
                                         class="fa-solid fa-angle-down"></i></span>
                                 <span class="form-dropdown-label">@lang('conference.en.topics')</span>
                             </div>
+
                             <div class="form-textbox">
                                 <input type="text" name="report_file_title"
                                     class="form-textbox-input {{ $report->report_file_title ? 'form-textbox-entered' : '' }}"
@@ -250,6 +252,7 @@
                                 </div>
                                 <span class="form-textbox-label">@lang('conference.en.file_title')</span>
                             </div>
+
                             <div class="form-textbox">
                                 <label>@lang('conference.en.file')</label>
                                 <input type="file" name="report_file"
@@ -274,6 +277,7 @@
                                     </div>
                                 @endif
                             </div>
+
                             <div class="form-dropdown">
                                 <select name="report_status" class="form-dropdown-select report-status">
                                     @if ($report->report_status == 1)
@@ -302,24 +306,30 @@
                                         class="fa-solid fa-angle-down"></i></span>
                                 <span class="form-dropdown-label">@lang('conference.en.status.status')</span>
                             </div>
-                            <div class="form-textbox report-suggested-addition {{ $report->report_status == 3 ? '' : 'hidden' }}">
+
+                            <div
+                                class="form-textbox report-suggested-addition {{ $report->report_status == 3 ? '' : 'hidden' }}">
                                 <label>@lang('conference.en.suggested_addition')</label>
-                                <textarea name="report_suggested_addition" rows=6 class="form-textarea report-suggested-addition-input" {{$report->report_status == 3 ? '' : 'disabled' }}>{{ $report->report_suggested_addition }}</textarea>
+                                <textarea name="report_suggested_addition" rows=6 class="form-textarea report-suggested-addition-input"
+                                    {{ $report->report_status == 3 ? '' : 'disabled' }}>{{ $report->report_suggested_addition }}</textarea>
                                 <div class="form-message-wrapper report_suggested_addition">
                                     <i class="fa fa-exclamation-circle"></i>
                                     <span class="report_suggested_addition-form-message"></span>
                                 </div>
                             </div>
-                            <div class="form-textbox report-reason-rejection {{ $report->report_status == 4 ? '' : 'hidden' }}">
+                            
+                            <div
+                                class="form-textbox report-reason-rejection {{ $report->report_status == 4 ? '' : 'hidden' }}">
                                 <label>@lang('conference.en.reason_rejection')</label>
-                                <textarea name="report_reason_rejection" rows=6 class="form-textarea report-reason-rejection-input" {{$report->report_status == 4 ? '' : 'disabled' }}>{{ $report->report_reason_rejection }}</textarea>
+                                <textarea name="report_reason_rejection" rows=6 class="form-textarea report-reason-rejection-input"
+                                    {{ $report->report_status == 4 ? '' : 'disabled' }}>{{ $report->report_reason_rejection }}</textarea>
                                 <div class="form-message-wrapper report_reason_rejection">
                                     <i class="fa fa-exclamation-circle"></i>
                                     <span class="report_reason_rejection-form-message"></span>
                                 </div>
                             </div>
 
-                            
+
                             <button type="button" class="primary-btn-submit button-submit">@lang('vart_define.button.update')</button>
                         </form>
                     </div>

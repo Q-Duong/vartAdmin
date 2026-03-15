@@ -13,14 +13,14 @@
                             <th>@lang('conference.en.create')</th>
                             <th>@lang('conference.en.id')</th>
                             <th>@lang('conference.en.code')</th>
-                            <th>@lang('conference.en.degree')</th>
+                            {{-- <th>@lang('conference.en.degree')</th> --}}
                             <th>@lang('conference.en.fullname')</th>
                             <th>@lang('conference.en.gender')</th>
                             <th>@lang('conference.en.date')</th>
                             <th>@lang('conference.en.month')</th>
                             <th>@lang('conference.en.year')</th>
                             <th>@lang('conference.en.unit')</th>
-                            <th>@lang('conference.en.place_of_birth')</th>
+                            {{-- <th>@lang('conference.en.place_of_birth')</th> --}}
                             <th>@lang('conference.en.email')</th>
                             <th>@lang('conference.en.phone')</th>
                             <th>@lang('conference.en.graduation_year')</th>
@@ -41,28 +41,28 @@
                                 <td>{{ \Carbon\Carbon::parse($report->created_at)->format('H:i:s d/m/Y') }}</td>
                                 <td>{{ $report->id }}</td>
                                 <td>{{ $report->report_code }}</td>
-                                <td>{{ $report->report_degree }}</td>
-                                <td>{{ $report->report_name }}</td>
-                                <td>{{ $report->report_gender == 0 ? 'Nam' : 'Nữ' }}</td>
-                                <td>{{ $report->report_date }}</td>
-                                <td>{{ $report->report_month }}</td>
-                                <td>{{ $report->report_year }}</td>
-                                <td>{{ $report->report_work_unit }}</td>
-                                <td>{{ $report->report_place_of_birth }}</td>
-                                <td>{{ $report->report_email }}</td>
-                                <td>{{ $report->report_phone }}</td>
-                                <td>{{ $report->report_graduation_year }}</td>
+                                {{-- <td>{{ $report->member_degree }}</td> --}}
+                                <td>{{ \Str::title($report->member_full_name) }}</td>
+                                <td>{{ $report->member_gender == 0 ? 'Nam' : 'Nữ' }}</td>
+                                <td>{{ $report->member_date }}</td>
+                                <td>{{ $report->member_month }}</td>
+                                <td>{{ $report->member_year }}</td>
+                                <td>{{ $report->member_work_unit }}</td>
+                                {{-- <td>{{ $report->member_place_of_birth }}</td> --}}
+                                <td>{{ $report->member_email }}</td>
+                                <td>{{ $report->member_phone }}</td>
+                                <td>{{ $report->member_graduation_year }}</td>
                                 <td>
-                                    @if ($report->report_image)
-                                        <a href="https://drive.google.com/file/d/{{ $report->report_image }}/view"
+                                    @if ($report->member_image)
+                                        <a href="https://drive.google.com/file/d/{{ $report->member_image }}/view"
                                             target="_blank">
                                             @lang('conference.en.link')
                                         </a>
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($report->report_image_card)
-                                        <a href="https://drive.google.com/file/d/{{ $report->report_image_card }}/view"
+                                    @if ($report->member_image_card)
+                                        <a href="https://drive.google.com/file/d/{{ $report->member_image_card }}/view"
                                             target="_blank">
                                             @lang('conference.en.link')
                                         </a>

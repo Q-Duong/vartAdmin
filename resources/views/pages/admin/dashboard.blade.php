@@ -19,7 +19,7 @@
                                     •&nbsp;Total Participants :
                                 </div>
                                 <div class="filter-content-details">
-                                    {{ $totalTheory['counter'] + $totalPractice['counter'] + $totalCME['counter'] }}</div>
+                                    {{ $totalAmount['counter']}}</div>
                             </li>
                             <li class="filter-content-block">
                                 <div class="filter-content-title">
@@ -40,6 +40,12 @@
                                     •&nbsp;CME :
                                 </div>
                                 <div class="filter-content-details">{{ isset($totalCME) ? $totalCME['counter'] : 0 }}</div>
+                            </li>
+                            <li class="filter-content-block">
+                                <div class="filter-content-title">
+                                    •&nbsp;Multi :
+                                </div>
+                                <div class="filter-content-details">{{ isset($totalMulti) ? $totalMulti['counter'] : 0 }}</div>
                             </li>
                         </ul>
                     </div>
@@ -83,6 +89,14 @@
                                 </div>
                                 <div class="filter-content-details">
                                     {{ isset($totalCME) ? number_format($totalCME['prices'], 0, ',', '.') . '₫' : 0 }}
+                                </div>
+                            </li>
+                            <li class="filter-content-block">
+                                <div class="filter-content-title">
+                                    •&nbsp;Total Multi :
+                                </div>
+                                <div class="filter-content-details">
+                                    {{ isset($totalMulti) ? number_format($totalMulti['prices'], 0, ',', '.') . '₫' : 0 }}
                                 </div>
                             </li>
                         </ul>

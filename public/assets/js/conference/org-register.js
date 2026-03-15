@@ -17,20 +17,16 @@ function getValuesFilter() {
             value: $(".register-code").val(),
         },
         {
-            name: "register_name",
-            value: $(".register-name").val(),
+            name: "member_full_name",
+            value: $(".member-full-name").val(),
         },
         {
-            name: "register_email",
-            value: $(".register-email").val(),
+            name: "member_email",
+            value: $(".member-email").val(),
         },
         {
-            name: "register_phone",
-            value: $(".register-phone").val(),
-        },
-        {
-            name: "conference_fee_title",
-            value: $(".conference-fee-title").val(),
+            name: "member_phone",
+            value: $(".member-phone").val(),
         },
         {
             name: "payment_status",
@@ -41,7 +37,7 @@ function getValuesFilter() {
 
 $(document).on(
     "change",
-    ".id, .register-code, .register-name, .register-email, .register-phone, .conference-fee-title, .payment-status",
+    ".id, .register-code, .member-full-name, .member-email, .member-phone, .payment-status",
     function () {
         var data = getValuesFilter();
         $(".loader-over").fadeIn();

@@ -13,6 +13,7 @@ class ConferenceFee extends Model
     protected $fillable = [
         'conference_fee_code',
         'conference_fee_price',
+        'conference_fee_cme',
         'conference_fee_title',
         'conference_fee_date',
         'conference_fee_content',
@@ -28,8 +29,10 @@ class ConferenceFee extends Model
         return $this->belongsTo(Conference::class);
     }
 
-    public function payment()
+    public function registers()
     {
-        $this->hasMany(Payment::class);
+        return $this->belongsToMany(Register::class, 'register_fees', 'conference_fee_id', 'register_id')
+            ->withPivot('price')
+            ->withTimestamps();
     }
 }

@@ -39,7 +39,7 @@ class Conference extends Model
 
     public function conferenceType()
     {
-        return $this->belongsTo(ConferenceType::class);
+        return $this->belongsTo(ConferenceType::class,'conference_type_id', 'id');
     }
 
     public function conferenceFee()
@@ -52,11 +52,6 @@ class Conference extends Model
         $this->hasMany(Register::class);
     }
 
-    public function en_register()
-    {
-        return $this->hasMany(EnRegister::class);
-    }
-
     public function vip()
     {
         $this->hasMany(Vip::class);
@@ -67,11 +62,6 @@ class Conference extends Model
         $this->hasMany(Report::class);
     }
 
-    public function en_report()
-    {
-        $this->hasMany(EnReport::class);
-    }
-
     public function album()
     {
         $this->hasMany(Album::class);
@@ -79,7 +69,7 @@ class Conference extends Model
 
     public function invitationLetter()
     {
-        $this->hasMany(InvitationLetter::class);
+        $this->hasMany(InvitationTemplates::class);
     }
 
     public function verifyLetter()

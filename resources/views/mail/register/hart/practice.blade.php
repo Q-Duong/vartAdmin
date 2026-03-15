@@ -50,9 +50,9 @@
                     </div>
                     <div style="margin-top: 25px;"><b>Hình thức tham dự:</b></div>
                     <div style="margin-top: 15px; text-align: center; color: #27c24c;"><b>PHIÊN THỰC HÀNH (HANDS-ON)</b></div>
-                    <div style="margin-top: 25px;"><b>Thời gian:</b> Thứ Bảy, ngày 25/10/2025</div>
+                    {{-- <div style="margin-top: 25px;"><b>Thời gian:</b> Thứ Bảy, ngày 25/10/2025</div>
                     <div style="margin-top: 15px;"><b>Địa điểm:</b> Hội Trường Bệnh viện Đại học Y Dược Shingmark</div>
-                    <div style="margin-top: 15px;"><b>Địa chỉ:</b> 1054 Quốc lộ 51, Phường Long Hưng, Tỉnh Đồng Nai</div>
+                    <div style="margin-top: 15px;"><b>Địa chỉ:</b> 1054 Quốc lộ 51, Phường Long Hưng, Tỉnh Đồng Nai</div> --}}
                 </div>
                 <div style="margin-bottom: 25px; text-align: justify;">
                     Quý đại biểu có thể bấm vào đường <a href="https://vart.vn/invitation"
