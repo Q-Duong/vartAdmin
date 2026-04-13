@@ -17,11 +17,6 @@ class Topic extends Model
 
     public function report()
     {
-        $this->hasMany(Report::class);
-    }
-
-    public function en_report()
-    {
-        $this->hasMany(EnReport::class);
+        $this->hasOne(Report::class);
     }
 }

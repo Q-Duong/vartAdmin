@@ -61,7 +61,7 @@
                     Trân trọng cảm ơn và kính chúc Quý đồng nghiệp sức khỏe và thành công.
                 </div>
                 <div style="margin-left: 50%;">
-                    <div style="text-align: center;"><b>TM.BAN THƯỜNG VỤ LIÊN CHI HỘI</b></div>
+                    <div style="text-align: center;"><b>TM. BAN THƯỜNG VỤ LIÊN CHI HỘI</b></div>
                     <div style="text-align: center;"><b>CHỦ TỊCH</b></div>
                     <img src="https://images.vart.vn/gmail/sign-vart.png"
                         style="height: 70px; width: 120px; margin-left: 90px">
@@ -78,10 +78,11 @@
             <a href="https://vart.vn/forum" style="color: #601e89;">Forum</a>&nbsp;•&nbsp;
             <a href="https://vart.vn/blog" style="color: #601e89;">Blog</a>
         </div>
-        <div style="text-align: center; margin-top: 25px ; font-size: 13px">Bản quyền © Hart.
+        <div style="text-align: center; margin-top: 25px ; font-size: 13px">Bản quyền © Vart.
             {{ \Carbon\Carbon::now()->year }} Bảo lưu mọi quyền.</div>
-        <div style="text-align: center; margin-top: 5px ; font-size: 13px">Bệnh viện Đại học Y Dược Tp.HCM-CS2, 201
-            Nguyễn Chí Thanh, Phường 12, Quận 5, TP.HCM.</div>
+        <div style="text-align: center; margin-top: 5px ; font-size: 13px">Bệnh viện Bạch Mai Hà Nội, 78 Đường Giải
+            Phóng,
+            Phường Phương Mai, Quận Đống Đa, Hà Nội.</div>
     </div>
 </body>
 

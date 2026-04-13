@@ -27,6 +27,7 @@
                             <th>@lang('conference.en.image')</th>
                             <th>@lang('conference.en.image_card')</th>
                             <th>@lang('conference.en.background')</th>
+                            <th>@lang('conference.en.report_type')</th>
                             <th>@lang('conference.en.topics')</th>
                             <th>@lang('conference.en.file_title')</th>
                             <th>@lang('conference.en.file')</th>
@@ -76,6 +77,7 @@
                                         </a>
                                     @endif
                                 </td>
+                                <td>{{ \Str::title($report->report_type) }}</td>
                                 <td>{{ $report->topic_title_en }}</td>
                                 <td>{{ $report->report_file_title }}</td>
                                 <td>

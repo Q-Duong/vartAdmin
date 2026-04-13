@@ -53,11 +53,11 @@
                 </div>
                 @if ($suggestedAddition)
                     <div style="margin-bottom: 15px;">
-                        <div style="margin-bottom: 15px;"><b>Ban Biên tập có một số đề nghị bổ sung/chỉnh sửa như
+                        <div style="margin-bottom: 15px;"><b>Ban biên tập có một số đề nghị bổ sung/chỉnh sửa như
                                 sau:</b>
                         </div>
                         <div style="margin-bottom: 15px; background: #f5f5f7; border-radius: 18px; border: 1px solid rgba(0, 0, 0, 0.16); padding: 20px;">{{ $suggestedAddition }}</div>
-                        <div>Báo cáo viên vui lòng gửi bài báo cáo hoàn chỉnh trước ngày 07/06/2025 qua địa
+                        <div>Báo cáo viên vui lòng gửi bài báo cáo hoàn chỉnh trước ngày 07/06/{{ \Carbon\Carbon::now()->year }} qua địa
                             chỉ email: <a href="mailto:vietnam.vart@gmail.com">
                                 vietnam.vart@gmail.com</a></div>
                     </div>
@@ -66,7 +66,7 @@
                     <div style="margin-bottom: 15px;"><b>Lưu ý:</b></div>
                     <div style="margin-left: 30px;">
                         <div style="margin-bottom: 10px;">1. Chuẩn bị bài thuyết trình PowerPoint theo mẫu Template của
-                            Ban Tổ chức, tải Template tại: <a href="https://tinyurl.com/mauppt2025"
+                            Ban tổ chức, tải Template tại: <a href="https://tinyurl.com/mauppt2025"
                                 target="_blank"><b>Link</b></a>
                         </div>
                         <div style="margin-bottom: 10px;">2. Bài báo cáo hoàn chỉnh gồm 02 file:
@@ -83,17 +83,12 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div style="margin-bottom: 15px; text-align: justify;">
-                    Trong trường hợp bị mất thư mời, Quý đại biểu có thể bấm vào đường <a
-                        href="https://vart.vn/invitation" target="_blank"><b>Link</b></a> và điền <b>Mã code:
-                        {{ $code }}</b>
-                    để lấy thư mời.
-                </div> --}}
+                
                 <div style="margin-bottom: 25px;">
                     Trân trọng cảm ơn và mong nhận được bài báo cáo của Báo cáo viên đúng hạn.
                 </div>
                 <div style="margin-left: 50%;">
-                    <div style="text-align: center;"><b>TM.BAN THƯỜNG VỤ LIÊN CHI HỘI</b></div>
+                    <div style="text-align: center;"><b>TM. BAN THƯỜNG VỤ LIÊN CHI HỘI</b></div>
                     <div style="text-align: center;"><b>CHỦ TỊCH</b></div>
                     <img src="https://images.vart.vn/gmail/sign-vart.png"
                         style="height: 70px; width: 120px; margin-left: 90px">
@@ -110,10 +105,11 @@
             <a href="https://vart.vn/forum" style="color: #601e89;">Forum</a>&nbsp;•&nbsp;
             <a href="https://vart.vn/blog" style="color: #601e89;">Blog</a>
         </div>
-        <div style="text-align: center; margin-top: 25px ; font-size: 13px">Bản quyền © Hart.
+        <div style="text-align: center; margin-top: 25px ; font-size: 13px">Bản quyền © Vart.
             {{ \Carbon\Carbon::now()->year }} Bảo lưu mọi quyền.</div>
-        <div style="text-align: center; margin-top: 5px ; font-size: 13px">Bệnh viện Đại học Y Dược Tp.HCM-CS2, 201
-            Nguyễn Chí Thanh, Phường 12, Quận 5, TP.HCM.</div>
+        <div style="text-align: center; margin-top: 5px ; font-size: 13px">Bệnh viện Bạch Mai Hà Nội, 78 Đường Giải
+            Phóng,
+            Phường Phương Mai, Quận Đống Đa, Hà Nội.</div>
     </div>
 </body>
 

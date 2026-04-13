@@ -2,7 +2,8 @@
 
 namespace App\Exports;
 
-use App\Models\EnRegister;
+use App\Models\Register;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -19,17 +20,20 @@ class ExcelExportEnRegister implements WithHeadings, FromQuery, WithMapping
     public function headings(): array
     {
         return [
-            'Registration time',
+            'Registration period',
             'ID',
             'Code',
             'Title',
-            'First name',
-            'Last name',
-            'Gender',
-            'Official Company Name',
+            'First Name',
+            'Last Name',
             'Country',
-            'Email',
-            'Phone',
+            'Gender',
+            'Month',
+            'Day',
+            'Year',
+            'Workplace',
+            'Email Address',
+            'Phone Number',
             'Register type',
             'Fee',
             'Status'
@@ -38,44 +42,32 @@ class ExcelExportEnRegister implements WithHeadings, FromQuery, WithMapping
 
     public function query()
     {
-        return EnRegister::join('payments', 'payments.id', '=', 'en_registers.payment_id')
-            ->join('conference_fees', 'payments.conference_fee_id', '=', 'conference_fees.id')
-            ->where('en_registers.conference_id', $this->conference_id)
-            ->select(
-                'en_registers.id',
-                'en_register_code',
-                'en_register_title',
-                'en_register_firstname',
-                'en_register_lastname',
-                'en_register_gender',
-                'en_register_work_unit',
-                'en_register_nation',
-                'en_register_email',
-                'en_register_phone',
-                'conference_fee_title',
-                'payment_price',
-                'en_registers.created_at',
-                'payment_status')
-            ->orderBy('en_registers.id', 'DESC');
+        return Register::with(['fees', 'payment', 'member'])
+            ->where('registers.conference_id', $this->conference_id)
+            ->where('registers.locale', 'en')
+            ->orderBy('registers.id', 'DESC');
     }
 
-    public function map($en_register): array
+    public function map($register): array
     {
         return [
-            \Carbon\Carbon::parse($en_register->created_at)->format('H:i:s d/m/Y'),
-            $en_register->id,
-            $en_register->en_register_code,
-            $en_register->en_register_title,
-            $en_register->en_register_firstname,
-            $en_register->en_register_lastname,
-            $en_register->en_register_gender == 0 ? 'Male' : 'Female',
-            $en_register->en_register_work_unit,
-            $en_register->en_register_nation,
-            $en_register->en_register_email,
-            $en_register->en_register_phone,
-            $en_register->conference_fee_title,
-            number_format($en_register->payment_price, 2),
-            $en_register->payment_status == 1 ? 'Wait checking' : 'Processed'
+            \Carbon\Carbon::parse($register->created_at)->format('H:i:s d/m/Y'),
+            $register->id,
+            $register->register_code,
+            $register->member->member_title,
+            Str::title($register->member->member_first_name),
+            Str::title($register->member->member_last_name),
+            $register->member->member_country,
+            $register->member->member_gender == 0 ? 'Male' : 'Female',
+            $register->member->member_month,
+            $register->member->member_date,
+            $register->member->member_year,
+            $register->member->member_work_unit,
+            $register->member->member_email,
+            $register->member->member_phone,
+            $register->conference_fee_title,
+            $register->payment->payment_price,
+            $register->payment->payment_status == 1 ? 'Wait checking' : 'Processed'
         ];
     }
 }

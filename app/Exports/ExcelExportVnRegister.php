@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Register;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -48,34 +49,9 @@ class ExcelExportVnRegister implements WithHeadings, FromQuery, WithMapping
 
     public function query()
     {
-        return Register::join('payments', 'payments.id', '=', 'registers.payment_id')
-            ->join('conference_fees', 'payments.conference_fee_id', '=', 'conference_fees.id')
+        return Register::with(['fees', 'payment', 'member'])
             ->where('registers.conference_id', $this->conference_id)
-            ->select(
-                'registers.id',
-                'register_code',
-                'register_degree',
-                'register_name',
-                'register_gender',
-                'register_date',
-                'register_month',
-                'register_year',
-                'register_work_unit',
-                'register_place_of_birth',
-                'register_nation',
-                'register_email',
-                'register_phone',
-                'register_object_group',
-                'conference_fee_title',
-                'payment_price',
-                'register_cme_type',
-                'register_receiving_address',
-                'registers.created_at',
-                'register_graduation_year',
-                'register_image',
-                'register_image_card',
-                'payment_image',
-                'payment_status')
+            ->where('registers.locale', 'vn')
             ->orderBy('registers.id', 'DESC');
     }
 
@@ -85,27 +61,27 @@ class ExcelExportVnRegister implements WithHeadings, FromQuery, WithMapping
             \Carbon\Carbon::parse($register->created_at)->format('H:i:s d/m/Y'),
             $register->id,
             $register->register_code,
-            $register->register_degree,
-            $register->register_name,
-            $register->register_gender == 0 ? 'Nam' : 'Nữ',
-            $register->register_date,
-            $register->register_month,
-            $register->register_year,
-            $register->register_work_unit,
-            $register->register_place_of_birth,
-            $register->register_nation,
-            $register->register_email,
-            $register->register_phone,
-            $register->register_object_group,
-            $register->conference_fee_title,
-            $register->payment_price,
+            $register->member->member_degree,
+            Str::title($register->member->member_full_name),
+            $register->member->member_gender == 0 ? 'Nam' : 'Nữ',
+            $register->member->member_date,
+            $register->member->member_month,
+            $register->member->member_year,
+            $register->member->member_work_unit,
+            $register->member->member_place_of_birth,
+            $register->member->member_nation,
+            $register->member->member_email,
+            $register->member->member_phone,
+            $register->member->member_object_group,
+            $register->fees->implode('conference_fee_title', ', '),
+            $register->payment->payment_price,
             $register->register_cme_type,
-            $register->register_receiving_address,
-            $register->register_graduation_year,
-            $register->register_image != null ? 'https://drive.google.com/file/d/' . $register->register_image . '/view' : '',
-            $register->register_image_card != null ? 'https://drive.google.com/file/d/' . $register->register_image_card . '/view' : '',
-            $register->payment_image != null ? 'https://drive.google.com/file/d/' . $register->payment_image . '/view' : '',
-            $register->payment_status == 1 ? 'Chờ kiểm tra' : 'Đã xử lý',
+            $register->member->member_full_address,
+            $register->member->member_graduation_year,
+            $register->member->member_image != null ? 'https://drive.google.com/file/d/' . $register->member->member_image . '/view' : '',
+            $register->member->member_image_card != null ? 'https://drive.google.com/file/d/' . $register->member->member_image_card . '/view' : '',
+            $register->payment->payment_image != null ? 'https://drive.google.com/file/d/' . $register->payment->payment_image . '/view' : '',
+            $register->payment->payment_status == 1 ? 'Chờ kiểm tra' : 'Đã xử lý',
         ];
     }
 }

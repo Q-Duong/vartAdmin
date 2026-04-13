@@ -83,6 +83,7 @@ return [
         'image' => 'Graduation certificate photo',
         'image_card' => 'Student identification photo',
         'background' => 'Background',
+        'report_type' => 'Report Type',
         'topics' => 'Topics',
         'file_title' => 'Abstract title',
         'share' => 'Share',

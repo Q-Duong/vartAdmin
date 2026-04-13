@@ -41,4 +41,9 @@ class Member extends Model
     {
         $this->hasMany(Register::class);
     }
+
+    public function report()
+    {
+        $this->hasMany(Report::class);
+    }
 }

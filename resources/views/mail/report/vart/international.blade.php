@@ -48,7 +48,7 @@
                 <div style="margin: 20px 0 5px 0"><strong>Event Details:</strong></div>
                 <div style="margin-bottom: 25px; text-align: justify; background: #f5f5f7; border-radius: 20px;padding: 20px 25px;">
                     <div style="margin: 5px 0 0 0">•&nbsp;<strong>Conference:</strong> {{ $conference_title }}</div>
-                    <div style="margin: 5px 0 0 0">•&nbsp;<strong>Date:</strong> 20 June, 2026</div>
+                    <div style="margin: 5px 0 0 0">•&nbsp;<strong>Date:</strong> 19-20 June, 2026</div>
                     <div style="margin: 5px 0 0 0">•&nbsp;<strong>Venue:</strong> Royal Lotus Convention Center - 120A Nguyen Van Thoai, My An, Da Nang,
                         Vietnam.</div>
                 </div>

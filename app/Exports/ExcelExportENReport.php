@@ -2,7 +2,8 @@
 
 namespace App\Exports;
 
-use App\Models\EnReport;
+use App\Models\Report;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -23,16 +24,17 @@ class ExcelExportENReport implements WithHeadings, FromQuery, WithMapping
             'ID',
             'Code',
             'Title',
-            'First name',
-            'Last name',
-            'Birth date',
-            'Birth month',
-            'Birth year',
-            'Email',
             'Profession',
-            'Organization',
-            'Department',
+            'First Name',
+            'Last Name',
             'Country',
+            'Gender',
+            'Month',
+            'Day',
+            'Year',
+            'Workplace',
+            'Email Address',
+            'Phone Number',
             'Topics',
             'Title of abstract, paper',
             'Abstract, paper',
@@ -41,51 +43,33 @@ class ExcelExportENReport implements WithHeadings, FromQuery, WithMapping
 
     public function query()
     {
-        return EnReport::join('topics', 'topics.id', 'en_reports.en_report_topics')
-        ->select(
-            'conference_id',
-            'en_reports.id',
-            'en_reports.created_at',
-            'en_report_code',
-            'en_report_firstname',
-            'en_report_lastname',
-            'en_report_title',
-            'en_report_date',
-            'en_report_month',
-            'en_report_year',
-            'en_report_email',
-            'en_report_profession',
-            'en_report_organization',
-            'en_report_department',
-            'en_report_nationality',
-            'en_report_topics',
-            'en_report_file',
-            'en_report_file_title',
-            'topic_title_en'
-        )->where('conference_id', $this->conference_id)
-        ->orderBy('en_reports.id', 'DESC');
+        return Report::with(['member', 'topic'])
+            ->where('reports.conference_id', $this->conference_id)
+            ->where('reports.locale', 'en')
+            ->orderBy('reports.id', 'DESC');
     }
 
-    public function map($en_report): array
+    public function map($report): array
     {
         return [
-            \Carbon\Carbon::parse($en_report->created_at)->format('H:i:s d/m/Y'),
-            $en_report->id,
-            $en_report->en_report_code,
-            $en_report->en_report_title,
-            $en_report->en_report_firstname,
-            $en_report->en_report_lastname,
-            $en_report->en_report_date,
-            $en_report->en_report_month,
-            $en_report->en_report_year,
-            $en_report->en_report_email,
-            $en_report->en_report_profession,
-            $en_report->en_report_organization,
-            $en_report->en_report_department,
-            $en_report->en_report_nationality,
-            $en_report->topic_title_en,
-            $en_report->en_report_file_title,
-            $en_report->en_report_file != null ? 'https://drive.google.com/file/d/' . $en_report->en_report_file . '/view' : '',
+            \Carbon\Carbon::parse($report->created_at)->format('H:i:s d/m/Y'),
+            $report->id,
+            $report->report_code,
+            $report->member->member_title,
+            $report->member->member_degree,
+            Str::title($report->member->member_first_name),
+            Str::title($report->member->member_last_name),
+            $report->member->member_country,
+            $report->member->member_gender == 0 ? 'Male' : 'Female',
+            $report->member->member_month,
+            $report->member->member_date,
+            $report->member->member_year,
+            $report->member->member_work_unit,
+            $report->member->member_email,
+            $report->member->member_phone,
+            $report->topic->topic_title_en,
+            $report->report_file_title,
+            $report->report_file != null ? 'https://drive.google.com/file/d/' . $report->report_file . '/view' : '',
         ];
     }
 }
