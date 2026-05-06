@@ -73,17 +73,13 @@ class TestController extends Controller
 
     public function Mail()
     {
-        return view('mail.report.vart.international')->with([
-            'title' => 'Mr.',
+        return view('mail.report.vart.reject')->with([
+            'title' => 0,
             'name' => 'Huỳnh Quốc Dương',
             'code' => 'LTCB0943705326',
-            'conference_title' => 'Hội Thảo Khoa học ISRRT RT-RTT
-                Kỹ Thuật Hình Ảnh Y Học và Kỹ Thuật Xạ Trị',
-
-            // 'title' => 0,
-            // 'name' => 'Huỳnh Quốc Dương',
-            // 'code' => 'LTCB0943705326',
-            // 'conference_title' => 'Hội Nghị Khoa Học Thường Niên Chi Hội Kỹ Thuật Xạ Trị Tp. Hồ Chí Minh Lần 3',
+            'conference_title' => 'Hội Nghị Khoa Học Thường Niên Chi Hội Kỹ Thuật Xạ Trị Tp. Hồ Chí Minh Lần 3',
+            'suggestedAddition' => 'Không có đề nghị bổ sung/chỉnh sửa',
+            'reasonRejection' => 'Lý do từ chối',
         ]);
     }
 

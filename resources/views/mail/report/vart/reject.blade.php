@@ -46,20 +46,34 @@
                         <div style="text-align: center;">
                             <br><b>"{{ $conference_title }}"</b>
                         </div>
-                        <div style="margin-top: 25px;">Sau quá trình đánh giá nghiêm túc và khách quan của Hội đồng phản biện, rất tiếc thông báo rằng bài báo cáo của Quý đồng nghiệp:</div>
-                        <div style="margin-top: 15px; text-align: center; color: #e53637;"><b>KHÔNG ĐƯỢC PHÊ DUYỆT</b></div>
+                        <div style="margin-top: 25px;">Sau quá trình đánh giá nghiêm túc và khách quan của Hội đồng phản
+                            biện, Ban chuyên môn rất tiếc phải thông báo rằng bài báo cáo của quý đồng nghiệp:</div>
+                        <div style="margin-top: 15px; text-align: center; text-transform: uppercase;color: #e53637;">
+                            <b>chưa phù hợp để trình bày tại hội nghị lần này</b></div>
                 </div>
                 <div style="margin-bottom: 15px;">
                     <div style="margin-bottom: 15px;"><b>Lý do từ chối:</b>
                     </div>
-                    <div style="margin-bottom: 15px; background: #f5f5f7; border-radius: 18px; border: 1px solid rgba(0, 0, 0, 0.16); padding: 20px;">{{ $reasonRejection }}</div>
+                    <div
+                        style="margin-bottom: 15px; background: #f5f5f7; border-radius: 18px; border: 1px solid rgba(0, 0, 0, 0.16); padding: 20px;">
+                        {{ $reasonRejection }}</div>
                 </div>
+
                 <div style="margin-bottom: 15px; text-align: justify;">
-                    Chúng tôi rất trân trọng sự nỗ lực và quan tâm của Quý đồng nghiệp đối với hội nghị. Rất mong Quý đồng nghiệp tiếp tục nghiên cứu, hoàn thiện và gửi bài tham dự các kỳ hội nghị tiếp theo.
+                    Đây là một quyết định khó khăn đối với Hội đồng vì bài viết của quý vị có những góc nhìn đáng ghi
+                    nhận. Tuy nhiên, do giới hạn về thời lượng chương trình cũng như các tiêu chí chuyên môn đặc thù của
+                    năm nay, Hội đồng chưa thể lựa chọn báo cáo này.
                 </div>
+
+                <div style="margin-bottom: 15px; text-align: justify;">
+                    Ban tổ chức rất trân trọng nỗ lực và tâm huyết của quý đồng nghiệp dành cho hội nghị. Rất mong quý
+                    vị tiếp tục nghiên cứu, hoàn thiện và gửi bài tham dự trong các kỳ hội nghị tiếp theo.
+                </div>
+
                 <div style="margin-bottom: 25px;">
-                    Trân trọng cảm ơn và kính chúc Quý đồng nghiệp sức khỏe và thành công.
+                    Trân trọng cảm ơn và kính chúc quý đồng nghiệp sức khỏe và thành công.
                 </div>
+
                 <div style="margin-left: 50%;">
                     <div style="text-align: center;"><b>TM. BAN THƯỜNG VỤ LIÊN CHI HỘI</b></div>
                     <div style="text-align: center;"><b>CHỦ TỊCH</b></div>

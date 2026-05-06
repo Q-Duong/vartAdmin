@@ -29,7 +29,7 @@
                 CHI HỘI KỸ THUẬT ĐIỆN QUANG VÀ Y HỌC HẠT NHÂN VIỆT NAM
             </h4>
         </div>
-        
+
         <div>
             <h3 style="text-align: center; color: #601e89;">
                 THƯ MỜI THAM GIA BÁO CÁO
@@ -53,39 +53,57 @@
                 </div>
                 @if ($suggestedAddition)
                     <div style="margin-bottom: 15px;">
-                        <div style="margin-bottom: 15px;"><b>Ban biên tập có một số đề nghị bổ sung/chỉnh sửa như
-                                sau:</b>
+                        <div style="margin-bottom: 15px;"><b>Ban chuyên môn xin gửi tới quý báo cáo viên nội dung góp
+                                ý/nhận xét như sau:
                         </div>
-                        <div style="margin-bottom: 15px; background: #f5f5f7; border-radius: 18px; border: 1px solid rgba(0, 0, 0, 0.16); padding: 20px;">{{ $suggestedAddition }}</div>
-                        <div>Báo cáo viên vui lòng gửi bài báo cáo hoàn chỉnh trước ngày 07/06/{{ \Carbon\Carbon::now()->year }} qua địa
-                            chỉ email: <a href="mailto:vietnam.vart@gmail.com">
-                                vietnam.vart@gmail.com</a></div>
+                        <div
+                            style="margin-bottom: 15px; background: #f5f5f7; border-radius: 18px; border: 1px solid rgba(0, 0, 0, 0.16); padding: 20px;">
+                            {{ $suggestedAddition }}</div>
                     </div>
                 @endif
+                
+                <div style="margin-bottom: 15px;">Báo cáo viên vui lòng gửi bài báo cáo hoàn chỉnh trước ngày
+                    01/06/{{ \Carbon\Carbon::now()->year }} qua <a href="https://forms.gle/Zj6Tm76qzjFzYa4u5"
+                        target="_blank">
+                        <b>Link</b></a></div>
                 <div>
                     <div style="margin-bottom: 15px;"><b>Lưu ý:</b></div>
                     <div style="margin-left: 30px;">
-                        <div style="margin-bottom: 10px;">1. Chuẩn bị bài thuyết trình PowerPoint theo mẫu Template của
-                            Ban tổ chức, tải Template tại: <a href="https://tinyurl.com/mauppt2025"
-                                target="_blank"><b>Link</b></a>
-                        </div>
-                        <div style="margin-bottom: 10px;">2. Bài báo cáo hoàn chỉnh gồm 02 file:
-                            <div style="margin-left: 30px;">
-                                <div style="margin-top: 5px;">&nbsp;•&nbsp; PowerPoint thuyết trình</div>
-                                <div style="margin-top: 5px;">&nbsp;•&nbsp; File PDF bài báo cáo</div>
+                        <div style="margin-bottom: 15px;"><b>1. Chuẩn bị bài thuyết trình và Poster:</b>
+                            <div style="margin-left: 15px;">
+                                <p>&nbsp;•&nbsp; Quý báo cáo viên vui lòng sử dụng mẫu (template) chính thức của Ban tổ
+                                    chức. Tải tại: <a
+                                        href="https://drive.google.com/drive/folders/1Heq4iZf0XRAzoZbYuUq8s1UBHNHA9qV4?usp=sharing"
+                                        target="_blank"><b>Link</b></a></p>
+                                <p>&nbsp;•&nbsp; <b>Quy định đặt tên file:</b> Lĩnh vực - Tên bài báo cáo - Tên báo cáo
+                                    viên
+
+                                </p>
+                                <div style="margin-top: -10px; margin-left: 20px;"><i>(Ví dụ: MRI - Kỹ thuật chụp -
+                                        Nguyễn Văn A)</i></div>
                             </div>
-                            <p>Vui lòng đặt tên file theo cú pháp: Tên bài báo cáo + Tên Báo cáo viên + Đơn vị công tác.
-                            </p>
                         </div>
-                        <div style="margin-bottom: 10px;">3. Để cập nhật thông tin và quyền lợi dành riêng cho Báo cáo
-                            viên, vui lòng tham gia nhóm Zalo Báo cáo viên: <a href="https://zalo.me/g/vztqdf992"
-                                target="_blank"><b>Link</b></a>
+
+                        <div style="margin-bottom: 5px;"><b>2. Cập nhật thông tin và quyền lợi:</b>
+                            <div style="margin-left: 15px;">
+                                <p>&nbsp;•&nbsp; Để nhận các thông báo mới nhất và đảm bảo quyền lợi dành riêng cho báo
+                                    cáo viên, kính mời quý vị tham gia nhóm Zalo tại: <a
+                                        href="https://zalo.me/g/iey2x9trpqwosw59qc4c" target="_blank"><b>Link</b></a>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <div style="margin-bottom: 25px;">
-                    Trân trọng cảm ơn và mong nhận được bài báo cáo của Báo cáo viên đúng hạn.
+                <div style="margin-top: 15px;; margin-bottom: 25px;">
+                    <b>Thông tin liên hệ:</b>
+                    <div style="margin-left: 15px;">
+                        <p>&nbsp;•&nbsp; Thư ký: <b>CN. Phan Văn Thường</b> – SĐT: <b>0349 510 177</b>
+                        </p>
+                    </div>
+                </div>
+                <div style="margin-bottom: 25px; text-align: justify;">
+                    Ban tổ chức trân trọng cảm ơn sự quan tâm và đóng góp quý báu của quý báo cáo viên cho thành công
+                    của hội nghị.
                 </div>
                 <div style="margin-left: 50%;">
                     <div style="text-align: center;"><b>TM. BAN THƯỜNG VỤ LIÊN CHI HỘI</b></div>
