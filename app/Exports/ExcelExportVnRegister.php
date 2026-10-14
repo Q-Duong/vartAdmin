@@ -25,6 +25,7 @@ class ExcelExportVnRegister implements WithHeadings, FromQuery, WithMapping
             'Code',
             'Học vị',
             'Họ và tên',
+            'Số Căn cước công dân',
             'Giới tính',
             'Ngày sinh',
             'Thánh sinh',
@@ -39,11 +40,11 @@ class ExcelExportVnRegister implements WithHeadings, FromQuery, WithMapping
             'Chi phí',
             'Loại CME',
             'Địa chỉ nhận giấy chứng nhận',
-            'Năm tốt nghiệp trên bằng',
-            'Ảnh bằng chuyên môn cao nhất (Mặt chính)',
+            'Mặt ảnh bằng chuyên môn/CCHN',
+            'Số bằng cấp chuyên môn/CCHN',
+            'Ngày cấp bằng cấp chuyên môn/CCHN',
             'Ảnh thẻ sinh viên',
             'Ảnh chuyển khoản',
-            'Trạng Thái'
         ];
     }
 
@@ -63,6 +64,7 @@ class ExcelExportVnRegister implements WithHeadings, FromQuery, WithMapping
             $register->register_code,
             $register->member->member_degree,
             Str::title($register->member->member_full_name),
+            $register->member->member_national_id,
             $register->member->member_gender == 0 ? 'Nam' : 'Nữ',
             $register->member->member_date,
             $register->member->member_month,
@@ -77,11 +79,11 @@ class ExcelExportVnRegister implements WithHeadings, FromQuery, WithMapping
             $register->payment->payment_price,
             $register->register_cme_type,
             $register->member->member_full_address,
-            $register->member->member_graduation_year,
             $register->member->member_image != null ? 'https://drive.google.com/file/d/' . $register->member->member_image . '/view' : '',
+            $register->member->member_degree_number,
+            \Carbon\Carbon::parse($register->member->member_degree_date)->format('d/m/Y'),
             $register->member->member_image_card != null ? 'https://drive.google.com/file/d/' . $register->member->member_image_card . '/view' : '',
             $register->payment->payment_image != null ? 'https://drive.google.com/file/d/' . $register->payment->payment_image . '/view' : '',
-            $register->payment->payment_status == 1 ? 'Chờ kiểm tra' : 'Đã xử lý',
         ];
     }
 }

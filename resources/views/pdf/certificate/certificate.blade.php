@@ -7,18 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <!-- Styles -->
     <style>
+        
         body {
-            font-family: DejaVu Sans;
-            ;
+            font-family: 'Tinos', serif;
             width: 100%;
+            font-weight: 400;
         }
 
         p {
-            font-weight: 400;
+            font-weight: 600;
         }
 
         .main {
@@ -40,10 +40,10 @@
 
         .no {
             position: absolute;
-            top: 110px;
-            left: 223px;
-            font-size: 12px;
-            font-style: italic;
+            top: 71px;
+            left: 118px;
+            font-size: 13px;
+            /* font-style: italic; */
         }
 
         /* .name {
@@ -58,23 +58,23 @@
 
         .name {
             position: absolute;
-            top: 352px;
-            left: 200px;
-            font-size: 17px;
+            top: 351px;
+            left: 260px;
+            font-size: 18px;
         }
 
         .birthday {
             position: absolute;
-            top: 391px;
+            top: 390px;
             left: 178px;
-            font-size: 17px;
+            font-size: 18px;
         }
 
         .unit {
             position: absolute;
-            top: 429px;
+            top: 428px;
             left: 223px;
-            font-size: 17px;
+            font-size: 18px;
         }
 
         

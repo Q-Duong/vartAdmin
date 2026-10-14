@@ -13,6 +13,7 @@ class Member extends Model
     protected $fillable = [
         'member_code',
         'member_title',
+        'member_national_id',
         'member_first_name',
         'member_last_name',
         'member_full_name',
@@ -28,6 +29,8 @@ class Member extends Model
         'member_nation',
         'member_work_unit',
         'member_object_group',
+        'member_degree_number',
+        'member_degree_date',
         'member_graduation_year',
         'member_image',
         'member_image_card',
@@ -35,6 +38,10 @@ class Member extends Model
         'ward_id',
         'address_detail',
         'member_full_address',
+    ];
+
+    protected $casts = [
+        'member_degree_date' => 'date',
     ];
 
     public function register()

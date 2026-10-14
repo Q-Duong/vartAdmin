@@ -1,6 +1,3 @@
-
-
-
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
 
@@ -63,7 +60,7 @@
             text-align: left;
             text-transform: uppercase;
             color: #ffffff;
-            font-size: 15px;
+            font-size: 16px;
             margin-top: 5px;
         }
 
@@ -108,7 +105,7 @@
 
         .conference-title {
             text-transform: uppercase;
-            font-size: 18px;
+            font-size: 20px;
             text-align: center;
             color: #f01c1c;
             margin-bottom: 20px;
@@ -165,63 +162,68 @@
         <div class="content">
             <div class="block-title">
                 <img src="{{ $imgLogo }}" class="title-logo">
-                <h4 class="title-name">CHI HỘI KỸ THUẬT ĐIỆN QUANG VÀ Y HỌC HẠT NHÂN KHU VỰC PHÍA BẮC</h4>
+                <h4 class="title-name">Viet Nam Assosiation Of Radiological Technologists</h4>
             </div>
             <div>
-                <h2 class="title">THƯ MỜI</h2>
+                <h2 class="title">INVITATION LETTER</h2>
             </div>
             <div class="dear">
-                <b>Kính mời:</b>
+                <b>Dear:</b>
             </div>
-            <div class="name"><b> {{ $title }}. {{ $fullName }}</b></div>
+            <div class="name"><b> {{ $title }} {{ $fullName }}</b></div>
             <div class="unit"><b> {{ $unit }}</b></div>
+
             <div class="content-text">
-                Chúng tôi rất vui được mời Quý đại biểu tham dự:
+                It is our great pleasure to invite you to participate in the upcoming:
             </div>
             <div class="conference-title">
-                <b>Hội nghị Khoa học Quốc tế kỹ thuật Điện quang, Y học hạt nhân và Xạ trị lần thứ VIII - khu vực phía Bắc (mở rộng)</b>
+                <b>Hội nghị Khoa học Kỹ Thuật Hình Ảnh Y Học Toàn
+                    Quốc lần thứ 14</b>
             </div>
             <div class="topic"><b>Chủ đề:</b></div>
-            <div class="conference-topic"><b>"Kết Nối - Chuyển Đổi - Phát Triển Bền Vững"</div>
+            <div class="conference-topic"><b>"Kỷ nguyên Trí tuệ nhân tạo đã bắt đầu và tác động đến<br> Kỹ thuật hình
+                    ảnh y
+                    học"</div>
             <div class="line"></div>
             <div class="section-location">
                 <div class="content-text-sub">
-                    <span class="content-strong">Thời gian:</span> Ngày 05,06/12/2024 (Thứ Sáu và Thứ Bảy)
+                    <span class="content-strong">Date:</span> 20 June, 2026
                 </div>
                 <div class="content-text-sub">
-                    <span class="content-strong">Địa điểm tổ chức:</span> Celina Peninsula, Đường Võ Nguyên Giáp, phường Đồng Hới, tỉnh Quảng Trị (Quảng Bình cũ).
+                    <span class="content-strong">Venue:</span> Royal Lotus Convention Center - 120A Nguyen
+                    Van
+                    Thoai, My An, Da Nang, Vietnam.
                 </div>
-                <div class="content-text-sub">Quý đại biểu sẽ được miễn phí: Phí tham gia, Tiệc chào mừng, Gala dinner, Giấy
-                    chứng nhận tham gia hội
-                    nghị, Chỗ ở trong 2 đêm (20/06 và 21/06).</div>
                 <div class="content-text-sub">
-                    Để biết thêm thông tin và đăng ký, vui lòng truy cập website tại <a
-                        href="https://vart.vn/conference/hoi-nghi-trong-nuoc/hoi-nghi-khoa-hoc-quoc-te-ky-thuat-dien-quang-y-hoc-hat-nhan-va-xa-tri-lan-thu-viii-khu-vuc-phia-bac">https://vart.vn</a>.
-                    Sự
-                    có mặt của Quý vị là niềm cổ vũ, động viên to lớn, góp phần quan trọng để tổ chức hội nghị thành
-                    công.
+                    <span class="content-strong">Welcome Dinner:</span> Royal Lotus Convention Center - 18:00, 19 June, 2026.
+                </div>
+                <div class="content-text-sub">
+                    Your presence will be a great source of encouragement and will play a vital role in the success of this conference.
                 </div>
             </div>
             <div class="line"></div>
             <div class="section-contact">
                 <div class="content-text">
                     <div class="content-text-sub">
-                        <b>Quý đại biểu cần thêm thông tin vui lòng liên hệ:</b>
+                        <b>Should delegates require any further inquiries, please kindly contact:</b>
                     </div>
                     <div class="content-text-sub">
-                        <span class="content-strong">CN. Nguyễn Cao Cường</span> - 0942.921.444 - Hỗ trợ thông tin CME.
+                        <span class="content-strong">Mr. Luu Tri Dung (Dung) - Head of the International Relations subcommittee</span>
+                        <div><span class="content-strong">Email:</span> tridungbvc@gmail.com<span class="content-strong"> - WhatsApp/Zalo:</span> +84904234310</div>
                     </div>
+                    
                     <div class="content-text-sub">
-                        <span class="content-strong">CN. Nguyễn Quang Trung</span> - 0986.024.192 - Hỗ trợ thông tin HN.
+                        <span class="content-strong">Mr. Phan Hoai Phuong (Paul) - International Director</span>
+                        <div><span class="content-strong">Email:</span> phuongmatlab@gmail.com<span class="content-strong"> - Zalo/Line:</span> +84915767101</div>
                     </div>
                 </div>
             </div>
             <div class="line"></div>
             <div style="margin-left: 50%; margin-top: 0px;">
-                <div style="text-align: center;"><b>TM. Ban Thường Vụ chi Hội </b></div>
-                <div style="text-align: center;"><b>CHỦ TỊCH</b></div>
+                <div style="text-align: center;"><b>Sincerely,</b></div>
                 <img src="{{ $imgSign }}" class="img-signature">
-                <div style="text-align: center;"><b>Ths.Phạm Nhật Yên</b></div>
+                <div style="text-align: center;"><b>Thai Van Loc</b></div>
+                <div style="text-align: center;"><b>VART chairman</b></div>
             </div>
         </div>
     </div>

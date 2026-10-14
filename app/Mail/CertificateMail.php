@@ -3,11 +3,12 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Str;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class CertificateMail extends Mailable
+class CertificateMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
     protected $conference_type;
@@ -15,6 +16,7 @@ class CertificateMail extends Mailable
     protected $title;
     protected $name;
     protected $code;
+    
     /**
      * Create a new message instance.
      *
@@ -61,7 +63,7 @@ class CertificateMail extends Mailable
             case ('vn'):
                 $modelContent = [
                     'title' => $this->title,
-                    'name' => $this->name,
+                    'name' => Str::title($this->name),
                     'conference_title' => $this->conference_title,
                 ];
 
@@ -71,7 +73,7 @@ class CertificateMail extends Mailable
                         'as' => 'Giấy chứng nhận CME.pdf',
                         'mime' => 'application/pdf',
                     ])
-                    ->subject('GIẤY CHỨNG NHẬN CME HỘI NGHỊ 2025 - QUẢNG TRỊ');
+                    ->subject('GIẤY CHỨNG NHẬN CME HỘI NGHỊ 2026');
 
                 return $mail;
 

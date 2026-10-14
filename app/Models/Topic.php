@@ -13,6 +13,8 @@ class Topic extends Model
     protected $fillable = [
         'topic_title',
         'topic_title_en',
+        'vart',
+        'nvart'
     ];
 
     public function report()

@@ -185,13 +185,13 @@ Route::group(['middleware' => 'auth'], function () {
     });
     Route::prefix('test')->group(function () {
         Route::get('certificate', function () {
-            $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.certificate.cpd', [
-                'title' => 'Mr.',
-                'name' => 'Huynh Quoc Duong',
-                // 'no' => '271',
-                // 'birthday' => '12/9/1988',
-                // 'unit' => 'Bệnh viện Phụ sản - Nhi Quảng Nam',
-                "imgBackground" => parserImgPdf('defineTemplates/backGround/Asia-CPD.jpg')
+            $pdf = Pdf::setOptions(['isRemoteEnabled' => true])->loadView('pdf.certificate.certificate', [
+                // 'title' => 'Mr.',
+                'name' => 'Đỗ Hoàng Anh',
+                'no' => '2675',
+                'birthday' => '22/02/1998',
+                'unit' => 'Khoa Chẩn đoán hình ảnh - Bệnh viện Đa khoa',
+                "imgBackground" => parserImgPdf('defineTemplates/backGround/certificate-vart-2026.jpg')
             ]);
             return $pdf->stream('invitation-letter-attendees.pdf');
         });

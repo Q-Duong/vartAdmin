@@ -31,13 +31,12 @@
         </div>
         <div>
             <h3 style="text-align: center; color: #601e89;">
-                GIẤY CHỨNG NHẬN CME HỘI NGHỊ 2025 - ĐÀ NẴNG
+                GIẤY CHỨNG NHẬN CME HỘI NGHỊ
             </h3>
         </div>
         <div style="width: 86%; margin: 50px auto;">
             <div style="margin: 0 0 20px 30px;">
-                Kính gửi<b> {{ $title == 0 ? 'Ông' : 'Bà' }} <span
-                        style=" text-transform: uppercase">{{ $name }}</span></b>,
+                Kính gửi<b> {{ $title == 0 ? 'Ông' : 'Bà' }} <span>{{ $name }}</span></b>,
             </div>
             <div>
                 <div style="margin-bottom: 25px; text-align: justify;">
@@ -47,15 +46,7 @@
                     <div style="text-align: center;">
                         <br><b>"{{ $conference_title }}"</b>
                     </div>
-                    <div style="margin-top: 25px;">• Vui lòng mở file đính kèm: Giấy chứng nhận Hội nghị 2025 tại Đà
-                        Nẵng.</div>
-                    <div style="margin-top: 10px;">• Chấp hành chủ trương của Đảng và Chính phủ về chuyển đổi số:
-                        <div style="margin-top: 10px; margin-left: 30px;">- Đề nghị Quý đại biểu lưu và in file đính kèm
-                            để Sở Y tế kiểm tra.</div>
-                        <div style="margin-top: 10px; margin-left: 30px;">- Ban tổ chức không khuyến khích việc sử dụng
-                            bảng cứng, nhưng nếu một số địa phương vẫn cần, vui lòng phản hồi email để Ban tổ chức gửi
-                            bảng cứng về địa chỉ đại biểu đã đăng ký.</div>
-                    </div>
+                    <div style="margin-top: 25px;">• Vui lòng mở file đính kèm: Giấy chứng nhận Hội nghị.</div>
                 </div>
                 <div style="margin-bottom: 25px; text-align: justify;">
                     Chúng tôi rất trân trọng sự quan tâm, tham gia và đóng góp quý báu của đại biểu cho hội nghị.

@@ -63,11 +63,11 @@
                                 <div style="margin-top: 10px;"><b>Địa điểm:</b> Khách sạn Royal Lotus Đà Nẵng</div>
                                 <div style="margin-top: 10px;"><b>Địa chỉ:</b> 120A Nguyễn Văn Thoại, Mỹ An,
                                     Ngũ Hành Sơn, Đà Nẵng.</div>
-                                <div style="margin-top: 10px;">
+                                {{-- <div style="margin-top: 10px;">
                                     <b>Lưu ý:</b> Tiệc Welcome dinner được tổ chức vào lúc <b>18:00</b> ngày <b>19/06/2026</b>
                                     tại
                                     <b>Khách sạn Royal Lotus Đà Nẵng</b> - 120A Nguyễn Văn Thoại, Mỹ An, Ngũ Hành Sơn, Đà Nẵng.
-                                </div>
+                                </div> --}}
                             @break
 
                             @case('CE')
@@ -92,11 +92,11 @@
                                 <div style="margin-top: 10px;"><b>Địa điểm:</b> Khách sạn Royal Lotus Đà Nẵng</div>
                                 <div style="margin-top: 10px;"><b>Địa chỉ:</b> 120A Nguyễn Văn Thoại, Mỹ An,
                                     Ngũ Hành Sơn, Đà Nẵng.</div>
-                                <div style="margin-top: 10px;">
+                                {{-- <div style="margin-top: 10px;">
                                     <b>Lưu ý:</b> Tiệc Welcome dinner được tổ chức vào lúc <b>18:00</b> ngày <b>19/06/2026</b>
                                     tại
                                     <b>Khách sạn Royal Lotus Đà Nẵng</b> - 120A Nguyễn Văn Thoại, Mỹ An, Ngũ Hành Sơn, Đà Nẵng.
-                                </div>
+                                </div> --}}
                         @endswitch
                     @else
                         <div style="margin-top: 15px;"><b>Thời gian:</b> Thứ bảy, ngày 20/06/2026</div>

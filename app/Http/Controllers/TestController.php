@@ -34,8 +34,8 @@ class TestController extends Controller
             'fullName' => 'Huỳnh Quốc Dương',
             'unit' => 'Medicen',
             'imgBackground' => parserImgPdf('defineTemplates/backGround/main.jpg'),
-            "imgLogo" => parserImgPdf(choseLogoByConferenceType(2)),
-            "imgSign" => parserImgPdf(choseSignatureByConferenceType(2)),
+            "imgLogo" => parserImgPdf(choseLogoByConferenceType(1)),
+            "imgSign" => parserImgPdf(choseSignatureByConferenceType(1)),
         ]);
         return $pdf->stream('invitation-letter-attendees.pdf');
     }   
@@ -73,7 +73,7 @@ class TestController extends Controller
 
     public function Mail()
     {
-        return view('mail.report.vart.reject')->with([
+        return view('mail.report.vart.international')->with([
             'title' => 0,
             'name' => 'Huỳnh Quốc Dương',
             'code' => 'LTCB0943705326',
@@ -85,7 +85,7 @@ class TestController extends Controller
 
     public function invoice()
     {
-        $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.invoice.hrtta', [
+        $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'defaultFont' => 'sans-serif'])->loadView('pdf.invoice.hart', [
             'name' => 'Huỳnh Quốc Dương', 
             'phone' => '0943705326',
             'unit' => 'Medicen',
@@ -94,7 +94,7 @@ class TestController extends Controller
             'conferenceTitle' => 'Hội nghị Khoa học Quốc tế kỹ thuật Điện quang, Y học hạt nhân và Xạ trị khu vực phía Bắc, lần thứ VIII',
             'conferenceFeeTitle' => 'Phí tham gia trực tuyến có cấp giấy chứng nhận CME',
             "imgSignature" => parserImgPdf(choseSignatureByConferenceType(2)),
-            // 'imgLogo' => parserImgPdf('defineTemplates/logo/vart.png'), 
+            'imgLogo' => parserImgPdf('defineTemplates/logo/vart.png'), 
             'imgLogo' => [
                 'hartLogo' => parserImgPdf('defineTemplates/logo/hart.png'), 
                 'hrttaLogo' => parserImgPdf('defineTemplates/logo/hrtta.png'), 
